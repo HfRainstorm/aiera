@@ -5,14 +5,13 @@ import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.stereotype.Component;
 
 /**
- *
  * @author : hmy
  * @date : 2025/2/8 10:33
  */
 
 @Slf4j
 @Component
-public class OllamaModelBuildHandler implements ModelBuildHandler {
+public class OpenAiModelBuildHandler implements ModelBuildHandler {
 
     @Override
     public boolean whetherCurrentModel(ChatModel model) {

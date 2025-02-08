@@ -2,7 +2,6 @@ package cn.hfstorm.aiera.common.core.provider;
 
 import lombok.AllArgsConstructor;
 import org.springframework.ai.chat.model.ChatModel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
