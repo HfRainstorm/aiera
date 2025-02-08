@@ -25,10 +25,14 @@
 
 
     <dependencies>
+        <!-- Modules -->
         <dependency>
             <groupId>cn.hfstorm</groupId>
-            <artifactId>aiera-common-bom</artifactId>
-            <version>${revision}</version>
+            <artifactId>aiera-common-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hfstorm</groupId>
+            <artifactId>aiera-common-ai</artifactId>
         </dependency>
     </dependencies>
 </project>

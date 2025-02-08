@@ -10,6 +10,13 @@
     <artifactId>aiera-common-ai</artifactId>
 
 
+    <dependencies>
 
+        <dependency>
+            <groupId>cn.hfstorm</groupId>
+            <artifactId>aiera-common-core</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
 
 </project>

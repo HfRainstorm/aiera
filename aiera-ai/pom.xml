@@ -9,6 +9,7 @@
     </parent>
 
     <artifactId>aiera-ai</artifactId>
+    <version>${revision}</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -17,34 +18,4 @@
     </modules>
 
 
-<!--    <properties>-->
-
-<!--        &lt;!&ndash; Spring AI &ndash;&gt;-->
-<!--        <spring-ai.version>1.0.0-M5</spring-ai.version>-->
-<!--        <springdoc-openapi.version>2.5.0</springdoc-openapi.version>-->
-<!--    </properties>-->
-
-
-<!--    <dependencyManagement>-->
-<!--        <dependencies>-->
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.ai</groupId>-->
-<!--                <artifactId>spring-ai-bom</artifactId>-->
-<!--                <version>${spring-ai.version}</version>-->
-<!--                <type>pom</type>-->
-<!--                <scope>import</scope>-->
-<!--            </dependency>-->
-<!--            &lt;!&ndash;                    <dependency>&ndash;&gt;-->
-<!--            &lt;!&ndash;                        <groupId>org.springframework.ai</groupId>&ndash;&gt;-->
-<!--            &lt;!&ndash;                        <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>&ndash;&gt;-->
-<!--            &lt;!&ndash;                        <version>${spring-ai.version}</version>&ndash;&gt;-->
-<!--            &lt;!&ndash;                    </dependency>&ndash;&gt;-->
-
-<!--            &lt;!&ndash;                    <dependency>&ndash;&gt;-->
-<!--            &lt;!&ndash;                        <groupId>org.springdoc</groupId>&ndash;&gt;-->
-<!--            &lt;!&ndash;                        <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>&ndash;&gt;-->
-<!--            &lt;!&ndash;                        <version>${springdoc-openapi.version}</version>&ndash;&gt;-->
-<!--            &lt;!&ndash;                    </dependency>&ndash;&gt;-->
-<!--        </dependencies>-->
-<!--    </dependencyManagement>-->
 </project>

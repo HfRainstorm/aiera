@@ -1,12 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>cn.hfstorm</groupId>
-        <artifactId>aiera-common</artifactId>
-        <version>${revision}</version>
-    </parent>
 
+    <groupId>cn.hfstorm</groupId>
+    <version>${revision}</version>
     <artifactId>aiera-common-bom</artifactId>
     <packaging>pom</packaging>
 
@@ -15,31 +12,42 @@
         <revision>0.0.1</revision>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>cn.hfstorm</groupId>
-            <artifactId>aiera-common-core</artifactId>
-            <version>${revision}</version>
-        </dependency>
-    </dependencies>
 
     <dependencyManagement>
 
+        <!-- Modules version -->
         <dependencies>
-
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-dependencies</artifactId>-->
-<!--                <version>${spring-boot.version}</version>-->
-<!--                <type>pom</type>-->
-<!--                <scope>import</scope>-->
-<!--            </dependency>-->
-
-<!--            <dependency>-->
-<!--                <groupId>com.mysql</groupId>-->
-<!--                <artifactId>mysql-connector-j</artifactId>-->
-<!--                <version>${mysql-connector.version}</version>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>cn.hfstorm</groupId>
+                <artifactId>aiera-common-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hfstorm</groupId>
+                <artifactId>aiera-common-ai</artifactId>
+                <version>${revision}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
+
+    <!--    <dependencyManagement>-->
+
+    <!--        <dependencies>-->
+
+    <!--&lt;!&ndash;            <dependency>&ndash;&gt;-->
+    <!--&lt;!&ndash;                <groupId>org.springframework.boot</groupId>&ndash;&gt;-->
+    <!--&lt;!&ndash;                <artifactId>spring-boot-dependencies</artifactId>&ndash;&gt;-->
+    <!--&lt;!&ndash;                <version>${spring-boot.version}</version>&ndash;&gt;-->
+    <!--&lt;!&ndash;                <type>pom</type>&ndash;&gt;-->
+    <!--&lt;!&ndash;                <scope>import</scope>&ndash;&gt;-->
+    <!--&lt;!&ndash;            </dependency>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;            <dependency>&ndash;&gt;-->
+    <!--&lt;!&ndash;                <groupId>com.mysql</groupId>&ndash;&gt;-->
+    <!--&lt;!&ndash;                <artifactId>mysql-connector-j</artifactId>&ndash;&gt;-->
+    <!--&lt;!&ndash;                <version>${mysql-connector.version}</version>&ndash;&gt;-->
+    <!--&lt;!&ndash;            </dependency>&ndash;&gt;-->
+    <!--        </dependencies>-->
+    <!--    </dependencyManagement>-->
 </project>

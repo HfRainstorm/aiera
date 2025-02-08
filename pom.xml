@@ -33,6 +33,10 @@
         <!-- Spring Boot -->
         <spring-boot.version>3.4.0</spring-boot.version>
 
+        <springdoc-openapi.version>2.5.0</springdoc-openapi.version>
+
+        <!-- Spring AI -->
+        <spring-ai.version>1.0.0-M5</spring-ai.version>
 
         <hutool.version>5.8.26</hutool.version>
         <mybatis-plus.version>3.5.5</mybatis-plus.version>
@@ -42,5 +46,34 @@
     </properties>
 
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+
+            <!-- Modules version -->
+            <dependency>
+                <groupId>cn.hfstorm</groupId>
+                <artifactId>aiera-common-bom</artifactId>
+                <version>${revision}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>
