@@ -9,4 +9,11 @@
 
     <artifactId>aiera-ai-biz</artifactId>
 
+    <dependencies>
+        <!-- Modules -->
+        <dependency>
+            <groupId>cn.hfstorm</groupId>
+            <artifactId>aiera-common-core</artifactId>
+        </dependency>
+    </dependencies>
 </project>

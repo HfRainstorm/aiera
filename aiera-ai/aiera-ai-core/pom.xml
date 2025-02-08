@@ -15,6 +15,10 @@
             <groupId>cn.hfstorm</groupId>
             <artifactId>aiera-common-ai</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.hfstorm</groupId>
+            <artifactId>aiera-ai-biz</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

@@ -8,6 +8,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *@date : 2025/2/8 10:33
  */
 @Data
-@ConfigurationProperties(prefix = "aiera")
+@ConfigurationProperties(prefix = "aiera.chat")
 public class AiEraChatProps {
 }

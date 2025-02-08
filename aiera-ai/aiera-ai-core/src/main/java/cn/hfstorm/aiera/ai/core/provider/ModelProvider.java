@@ -1,4 +1,4 @@
-package cn.hfstorm.aiera.common.core.provider;
+package cn.hfstorm.aiera.ai.core.provider;
 
 import lombok.AllArgsConstructor;
 import org.springframework.ai.chat.model.ChatModel;
@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 /**
- * modelName provider
+ * model provider
  *
  * @author : hmy
  * @date : 2025/2/8 10:33

@@ -1,7 +1,7 @@
 package cn.hfstorm.aiera.server.service.impl;
 
 import cn.hfstorm.aiera.common.ai.entity.ChatRequest;
-import cn.hfstorm.aiera.common.core.provider.ModelProvider;
+import cn.hfstorm.aiera.ai.core.provider.ModelProvider;
 import cn.hfstorm.aiera.server.service.ChatService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

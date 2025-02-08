@@ -1,19 +1,19 @@
-package cn.hfstorm.aiera.common.ai;
+package cn.hfstorm.aiera.ai.core;
 
-import cn.hfstorm.aiera.common.ai.properties.AiEraChatProps;
+import cn.hfstorm.aiera.ai.core.properties.AiEraProps;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author hmy
- *@date : 2025/2/8 10:33
+ * @author tycoding
+ * @since 2024/4/15
  */
 @Slf4j
 @Configuration
-@EnableConfigurationProperties({AiEraChatProps.class,})
+@EnableConfigurationProperties({AiEraProps.class,})
 @AllArgsConstructor
-public class CoreAutoConfiguration {
+public class AiCoreAutoConfiguration {
 
 }

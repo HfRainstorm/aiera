@@ -1,4 +1,4 @@
-package cn.hfstorm.aiera.common.core.provider;
+package cn.hfstorm.aiera.ai.core.provider;
 
 /**
  * @author : hmy
