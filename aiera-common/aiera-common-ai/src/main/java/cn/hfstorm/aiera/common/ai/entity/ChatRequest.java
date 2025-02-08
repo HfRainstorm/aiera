@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import java.util.List;
 import java.util.Map;
 
-public class ApiRequest {
+public class ChatRequest {
 
 
     // --------------------------------------------------------------------------
@@ -16,7 +16,7 @@ public class ApiRequest {
     // --------------------------------------------------------------------------
 
     /**
-     * Represents a tool the model may call. Currently, only functions are supported as a
+     * Represents a tool the modelName may call. Currently, only functions are supported as a
      * tool.
      *
      * @param type     The type of the tool. Currently, only 'function' is supported.
@@ -50,7 +50,7 @@ public class ApiRequest {
         /**
          * Function definition.
          *
-         * @param description A description of what the function does, used by the model
+         * @param description A description of what the function does, used by the modelName
          *                    to choose when and how to call the function.
          * @param name        The name of the function to be called. Must be a-z, A-Z, 0-9, or
          *                    contain underscores and dashes, with a maximum length of 64.
@@ -78,10 +78,11 @@ public class ApiRequest {
     /**
      * Chat completion request object.
      *
-     * @param model       所要调用的模型编码
+     * @param modelName   所要调用的模型编码
      * @param messages    调用语言模型时，将当前对话信息列表作为提示输入给模型， 按照 {"role": "user", "content": "你好"} 的json 数组形式进行传参； 可能的消息类型包括
      *                    System message、User message、Assistant message 和 Tool message。
-     * @param requestId   由用户端传参，需保证唯一性；用于区分每次请求的唯一标识，用户端不传时平台会默认生成。
+     * @param chatId      由用户端传参，需保证唯一性；用于区分每次请求的唯一标识，用户端不传时平台会默认生成。
+     * @param modelId     用户配置的模型id
      * @param doSample    do_sample 为 true 时启用采样策略，do_sample 为 false 时采样策略 temperature、top_p 将不生效。默认值为 true。
      * @param stream      使用同步调用时，此参数应当设置为 fasle 或者省略。表示模型生成完所有内容后一次性返回所有内容。默认值为 false。
      *                    如果设置为 true，模型将通过标准 Event Stream ，逐块返回模型生成内容。Event Stream 结束时会返回一条data: [DONE]消息。
@@ -100,8 +101,9 @@ public class ApiRequest {
      * @param user
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public record ChatCompletionRequest(@JsonProperty("request_id") String requestId,
-                                        @JsonProperty("model") String model,
+    public record ChatCompletionRequest(@JsonProperty("chat_id") String chatId,
+                                        @JsonProperty("model_id") String modelId,
+                                        @JsonProperty("model_name") String modelName,
                                         @JsonProperty("messages") List<ChatCompletionMessage> messages,
                                         @JsonProperty("do_sample") Boolean doSample,
                                         @JsonProperty("stream") Boolean stream,
@@ -114,51 +116,58 @@ public class ApiRequest {
                                         @JsonProperty("user_id") String user) {
 
         /**
-         * Shortcut constructor for a chat completion request with the given messages and model.
+         * Shortcut constructor for a chat completion request with the given messages and modelName.
          *
          * @param requestId   A unique identifier for the request.
-         * @param model       ID of the model to use.
+         * @param modelId     ID of the modelName to use.
+         * @param modelName   modelName to use.
          * @param messages    A list of messages comprising the conversation so far.
          * @param temperature What sampling temperature to use, between 0 and 1.
          */
-        public ChatCompletionRequest(String requestId, String model, List<ChatCompletionMessage> messages,
-                                     Double temperature) {
-            this(requestId, model, messages, null, null, temperature, null, null, null, null, null, null);
+        public ChatCompletionRequest(String requestId, String modelId, String modelName,
+                                     List<ChatCompletionMessage> messages, Double temperature) {
+            this(requestId, modelId, modelName, messages, null, null, temperature, null, null, null, null, null, null);
         }
 
         /**
-         * Shortcut constructor for a chat completion request with the given messages, model and control for streaming.
+         * Shortcut constructor for a chat completion request with the given messages, modelName and control for
+         * streaming.
          *
          * @param requestId   A unique identifier for the request.
-         * @param model       ID of the model to use.
+         * @param modelId     ID of the modelName to use.
+         * @param modelName   modelName to use.
          * @param messages    A list of messages comprising the conversation so far.
          * @param temperature What sampling temperature to use, between 0 and 1.
          * @param stream      If set, partial message deltas will be sent.Tokens will be sent as data-only
          *                    server-sent events
          *                    as they become available, with the stream terminated by a data: [DONE] message.
          */
-        public ChatCompletionRequest(String requestId, String model, List<ChatCompletionMessage> messages,
-                                     Double temperature, boolean stream) {
-            this(requestId, model, messages, null, stream, temperature, null, null, null, null, null, null);
+        public ChatCompletionRequest(String requestId, String modelId, String modelName,
+                                     List<ChatCompletionMessage> messages, Double temperature, boolean stream) {
+            this(requestId, modelId, modelName, messages, null, stream, temperature, null, null, null, null, null,
+                    null);
         }
 
         /**
-         * Shortcut constructor for a chat completion request with the given messages, model, tools and tool choice.
+         * Shortcut constructor for a chat completion request with the given messages, modelName, tools and tool choice.
          * Streaming is set to false, temperature to 0.8 and all other parameters are null.
          *
          * @param requestId  A unique identifier for the request.
-         * @param model      ID of the model to use.
+         * @param modelId    ID of the modelName to use.
+         * @param modelName  modelName to use.
          * @param messages   A list of messages comprising the conversation so far.
-         * @param tools      A list of tools the model may call. Currently, only functions are supported as a tool.
-         * @param toolChoice Controls which (if any) function is called by the model.
+         * @param tools      A list of tools the modelName may call. Currently, only functions are supported as a tool.
+         * @param toolChoice Controls which (if any) function is called by the modelName.
          */
-        public ChatCompletionRequest(String requestId, String model, List<ChatCompletionMessage> messages,
+        public ChatCompletionRequest(String requestId, String modelId, String modelName,
+                                     List<ChatCompletionMessage> messages,
                                      List<FunctionTool> tools, String toolChoice) {
-            this(requestId, model, messages, null, false, 0.95d, null, null, null, tools, toolChoice, null);
+            this(requestId, modelId, modelName, messages, null, false, 0.95d, null, null, null, tools, toolChoice,
+                    null);
         }
 
         /**
-         * Shortcut constructor for a chat completion request with the given messages, model, tools and tool choice.
+         * Shortcut constructor for a chat completion request with the given messages, modelName, tools and tool choice.
          * Streaming is set to false, temperature to 0.8 and all other parameters are null.
          *
          * @param requestId A unique identifier for the request.
@@ -168,7 +177,7 @@ public class ApiRequest {
          *                  as they become available, with the stream terminated by a data: [DONE] message.
          */
         public ChatCompletionRequest(String requestId, List<ChatCompletionMessage> messages, Boolean stream) {
-            this(requestId, null, messages, null, stream, null, null, null, null, null, null, null);
+            this(requestId, null, null, messages, null, stream, null, null, null, null, null, null, null);
         }
 
         /**
@@ -194,7 +203,7 @@ public class ApiRequest {
             public static final String NONE = "none";
 
             /**
-             * Specifying a particular function forces the model to call that function.
+             * Specifying a particular function forces the modelName to call that function.
              */
             public static String FUNCTION(String functionName) {
                 return ModelOptionsUtils.toJsonString(Map.of("type", "function", "function", Map.of("name",
@@ -255,7 +264,7 @@ public class ApiRequest {
          * The function definition.
          *
          * @param name      The name of the function.
-         * @param arguments The arguments that the model expects you to pass to the function.
+         * @param arguments The arguments that the modelName expects you to pass to the function.
          */
         @JsonInclude(JsonInclude.Include.NON_NULL)
         public record ChatCompletionFunction(@JsonProperty("name") String name,
@@ -264,7 +273,7 @@ public class ApiRequest {
     }
 
     /**
-     * The reason the model stopped generating tokens.
+     * The reason the modelName stopped generating tokens.
      * 模型推理终止的原因
      */
     public enum ChatCompletionFinishReason {
@@ -295,19 +304,19 @@ public class ApiRequest {
 
     /**
      * 模型同步调用响应内容
-     * Represents a chat completion response returned by model, based on the provided
+     * Represents a chat completion response returned by modelName, based on the provided
      * input.
      *
      * @param id      A unique identifier for the chat completion.
      * @param created The Unix timestamp (in seconds) of when the chat completion was
      *                created.
-     * @param model   The model used for the chat completion.
+     * @param model   The modelName used for the chat completion.
      * @param choices A list of chat completion choices.
      * @param usage   Usage statistics for the completion request.
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public record ChatCompletion(@JsonProperty("id") String id, @JsonProperty("object") String object,
-                                 @JsonProperty("created") Long created, @JsonProperty("model") String model,
+                                 @JsonProperty("created") Long created, @JsonProperty("modelName") String model,
                                  @JsonProperty("choices") List<Choice> choices,
                                  @JsonProperty("request_id") String requestId, @JsonProperty("usage") Usage usage) {
         // @formatter:on
@@ -316,8 +325,8 @@ public class ApiRequest {
          * Chat completion choice.
          *
          * @param index        The index of the choice in the list of choices.
-         * @param message      A chat completion message generated by the model.
-         * @param finishReason The reason the model stopped generating tokens.
+         * @param message      A chat completion message generated by the modelName.
+         * @param finishReason The reason the modelName stopped generating tokens.
          */
         @JsonInclude(JsonInclude.Include.NON_NULL)
         public record Choice(
@@ -330,14 +339,14 @@ public class ApiRequest {
     }
 
     /**
-     * Represents a streamed chunk of a chat completion response returned by model, based
+     * Represents a streamed chunk of a chat completion response returned by modelName, based
      * on the provided input.
      *
      * @param id      A unique identifier for the chat completion. Each chunk has the same ID.
      * @param object  The object type, which is always 'chat.completion.chunk'.
      * @param created The Unix timestamp (in seconds) of when the chat completion was
      *                created. Each chunk has the same timestamp.
-     * @param model   The model used for the chat completion.
+     * @param model   The modelName used for the chat completion.
      * @param choices A list of chat completion choices. Can be more than one if n is
      *                greater than 1.
      */
@@ -347,7 +356,7 @@ public class ApiRequest {
             @JsonProperty("id") String id,
             @JsonProperty("object") String object,
             @JsonProperty("created") Long created,
-            @JsonProperty("model") String model,
+            @JsonProperty("modelName") String model,
             @JsonProperty("request_id") String requestId,
             @JsonProperty("choices") List<ChunkChoice> choices) {
         // @formatter:on
@@ -356,8 +365,8 @@ public class ApiRequest {
          * Chat completion choice.
          *
          * @param index        The index of the choice in the list of choices.
-         * @param delta        A chat completion delta generated by streamed model responses.
-         * @param finishReason The reason the model stopped generating tokens.
+         * @param delta        A chat completion delta generated by streamed modelName responses.
+         * @param finishReason The reason the modelName stopped generating tokens.
          */
         @JsonInclude(JsonInclude.Include.NON_NULL)
         public record ChunkChoice(
@@ -449,7 +458,7 @@ public class ApiRequest {
      *
      * @param index     The index of the embedding in the list of embeddings.
      * @param embedding The embedding vector, which is a list of floats. The length of
-     *                  vector depends on the model.
+     *                  vector depends on the modelName.
      * @param object    The object type, which is always 'embedding'.
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -462,7 +471,7 @@ public class ApiRequest {
          *
          * @param index     The index of the embedding in the list of embeddings.
          * @param embedding The embedding vector, which is a list of floats. The length of
-         *                  vector depends on the model.
+         *                  vector depends on the modelName.
          */
         public Embedding(Integer index, List<Double> embedding) {
             this(index, embedding, "embedding");
@@ -473,11 +482,11 @@ public class ApiRequest {
      * Creates an embedding vector representing the input text.
      *
      * @param input Input text to embed, encoded as a string or array of tokens
-     * @param model ID of the model to use.
+     * @param model ID of the modelName to use.
      *              or base64.
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public record EmbeddingRequest(@JsonProperty("input") String input, @JsonProperty("model") String model) {
+    public record EmbeddingRequest(@JsonProperty("input") String input, @JsonProperty("modelName") String model) {
 
     }
 
@@ -487,7 +496,7 @@ public class ApiRequest {
      * @param <T>    Type of the entities in the data list.
      * @param object Must have value "list".
      * @param data   List of entities.
-     * @param model  ID of the model to use.
+     * @param model  ID of the modelName to use.
      * @param usage  Usage statistics for the completion request.
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -495,7 +504,7 @@ public class ApiRequest {
             // @formatter:off
             @JsonProperty("object") String object,
             @JsonProperty("data") List<T> data,
-            @JsonProperty("model") String model,
+            @JsonProperty("modelName") String model,
             @JsonProperty("usage") Usage usage) {
         // @formatter:on
     }
@@ -510,7 +519,7 @@ public class ApiRequest {
      * @param object 结果类型，目前为 "list"
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public record EmbeddingResponse(@JsonProperty("model") String model,
+    public record EmbeddingResponse(@JsonProperty("modelName") String model,
                                     @JsonProperty("data") List<EmbeddingResponseData> data,
                                     @JsonProperty("usage") EmbeddingResponseUsage usage,
                                     @JsonProperty("object") String object) {

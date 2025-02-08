@@ -27,6 +27,16 @@
                 <artifactId>aiera-common-ai</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>cn.hfstorm</groupId>
+                <artifactId>aiera-ai-biz</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hfstorm</groupId>
+                <artifactId>aiera-ai-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

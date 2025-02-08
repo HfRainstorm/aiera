@@ -8,13 +8,13 @@ spring:
     name: aiera
   # 默认执行的配置文件
   profiles:
-    active: local
+    active: dev
   main:
     allow-bean-definition-overriding: true
 
   # Cache设置
-  cache:
-    type: redis
+#  cache:
+#    type: redis
 
   # 文件上传相关设置
   servlet:
@@ -24,15 +24,15 @@ spring:
   mvc:
     async:
       request-timeout: 3600000
-
-# MybatisPlus配置
-mybatis-plus:
-  mapper-locations: classpath:mapper/**/*.xml
-  configuration:
-    jdbc-type-for-null: null
-  #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  global-config:
-    banner: false
+#
+## MybatisPlus配置
+#mybatis-plus:
+#  mapper-locations: classpath:mapper/**/*.xml
+#  configuration:
+#    jdbc-type-for-null: null
+#  #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#  global-config:
+#    banner: false
 
 
 logging:

@@ -8,8 +8,13 @@
     </parent>
 
     <artifactId>aiera-ai-core</artifactId>
+    <packaging>jar</packaging>
 
-    <name>aiera-ai-core</name>
-
+    <dependencies>
+        <dependency>
+            <groupId>cn.hfstorm</groupId>
+            <artifactId>aiera-common-ai</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

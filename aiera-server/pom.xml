@@ -9,30 +9,14 @@
     </parent>
 
     <artifactId>aiera-server</artifactId>
-    <version>${revision}</version>
     <packaging>jar</packaging>
-
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-        <java.version>17</java.version>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-
-    </properties>
 
 
     <dependencies>
         <!-- Modules -->
         <dependency>
             <groupId>cn.hfstorm</groupId>
-            <artifactId>aiera-common-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.hfstorm</groupId>
-            <artifactId>aiera-common-ai</artifactId>
+            <artifactId>aiera-ai-core</artifactId>
         </dependency>
     </dependencies>
 </project>
