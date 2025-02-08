@@ -16,3 +16,19 @@
 
 此项目仓库正在建设中，请阅读 [Roadmap.md](./Roadmap-zh.md) 了解更多信息。
 
+
+## 项目结构
+
+```text
+|-aiera
+|---aiera-common 公共包
+|-----aiera-common-bom 所有模块声明的
+|-----aiera-common-core  公共文件，对异常、配置、常量进行声明
+|-----aiera-common-ai  ai相关公共配置
+|---aiera-ai  ai模块
+|-----aiera-ai-biz  ai业务逻辑
+|-----aiera-ai-core  ai操作核心类，如model调用、prompt生成等
+|---aiera-server  ai服务启动
+
+
+```
