@@ -1,11 +1,11 @@
 package cn.hfstorm.aiera.server.api;
 
 import cn.hfstorm.aiera.common.ai.annotation.ValidChatMessage;
-import cn.hfstorm.aiera.common.ai.constants.ChatRespConstant;
 import cn.hfstorm.aiera.common.ai.entity.ChatRequest;
 import cn.hfstorm.aiera.server.service.ChatService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,8 +35,14 @@ public class ApiChatEndpoint {
 
     @ValidChatMessage
     @PostMapping("/chat/completions")
-    public Flux<String> chatCompletions(@RequestBody ChatRequest.ChatCompletionRequest chatRequest) {
-        return chatService.chat(chatRequest).content().concatWith(Flux.just(ChatRespConstant.CONTENT_CONCAT_END_WITH));
+    public Flux<ChatResponse> chatCompletionsWithResponse(@RequestBody ChatRequest.ChatCompletionRequest chatRequest) {
+        return chatService.chat(chatRequest);
+    }
+
+    @ValidChatMessage
+    @PostMapping("/chat/single/completions")
+    public Flux<String> chatCompletionsWithStr(@RequestBody ChatRequest.ChatCompletionRequest chatRequest) {
+        return chatService.singleChat(chatRequest);
     }
 
 }

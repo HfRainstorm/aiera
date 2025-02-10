@@ -1,14 +1,17 @@
 package cn.hfstorm.aiera.server.service.impl;
 
-import cn.hfstorm.aiera.common.ai.entity.ChatRequest;
+import cn.hfstorm.aiera.ai.biz.service.AigcModelService;
+import cn.hfstorm.aiera.ai.core.chat.prompt.PromptUtils;
 import cn.hfstorm.aiera.ai.core.provider.ModelProvider;
+import cn.hfstorm.aiera.common.ai.entity.ChatRequest;
 import cn.hfstorm.aiera.server.service.ChatService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 /**
  * @author : hmy
@@ -21,42 +24,28 @@ public class ChatServiceImpl implements ChatService {
 
 
     @Autowired
-    private ModelProvider modelProvider;
+    ModelProvider modelProvider;
+
+    @Autowired
+    AigcModelService aigcModelService;
 
     @Override
-    public ChatClient.StreamResponseSpec chat(ChatRequest.ChatCompletionRequest req) {
-        System.out.println(req.modelName());
-        ChatModel model = modelProvider.getModel(req.modelId());
-        System.out.println(model);
-//        ChatModel model = aiEraChatService.stream(req.modelId());
+    public Flux<ChatResponse> chat(ChatRequest.ChatCompletionRequest req) {
+        ChatClient chatClient = modelProvider.getModelClient(req.modelId());
 
-
-//
-//
-//        ChatOptions modelOptions =
-//                OllamaOptions.builder()
-//                        .modelName(req.modelName())
-//                        .temperature(req.temperature())
-//                        .topP(req.topP()).build();
-//
-//        List<Message> messages = chatRequest.messages().stream().map(msg -> {
-//            switch (msg.role()) {
-//                case ASSISTANT:
-//                    return new AssistantMessage(msg.content());
-//                case SYSTEM:
-//                    return new SystemMessage(msg.content());
-//                default:
-//                    return new UserMessage(msg.content());
-//            }
-//        }).collect(Collectors.toList());
-//
-//        Prompt prompt = new Prompt(messages, modelOptions);
-
-        return null;
+        return chatClient.prompt(PromptUtils.generateChatPrompt(aigcModelService.selectById(req.modelId()), req)).stream().chatResponse();
     }
 
     @Override
-    public ChatClient.StreamResponseSpec singleChat(ChatRequest.ChatCompletionRequest req) {
-        return null;
+    public Flux<String> singleChat(ChatRequest.ChatCompletionRequest req) {
+//        ChatModel model = modelProvider.getModel(req.modelId());
+//
+//        return model.stream(PromptUtils.generateChatPrompt(aigcModelService.selectById(req.modelId()), req))
+//                .map(response -> (response.getResult() == null || response.getResult().getOutput() == null
+//                || response.getResult().getOutput().getText() == null) ? ""
+//                : response.getResult().getOutput().getText());
+        String content = req.messages().get(0).content();
+        ChatClient chatClient = modelProvider.getModelClient(req.modelId());
+        return chatClient.prompt().user(content).stream().content();
     }
 }

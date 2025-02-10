@@ -3,11 +3,15 @@ package cn.hfstorm.aiera.ai.core.provider;
 import cn.hfstorm.aiera.ai.biz.entity.AigcModel;
 import cn.hfstorm.aiera.ai.biz.enums.ModelTypeEnum;
 import cn.hfstorm.aiera.ai.biz.service.AigcModelService;
+import cn.hfstorm.aiera.ai.core.chat.entity.ModelChat;
 import cn.hfstorm.aiera.ai.core.provider.build.ModelBuildHandler;
 import cn.hfstorm.aiera.common.core.component.SpringContextHolder;
 import cn.hutool.core.util.ObjectUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -68,8 +72,19 @@ public class ProviderInitialize implements ApplicationContextAware {
             }
             modelBuildHandlers.forEach(x -> {
                 ChatModel chatModel = x.buildStreamingChat(model);
+
+                // build chat client
+                ChatClient chatClient = ChatClient.builder(chatModel)
+                        .defaultAdvisors(new MessageChatMemoryAdvisor(new InMemoryChatMemory())).build();
+
+                // model chat relationship
+                ModelChat modelChat =
+                        ModelChat.builder().chatClient(chatClient).chatModel(chatModel)
+                                .aigcModel(model).modelId(model.getId()).modelType(model.getType()).build();
+
                 if (ObjectUtil.isNotEmpty(chatModel)) {
-                    contextHolder.registerBean(model.getId(), chatModel);
+                    contextHolder.registerBean(model.getId(), modelChat);
+
                     modelStore.add(model);
                 }
 

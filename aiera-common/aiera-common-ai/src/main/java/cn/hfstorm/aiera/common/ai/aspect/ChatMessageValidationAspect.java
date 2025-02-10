@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * @author : hmy
@@ -32,7 +31,7 @@ public class ChatMessageValidationAspect {
      * @param joinPoint
      * @param validMessage
      */
-    @Before("@annotation(validChatMessage)")
+    @Before(value = "@annotation(validChatMessage)")
     public void validateMessage(JoinPoint joinPoint, ValidChatMessage validMessage) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();

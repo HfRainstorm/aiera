@@ -1,7 +1,7 @@
 package cn.hfstorm.aiera.ai.core.provider.build;
 
 import cn.hfstorm.aiera.ai.biz.entity.AigcModel;
-import cn.hfstorm.aiera.ai.core.constants.ProviderEnum;
+import cn.hfstorm.aiera.ai.core.enums.ProviderEnum;
 import cn.hfstorm.aiera.common.ai.enums.ChatErrorEnum;
 import cn.hfstorm.aiera.common.core.exception.ServiceException;
 import cn.hutool.core.util.StrUtil;

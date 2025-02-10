@@ -9,6 +9,12 @@ spring:
   # 默认执行的配置文件
   profiles:
     active: dev
+  # 国际化配置
+  messages:
+    basename: i18n.messages
+    encoding: UTF-8
+    cache-duration: 3600
+    fallback-to-system-locale: true
   main:
     allow-bean-definition-overriding: true
 

@@ -1,7 +1,7 @@
 package cn.hfstorm.aiera.ai.core.provider.build;
 
 import cn.hfstorm.aiera.ai.biz.entity.AigcModel;
-import cn.hfstorm.aiera.ai.core.constants.ProviderEnum;
+import cn.hfstorm.aiera.ai.core.enums.ProviderEnum;
 import cn.hfstorm.aiera.common.core.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -51,7 +51,8 @@ public class OllamaModelBuildHandler implements ModelBuildHandler {
 
             // 构造ollama 模型
             OllamaApi ollamaApi = new OllamaApi(model.getBaseUrl());
-            OllamaOptions ollamaOptions = OllamaOptions.builder().model(model.getModel())
+            OllamaOptions ollamaOptions = OllamaOptions.builder()
+                    .model(model.getModel())
                     .temperature(model.getTemperature())
                     .build();
 

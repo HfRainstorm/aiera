@@ -2,6 +2,8 @@ package cn.hfstorm.aiera.server.service;
 
 import cn.hfstorm.aiera.common.ai.entity.ChatRequest;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.model.ChatResponse;
+import reactor.core.publisher.Flux;
 
 /**
  * @author : hmy
@@ -11,7 +13,7 @@ public interface ChatService {
 
 
 
-    ChatClient.StreamResponseSpec chat(ChatRequest.ChatCompletionRequest req);
+    Flux<ChatResponse> chat(ChatRequest.ChatCompletionRequest req);
 
-    ChatClient.StreamResponseSpec singleChat(ChatRequest.ChatCompletionRequest req);
+    Flux<String> singleChat(ChatRequest.ChatCompletionRequest req);
 }

@@ -2,6 +2,7 @@ package cn.hfstorm.aiera.common.ai.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.model.ModelOptionsUtils;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
@@ -78,23 +79,24 @@ public class ChatRequest {
     /**
      * Chat completion request object.
      *
-     * @param modelName   所要调用的模型编码
-     * @param messages    调用语言模型时，将当前对话信息列表作为提示输入给模型， 按照 {"role": "user", "content": "你好"} 的json 数组形式进行传参； 可能的消息类型包括
-     *                    System message、User message、Assistant message 和 Tool message。
-     * @param chatId      由用户端传参，需保证唯一性；用于区分每次请求的唯一标识，用户端不传时平台会默认生成。
-     * @param modelId     用户配置的模型id
-     * @param doSample    do_sample 为 true 时启用采样策略，do_sample 为 false 时采样策略 temperature、top_p 将不生效。默认值为 true。
-     * @param stream      使用同步调用时，此参数应当设置为 fasle 或者省略。表示模型生成完所有内容后一次性返回所有内容。默认值为 false。
-     *                    如果设置为 true，模型将通过标准 Event Stream ，逐块返回模型生成内容。Event Stream 结束时会返回一条data: [DONE]消息。
-     * @param temperature 采样温度，控制输出的随机性，必须为正数     *
-     *                    取值范围是：(0.0,1.0]，不能等于 0，默认值为 0.95,值越大，会使输出更随机，更具创造性；值越小，输出会更加稳定或确定
-     *                    建议您根据应用场景调整 top_p 或 temperature 参数，但不要同时调整两个参数
-     * @param topP        用温度取样的另一种方法，称为核取样
-     *                    取值范围是：(0.0, 1.0) 开区间，不能等于 0 或 1，默认值为 0.7
-     *                    模型考虑具有 top_p 概率质量tokens的结果
-     *                    例如：0.1 意味着模型解码器只考虑从前 10% 的概率的候选集中取tokens
-     *                    建议您根据应用场景调整 top_p 或 temperature 参数，但不要同时调整两个参数
-     * @param maxTokens   模型输出最大 tokens，最大输出为8192，默认值为1024
+     * @param modelName      所要调用的模型编码
+     * @param messages       调用语言模型时，将当前对话信息列表作为提示输入给模型， 按照 {"role": "user", "content": "你好"} 的json 数组形式进行传参； 可能的消息类型包括
+     *                       System message、User message、Assistant message 和 Tool message。
+     * @param chatId         由用户端传参，需保证唯一性；用于区分每次请求的唯一标识，用户端不传时平台会默认生成。
+     * @param modelId        用户配置的模型id
+     * @param conversationId 用户配置的对话id
+     * @param doSample       do_sample 为 true 时启用采样策略，do_sample 为 false 时采样策略 temperature、top_p 将不生效。默认值为 true。
+     * @param stream         使用同步调用时，此参数应当设置为 fasle 或者省略。表示模型生成完所有内容后一次性返回所有内容。默认值为 false。
+     *                       如果设置为 true，模型将通过标准 Event Stream ，逐块返回模型生成内容。Event Stream 结束时会返回一条data: [DONE]消息。
+     * @param temperature    采样温度，控制输出的随机性，必须为正数     *
+     *                       取值范围是：(0.0,1.0]，不能等于 0，默认值为 0.95,值越大，会使输出更随机，更具创造性；值越小，输出会更加稳定或确定
+     *                       建议您根据应用场景调整 top_p 或 temperature 参数，但不要同时调整两个参数
+     * @param topP           用温度取样的另一种方法，称为核取样
+     *                       取值范围是：(0.0, 1.0) 开区间，不能等于 0 或 1，默认值为 0.7
+     *                       模型考虑具有 top_p 概率质量tokens的结果
+     *                       例如：0.1 意味着模型解码器只考虑从前 10% 的概率的候选集中取tokens
+     *                       建议您根据应用场景调整 top_p 或 temperature 参数，但不要同时调整两个参数
+     * @param maxTokens      模型输出最大 tokens，最大输出为8192，默认值为1024
      * @param stop
      * @param tools
      * @param toolChoice
@@ -103,6 +105,7 @@ public class ChatRequest {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public record ChatCompletionRequest(@JsonProperty("chat_id") String chatId,
                                         @JsonProperty("model_id") String modelId,
+                                        @JsonProperty("conversation_id") String conversationId,
                                         @JsonProperty("model_name") String modelName,
                                         @JsonProperty("messages") List<ChatCompletionMessage> messages,
                                         @JsonProperty("do_sample") Boolean doSample,
@@ -124,9 +127,11 @@ public class ChatRequest {
          * @param messages    A list of messages comprising the conversation so far.
          * @param temperature What sampling temperature to use, between 0 and 1.
          */
-        public ChatCompletionRequest(String requestId, String modelId, String modelName,
+        public ChatCompletionRequest(String requestId, String modelId, String conversationId, String modelName,
                                      List<ChatCompletionMessage> messages, Double temperature) {
-            this(requestId, modelId, modelName, messages, null, null, temperature, null, null, null, null, null, null);
+            this(requestId, modelId, conversationId, modelName, messages, null, null, temperature, null, null, null,
+                    null, null,
+                    null);
         }
 
         /**
@@ -142,9 +147,10 @@ public class ChatRequest {
          *                    server-sent events
          *                    as they become available, with the stream terminated by a data: [DONE] message.
          */
-        public ChatCompletionRequest(String requestId, String modelId, String modelName,
+        public ChatCompletionRequest(String requestId, String modelId, String conversationId, String modelName,
                                      List<ChatCompletionMessage> messages, Double temperature, boolean stream) {
-            this(requestId, modelId, modelName, messages, null, stream, temperature, null, null, null, null, null,
+            this(requestId, modelId, conversationId, modelName, messages, null, stream, temperature, null, null, null
+                    , null, null,
                     null);
         }
 
@@ -159,10 +165,11 @@ public class ChatRequest {
          * @param tools      A list of tools the modelName may call. Currently, only functions are supported as a tool.
          * @param toolChoice Controls which (if any) function is called by the modelName.
          */
-        public ChatCompletionRequest(String requestId, String modelId, String modelName,
+        public ChatCompletionRequest(String requestId, String modelId, String conversationId, String modelName,
                                      List<ChatCompletionMessage> messages,
                                      List<FunctionTool> tools, String toolChoice) {
-            this(requestId, modelId, modelName, messages, null, false, 0.95d, null, null, null, tools, toolChoice,
+            this(requestId, modelId, conversationId, modelName, messages, null, false, 0.95d, null, null, null, tools,
+                    toolChoice,
                     null);
         }
 
@@ -177,7 +184,7 @@ public class ChatRequest {
          *                  as they become available, with the stream terminated by a data: [DONE] message.
          */
         public ChatCompletionRequest(String requestId, List<ChatCompletionMessage> messages, Boolean stream) {
-            this(requestId, null, null, messages, null, stream, null, null, null, null, null, null, null);
+            this(requestId, null, null, null, messages, null, stream, null, null, null, null, null, null, null);
         }
 
         /**

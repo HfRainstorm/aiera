@@ -1,4 +1,4 @@
-package cn.hfstorm.aiera.ai.core.constants;
+package cn.hfstorm.aiera.ai.core.enums;
 
 import lombok.Getter;
 
