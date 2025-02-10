@@ -1,5 +1,7 @@
 package cn.hfstorm.aiera.server.api;
 
+import cn.hfstorm.aiera.common.ai.annotation.ValidChatMessage;
+import cn.hfstorm.aiera.common.ai.constants.ChatRespConstant;
 import cn.hfstorm.aiera.common.ai.entity.ChatRequest;
 import cn.hfstorm.aiera.server.service.ChatService;
 import lombok.AllArgsConstructor;
@@ -31,12 +33,10 @@ public class ApiChatEndpoint {
         return Map.of("generation", message);
     }
 
+    @ValidChatMessage
     @PostMapping("/chat/completions")
     public Flux<String> chatCompletions(@RequestBody ChatRequest.ChatCompletionRequest chatRequest) {
-
-//        return chatService.chat(chatRequest).content();
-        chatService.chat(chatRequest);
-        return null;
+        return chatService.chat(chatRequest).content().concatWith(Flux.just(ChatRespConstant.CONTENT_CONCAT_END_WITH));
     }
 
 }
