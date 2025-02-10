@@ -9,11 +9,33 @@ import lombok.Getter;
 @Getter
 public enum ModelTypeEnum {
 
+    /**
+     * 聊天模型
+     */
     CHAT,
 
+    /**
+     * 嵌入模型
+     */
     EMBEDDING,
 
+    /**
+     * 图像模型
+     */
     TEXT_IMAGE,
 
-    WEB_SEARCH;
+    /**
+     * 搜索模型
+     */
+    WEB_SEARCH,
+
+    /**
+     * 音频模型
+     */
+    AUDIO,
+
+    /**
+     * 审核模型
+     */
+    MODERATION;
 }
