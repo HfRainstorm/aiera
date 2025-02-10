@@ -2,11 +2,14 @@ package cn.hfstorm.aiera.ai.core.provider.build;
 
 import cn.hfstorm.aiera.ai.biz.entity.AigcModel;
 import cn.hfstorm.aiera.ai.core.constants.ProviderEnum;
-import cn.hfstorm.aiera.common.ai.enums.ChatErrorEnum;
 import cn.hfstorm.aiera.common.core.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.ai.autoconfigure.ollama.OllamaConnectionProperties;
 import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.ollama.OllamaChatModel;
+import org.springframework.ai.ollama.api.OllamaApi;
+import org.springframework.ai.ollama.api.OllamaOptions;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,6 +21,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class OllamaModelBuildHandler implements ModelBuildHandler {
 
+    OllamaConnectionProperties ollamaConnectionProperties;
+
     @Override
     public boolean whetherCurrentModel(AigcModel model) {
         return ProviderEnum.OLLAMA.name().equals(model.getProvider());
@@ -26,9 +31,10 @@ public class OllamaModelBuildHandler implements ModelBuildHandler {
     @Override
     public boolean basicCheck(AigcModel model) {
         if (StringUtils.isBlank(model.getBaseUrl())) {
+            model.setBaseUrl(ollamaConnectionProperties.getBaseUrl());
             // change default base url
-            throw new ServiceException(ChatErrorEnum.BASE_URL_IS_NULL.getErrorCode(),
-                    ChatErrorEnum.BASE_URL_IS_NULL.getErrorDesc(ProviderEnum.OLLAMA.name(), model.getType()));
+//            throw new ServiceException(ChatErrorEnum.BASE_URL_IS_NULL.getErrorCode(),
+//                    ChatErrorEnum.BASE_URL_IS_NULL.getErrorDesc(ProviderEnum.OLLAMA.name(), model.getType()));
         }
         return true;
     }
@@ -42,16 +48,14 @@ public class OllamaModelBuildHandler implements ModelBuildHandler {
             if (!basicCheck(model)) {
                 return null;
             }
-//            return OllamaStreamingChatModel
-//                    .builder()
-//                    .baseUrl(model.getBaseUrl())
-//                    .modelName(model.getModel())
-//                    .temperature(model.getTemperature())
-//                    .topP(model.getTopP())
-//                    .logRequests(true)
-//                    .logResponses(true)
-//                    .build();
-            return null;
+
+            // 构造ollama 模型
+            OllamaApi ollamaApi = new OllamaApi(model.getBaseUrl());
+            OllamaOptions ollamaOptions = OllamaOptions.builder().model(model.getModel())
+                    .temperature(model.getTemperature())
+                    .build();
+
+            return OllamaChatModel.builder().ollamaApi(ollamaApi).defaultOptions(ollamaOptions).build();
         } catch (ServiceException e) {
             log.error(e.getMessage());
             throw e;
