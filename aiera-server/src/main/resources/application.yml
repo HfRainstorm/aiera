@@ -2,6 +2,12 @@ server:
   tomcat:
     uri-encoding: utf-8
 
+project:
+  version: @project.version@
+  url: @app.url@
+
+
+
 spring:
   # 应用名称
   application:
@@ -40,9 +46,15 @@ mybatis-plus:
   global-config:
     banner: false
 
+#logging:
+#  level:
+#    dev:
+#      ai4j:
+#        openai4j: DEBUG
 
-logging:
-  level:
-    dev:
-      ai4j:
-        openai4j: DEBUG
+# swagger配置 访问地址http://localhost:8100/swagger-ui/index.html
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html

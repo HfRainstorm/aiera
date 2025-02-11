@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <name>aiera</name>
-    <url>https://github.com/HfRainstorm/aiera.git</url>
+    <url>https://github.com/HfRainstorm/aiera</url>
 
 
     <modules>
@@ -20,6 +20,7 @@
     </modules>
 
     <properties>
+        <app.url>https://github.com/HfRainstorm/aiera</app.url>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -76,4 +77,28 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
