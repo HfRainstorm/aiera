@@ -7,7 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.ai.autoconfigure.ollama.OllamaConnectionProperties;
 import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.ollama.OllamaChatModel;
+import org.springframework.ai.ollama.OllamaEmbeddingModel;
 import org.springframework.ai.ollama.api.OllamaApi;
 import org.springframework.ai.ollama.api.OllamaOptions;
 import org.springframework.stereotype.Component;
@@ -22,6 +24,8 @@ import org.springframework.stereotype.Component;
 public class OllamaModelBuildHandler implements ModelBuildHandler {
 
     OllamaConnectionProperties ollamaConnectionProperties;
+
+    OllamaEmbeddingModel ollamaEmbeddingModel;
 
     @Override
     public boolean whetherCurrentModel(AigcModel model) {
@@ -40,7 +44,7 @@ public class OllamaModelBuildHandler implements ModelBuildHandler {
     }
 
     @Override
-    public ChatModel buildStreamingChat(AigcModel model) {
+    public ChatModel doBuildStreamingChat(AigcModel model) {
         try {
             if (!whetherCurrentModel(model)) {
                 return null;
@@ -64,5 +68,10 @@ public class OllamaModelBuildHandler implements ModelBuildHandler {
             log.error("Ollama streaming chat 配置报错", e);
             return null;
         }
+    }
+
+    @Override
+    public EmbeddingModel doBuildEmbedding(AigcModel model) {
+        return ollamaEmbeddingModel;
     }
 }

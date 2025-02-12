@@ -1,8 +1,8 @@
-package cn.hfstorm.aiera.server.api;
+package cn.hfstorm.aiera.ai.web.api;
 
 import cn.hfstorm.aiera.common.ai.annotation.ValidChatMessage;
 import cn.hfstorm.aiera.common.ai.entity.ChatRequest;
-import cn.hfstorm.aiera.server.service.ChatService;
+import cn.hfstorm.aiera.ai.core.service.ChatService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -18,7 +18,7 @@ import java.util.Map;
 
 /**
  * @author : hmy
- * @date : 2025/2/7 17:20
+ * @since : 2025/2/7 17:20
  */
 @Slf4j
 @RequestMapping("/v1")

@@ -1,7 +1,10 @@
 package cn.hfstorm.aiera.ai.core.provider.build;
 
 import cn.hfstorm.aiera.ai.biz.entity.AigcModel;
+import cn.hfstorm.aiera.common.ai.exception.ChatException;
+import cn.hfstorm.aiera.common.core.exception.ServiceException;
 import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.embedding.EmbeddingModel;
 
 
 /**
@@ -26,7 +29,40 @@ public interface ModelBuildHandler {
     /**
      * streaming chat build
      */
-    ChatModel buildStreamingChat(AigcModel model);
+    ChatModel doBuildStreamingChat(AigcModel model);
+
+    default ChatModel buildStreamingChat(AigcModel model) {
+        try {
+            if (!whetherCurrentModel(model)) {
+                return null;
+            }
+            if (!basicCheck(model)) {
+                return null;
+            }
+            return doBuildStreamingChat(model);
+        } catch (ServiceException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new ChatException("build ai model exception", e);
+        }
+    }
+
+    EmbeddingModel doBuildEmbedding(AigcModel model);
+    default EmbeddingModel buildEmbedding(AigcModel model) {
+        try {
+            if (!whetherCurrentModel(model)) {
+                return null;
+            }
+            if (!basicCheck(model)) {
+                return null;
+            }
+            return doBuildEmbedding(model);
+        } catch (ServiceException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new ChatException("build ai model exception", e);
+        }
+    }
 
 
 }

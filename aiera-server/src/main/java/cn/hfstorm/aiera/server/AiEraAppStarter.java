@@ -1,9 +1,9 @@
 package cn.hfstorm.aiera.server;
 
+import com.alibaba.druid.spring.boot3.autoconfigure.DruidDataSourceAutoConfigure;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 
@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * @date : 2025/2/7 16:54
  */
 @EnableAsync
-@SpringBootApplication
+@SpringBootApplication(exclude = DruidDataSourceAutoConfigure.class)
 @ComponentScan(basePackages = "cn.hfstorm.aiera")
 @MapperScan("cn.hfstorm.aiera.*.*.mapper")
 public class AiEraAppStarter {

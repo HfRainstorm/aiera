@@ -33,6 +33,7 @@ spring:
     multipart:
       max-file-size: 200MB
       max-request-size: 200MB
+      location: app/tmp
   mvc:
     async:
       request-timeout: 3600000
@@ -42,15 +43,9 @@ mybatis-plus:
   mapper-locations: classpath:mapper/**/*.xml
   configuration:
     jdbc-type-for-null: null
-  #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  global-config:
-    banner: false
 
-#logging:
-#  level:
-#    dev:
-#      ai4j:
-#        openai4j: DEBUG
+
+
 
 # swagger配置 访问地址http://localhost:8100/swagger-ui/index.html
 springdoc:

@@ -1,4 +1,4 @@
-package cn.hfstorm.aiera.server.controller;
+package cn.hfstorm.aiera.ai.web.controller;
 
 import cn.hfstorm.aiera.ai.biz.entity.AigcModel;
 import cn.hfstorm.aiera.ai.biz.event.ProviderRefreshEvent;
@@ -51,7 +51,7 @@ public class AigcModelController {
     }
 
     @GetMapping("/{id}")
-    public R<AigcModel> findById(@PathVariable String id) {
+    public R<AigcModel> findById(@PathVariable("id") String id) {
         return R.ok(modelService.selectById(id));
     }
 
@@ -90,7 +90,7 @@ public class AigcModelController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "删除模型")
-    public R delete(@PathVariable String id) {
+    public R delete(@PathVariable("id") String id) {
         modelService.removeById(id);
 
         // Delete dynamically registered beans, according to ID

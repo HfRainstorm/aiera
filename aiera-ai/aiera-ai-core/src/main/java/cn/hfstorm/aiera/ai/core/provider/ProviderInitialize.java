@@ -13,6 +13,7 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -37,7 +38,7 @@ public class ProviderInitialize implements ApplicationContextAware {
     private final AigcModelService aigcModelService;
     private final SpringContextHolder contextHolder;
     private List<ModelBuildHandler> modelBuildHandlers;
-    private List<AigcModel> modelStore = new ArrayList<>();
+    private List<AigcModel> modelStore;
 
     @Override
     public void setApplicationContext(ApplicationContext context) throws BeansException {
@@ -64,6 +65,11 @@ public class ProviderInitialize implements ApplicationContextAware {
         modelStore.forEach(i -> log.info("已成功注册模型：{} -- {}， 模型配置：{}", i.getProvider(), i.getType(), i));
     }
 
+    /**
+     * 注册chat 模型
+     *
+     * @param model
+     */
     private void chatHandler(AigcModel model) {
         try {
             String type = model.getType();
@@ -98,19 +104,24 @@ public class ProviderInitialize implements ApplicationContextAware {
         }
     }
 
+    /**
+     * 注册embedding 模型
+     *
+     * @param model
+     */
     private void embeddingHandler(AigcModel model) {
         try {
             String type = model.getType();
             if (!ModelTypeEnum.EMBEDDING.name().equals(type)) {
                 return;
             }
-//            modelBuildHandlers.forEach(x -> {
-//                EmbeddingModel embeddingModel = x.buildEmbedding(model);
-//                if (ObjectUtil.isNotEmpty(embeddingModel)) {
-//                    contextHolder.registerBean(model.getId(), embeddingModel);
-//                    modelStore.add(model);
-//                }
-//            });
+            modelBuildHandlers.forEach(x -> {
+                EmbeddingModel embeddingModel = x.buildEmbedding(model);
+                if (ObjectUtil.isNotEmpty(embeddingModel)) {
+                    contextHolder.registerBean(model.getId(), embeddingModel);
+                    modelStore.add(model);
+                }
+            });
 
         } catch (Exception e) {
             log.error("model 【id{} name{}】 embedding 配置报错", model.getId(), model.getName());

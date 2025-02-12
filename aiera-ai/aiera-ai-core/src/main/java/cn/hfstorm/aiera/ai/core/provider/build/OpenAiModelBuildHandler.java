@@ -7,6 +7,7 @@ import cn.hfstorm.aiera.common.core.exception.ServiceException;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.stereotype.Component;
 
 /**
@@ -43,7 +44,7 @@ public class OpenAiModelBuildHandler implements ModelBuildHandler {
     }
 
     @Override
-    public ChatModel buildStreamingChat(AigcModel model) {
+    public ChatModel doBuildStreamingChat(AigcModel model) {
         try {
             if (!whetherCurrentModel(model)) {
                 return null;
@@ -70,5 +71,10 @@ public class OpenAiModelBuildHandler implements ModelBuildHandler {
             log.error(model.getProvider() + " Streaming Chat 模型配置报错", e);
             return null;
         }
+    }
+
+    @Override
+    public EmbeddingModel doBuildEmbedding(AigcModel model) {
+        return null;
     }
 }

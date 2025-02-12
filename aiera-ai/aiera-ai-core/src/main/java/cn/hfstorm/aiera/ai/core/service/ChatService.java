@@ -1,4 +1,4 @@
-package cn.hfstorm.aiera.server.service;
+package cn.hfstorm.aiera.ai.core.service;
 
 import cn.hfstorm.aiera.common.ai.entity.ChatRequest;
 import org.springframework.ai.chat.client.ChatClient;
