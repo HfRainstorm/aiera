@@ -25,6 +25,7 @@
         <module>aiera-common-redis</module>
         <module>aiera-common-satoken</module>
         <module>aiera-common-security</module>
+        <module>aiera-common-ai</module>
     </modules>
 
 </project>

@@ -65,6 +65,7 @@ IDE(JAVA)： IDEA
 │   ├─aiera-modules （业务模块）
 │   │   ├─aiera-file （文件业务模块）
 │   │   └─aiera-system（系统业务模块：例如各种管理）
+│   │   └─aiera-ai（ai模块 端口默认14660）
 
 
 ```

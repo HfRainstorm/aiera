@@ -1,0 +1,98 @@
+package cn.hfstorm.aiera.common.ai.provider.build;
+
+import cn.hfstorm.aiera.common.ai.domain.AigcModel;
+import cn.hfstorm.aiera.common.ai.enums.ProviderEnum;
+import cn.hfstorm.aiera.common.core.exception.ServiceException;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.ai.autoconfigure.ollama.OllamaConnectionProperties;
+import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.embedding.EmbeddingModel;
+import org.springframework.ai.image.ImageModel;
+import org.springframework.ai.ollama.OllamaChatModel;
+import org.springframework.ai.ollama.OllamaEmbeddingModel;
+import org.springframework.ai.ollama.api.OllamaApi;
+import org.springframework.ai.ollama.api.OllamaOptions;
+import org.springframework.stereotype.Component;
+
+/**
+ * @author : hmy
+ * @date : 2025/2/8 10:33
+ */
+
+@Slf4j
+@Component
+public class OllamaModelBuildHandler implements ModelBuildHandler {
+
+    OllamaConnectionProperties ollamaConnectionProperties;
+
+    OllamaEmbeddingModel ollamaEmbeddingModel;
+
+    @Override
+    public boolean whetherCurrentModel(AigcModel model) {
+        return ProviderEnum.OLLAMA.name().equals(model.getProvider());
+    }
+
+    @Override
+    public boolean basicCheck(AigcModel model) {
+        if (StringUtils.isBlank(model.getBaseUrl())) {
+            model.setBaseUrl(ollamaConnectionProperties.getBaseUrl());
+            // change default base url
+//            throw new ServiceException(ChatErrorEnum.BASE_URL_IS_NULL.getErrorCode(),
+//                    ChatErrorEnum.BASE_URL_IS_NULL.getErrorDesc(ProviderEnum.OLLAMA.name(), model.getType()));
+        }
+        return true;
+    }
+
+    @Override
+    public ChatModel buildStreamingChat(AigcModel model) {
+        return null;
+    }
+
+    @Override
+    public ChatModel buildChatLanguageModel(AigcModel model) {
+        return null;
+    }
+
+    @Override
+    public EmbeddingModel buildEmbedding(AigcModel model) {
+        return null;
+    }
+
+    @Override
+    public ImageModel buildImage(AigcModel model) {
+        return null;
+    }
+
+    @Override
+    public ChatModel doBuildStreamingChat(AigcModel model) {
+        try {
+            if (!whetherCurrentModel(model)) {
+                return null;
+            }
+            if (!basicCheck(model)) {
+                return null;
+            }
+
+            // 构造ollama 模型
+            OllamaApi ollamaApi = new OllamaApi(model.getBaseUrl());
+            OllamaOptions ollamaOptions = OllamaOptions.builder()
+                    .model(model.getModel())
+                    .temperature(model.getTemperature())
+                    .build();
+
+            return OllamaChatModel.builder().ollamaApi(ollamaApi).defaultOptions(ollamaOptions).build();
+        } catch (ServiceException e) {
+            log.error(e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            log.error("Ollama streaming chat 配置报错", e);
+            return null;
+        }
+    }
+
+    @Override
+    public EmbeddingModel doBuildEmbedding(AigcModel model) {
+        return ollamaEmbeddingModel;
+    }
+}
