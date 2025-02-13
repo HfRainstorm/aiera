@@ -1,1 +1,0 @@
-{"doc":" XSS跨站脚本配置\n\n @author hmy\n","fields":[{"name":"enabled","doc":" Xss开关\n"},{"name":"excludeUrls","doc":" 排除路径\n"}],"enumConstants":[],"methods":[],"constructors":[]}

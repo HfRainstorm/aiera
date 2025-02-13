@@ -1,1 +1,0 @@
-{"doc":" 用户登录对象\n\n @author hmy\n","fields":[{"name":"grantType","doc":" 授权类型\n"},{"name":"code","doc":" 验证码\n"},{"name":"uuid","doc":" 唯一标识\n"}],"enumConstants":[],"methods":[],"constructors":[]}

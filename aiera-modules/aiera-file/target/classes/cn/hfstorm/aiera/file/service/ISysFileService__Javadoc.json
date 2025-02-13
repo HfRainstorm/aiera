@@ -1,1 +1,0 @@
-{"doc":" 文件上传接口\n\n @author melorogee\n","fields":[],"enumConstants":[],"methods":[{"name":"uploadFile","paramTypes":["org.springframework.web.multipart.MultipartFile"],"doc":" 文件上传接口\n\n @param file 上传的文件\n @return 访问地址\n @throws Exception\n"},{"name":"delete","paramTypes":["java.lang.String"],"doc":" 文件删除\n\n @param path 文件路径，包含文件名\n"}],"constructors":[]}

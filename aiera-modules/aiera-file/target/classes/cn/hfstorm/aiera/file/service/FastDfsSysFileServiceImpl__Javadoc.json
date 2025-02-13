@@ -1,1 +1,0 @@
-{"doc":" FastDFS 文件存储\n\n @author melorogee\n","fields":[{"name":"domain","doc":" 域名或本机访问地址\n"}],"enumConstants":[],"methods":[{"name":"uploadFile","paramTypes":["org.springframework.web.multipart.MultipartFile"],"doc":" FastDfs文件上传接口\n\n @param file 上传的文件\n @return 访问地址\n @throws Exception\n"}],"constructors":[]}

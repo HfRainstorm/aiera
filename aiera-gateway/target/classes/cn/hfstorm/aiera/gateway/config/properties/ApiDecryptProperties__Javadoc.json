@@ -1,1 +1,0 @@
-{"doc":" api解密属性配置类\n\n @author hmy\n","fields":[{"name":"enabled","doc":" 加密开关\n"},{"name":"headerFlag","doc":" 头部标识\n"}],"enumConstants":[],"methods":[],"constructors":[]}

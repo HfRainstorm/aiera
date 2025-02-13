@@ -1,1 +1,0 @@
-{"doc":" 日志服务\n\n @author hmy\n","fields":[],"enumConstants":[],"methods":[{"name":"saveLog","paramTypes":["cn.hfstorm.aiera.system.api.domain.bo.RemoteOperLogBo"],"doc":" 保存系统日志\n\n @param sysOperLog 日志实体\n"},{"name":"saveLogininfor","paramTypes":["cn.hfstorm.aiera.system.api.domain.bo.RemoteLogininforBo"],"doc":" 保存访问记录\n\n @param sysLogininfor 访问实体\n"}],"constructors":[]}

@@ -1,1 +1,0 @@
-{"doc":" 配置服务\n\n @author hmy\n","fields":[],"enumConstants":[],"methods":[{"name":"selectRegisterEnabled","paramTypes":[],"doc":" 获取注册开关\n\n @return true开启，false关闭\n"}],"constructors":[]}

@@ -1,1 +1,0 @@
-{"doc":" 通用映射配置\n\n @author melorogee\n","fields":[{"name":"localFilePath","doc":" 上传文件存储在本地的根路径\n"},{"name":"localFilePrefix","doc":" 资源映射路径 前缀\n"}],"enumConstants":[],"methods":[{"name":"addCorsMappings","paramTypes":["org.springframework.web.servlet.config.annotation.CorsRegistry"],"doc":" 开启跨域\n"}],"constructors":[]}

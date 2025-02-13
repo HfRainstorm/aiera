@@ -1,5 +1,0 @@
-cn.hfstorm.aiera.common.core.utils.SpringUtils
-cn.hfstorm.aiera.common.core.config.ApplicationConfig
-cn.hfstorm.aiera.common.core.config.ValidatorConfig
-cn.hfstorm.aiera.common.core.config.AsyncConfig
-cn.hfstorm.aiera.common.core.config.JacksonConfig
