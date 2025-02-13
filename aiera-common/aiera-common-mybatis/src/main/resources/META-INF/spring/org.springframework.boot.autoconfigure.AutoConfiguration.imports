@@ -1,0 +1,3 @@
+cn.hfstorm.aiera.common.mybatis.config.MybatisPlusConfiguration
+cn.hfstorm.aiera.common.mybatis.handler.MybatisExceptionHandler
+cn.hfstorm.aiera.common.mybatis.service.SysDataScopeService

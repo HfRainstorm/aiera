@@ -1,0 +1,1 @@
+{"doc":" Minio 配置信息\n\n @author melorogee\n","fields":[{"name":"inUrl","doc":" 内部服务地址\n"},{"name":"outUrl","doc":" 外部服务地址\n"},{"name":"accessKey","doc":" 用户名\n"},{"name":"secretKey","doc":" 密码\n"},{"name":"bucketName","doc":" 存储桶名称\n"}],"enumConstants":[],"methods":[],"constructors":[]}

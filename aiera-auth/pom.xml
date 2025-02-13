@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>cn.hfstorm</groupId>
+        <artifactId>aiera</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>aiera-auth</artifactId>
+    <description>
+        aiera-auth 认证授权中心
+    </description>
+
+    <dependencies>
+
+        <!-- SpringCloud Alibaba Nacos -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
+        <!-- SpringCloud Alibaba Nacos Config -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-captcha</artifactId>
+        </dependency>
+
+        <!-- aiera Common Security-->
+        <dependency>
+            <groupId>cn.hfstorm</groupId>
+            <artifactId>aiera-common-security</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <!-- aiera Common Log -->
+        <dependency>
+            <groupId>cn.hfstorm</groupId>
+            <artifactId>aiera-common-log</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hfstorm</groupId>
+            <artifactId>aiera-common-doc</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hfstorm</groupId>
+            <artifactId>aiera-common-encrypt</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

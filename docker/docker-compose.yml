@@ -3,28 +3,35 @@ services:
   pgvector:
     image: docker.m.daocloud.io/pgvector/pgvector:0.7.2-pg16
     ports:
-     - 5432:5432
+      - 5432:5432
     restart: always
     environment:
       - POSTGRES_DB=aiera
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - ./pgdata:/var/lib/postgresql/data
+      - ../data/pgdata:/var/lib/postgresql/data
 
-  mysql:
-    image: mysql:8.0
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: aiera
-    ports:
-      - 3306:3306
-    volumes:
-      - ./db_data:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-
+#  mysql:
+#    container_name: mysql
+#    build:
+#      context: .
+#      dockerfile: mysql/Dockerfile
+#    env_file:
+#      - ../env/mysql.env
+#    ports:
+#      - 3306:3306
+#    volumes:
+#      - ../data/mysql/data:/var/lib/mysql
+#      - ./mysql/init:/docker-entrypoint-initdb.d/
+#      - ./mysql/sql:/opt/sql
+#    restart: always
+#    healthcheck:
+#      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+#      interval: 5s
+#      timeout: 10s
+#      retries: 10
+  # redis
   redis:
     image: redis:latest
     container_name: redis-server
@@ -33,6 +40,41 @@ services:
     environment:
       - REDIS_PASSWORD=123456
     volumes:
-      - ./redis_data:/data
+      - ../data/redis_data:/data
     command: "redis-server --bind 0.0.0.0 --appendonly yes --requirepass 123456"
     restart: always
+
+  nacos:
+    image: nacos/nacos-server:v2.5.0
+    container_name: nacos-standalone-mysql
+    env_file:
+      - ../env/nacos-standalone-mysql.env
+    volumes:
+      - ./standalone-logs/:/home/nacos/logs
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: always
+  mysql:
+    container_name: mysql
+    build:
+      context: .
+      dockerfile: ./mysql/Dockerfile
+    image: mysql:8.0
+    env_file:
+      - ../env/mysql.env
+    volumes:
+      - ../data/mysql/data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d/
+      - ./mysql/sql:/opt/sql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+#    restart: always

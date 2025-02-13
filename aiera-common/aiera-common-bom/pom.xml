@@ -17,47 +17,84 @@
 
         <!-- Modules version -->
         <dependencies>
+            <!-- 核心模块 -->
             <dependency>
                 <groupId>cn.hfstorm</groupId>
                 <artifactId>aiera-common-core</artifactId>
                 <version>${revision}</version>
             </dependency>
+
+            <!-- 缓存服务 -->
             <dependency>
                 <groupId>cn.hfstorm</groupId>
-                <artifactId>aiera-common-ai</artifactId>
+                <artifactId>aiera-common-redis</artifactId>
                 <version>${revision}</version>
             </dependency>
+
+            <!-- 系统接口 -->
             <dependency>
                 <groupId>cn.hfstorm</groupId>
-                <artifactId>aiera-ai-biz</artifactId>
+                <artifactId>aiera-api-system</artifactId>
                 <version>${revision}</version>
             </dependency>
+
             <dependency>
                 <groupId>cn.hfstorm</groupId>
-                <artifactId>aiera-ai-core</artifactId>
+                <artifactId>aiera-common-satoken</artifactId>
                 <version>${revision}</version>
             </dependency>
+
+            <dependency>
+                <groupId>cn.hfstorm</groupId>
+                <artifactId>aiera-common-security</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hfstorm</groupId>
+                <artifactId>aiera-common-log</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hfstorm</groupId>
+                <artifactId>aiera-common-doc</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hfstorm</groupId>
+                <artifactId>aiera-common-mybatis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hfstorm</groupId>
+                <artifactId>aiera-common-excel</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>cn.hfstorm</groupId>
+                <artifactId>aiera-common-mail</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hfstorm</groupId>
+                <artifactId>aiera-common-job</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hfstorm</groupId>
+                <artifactId>aiera-common-encrypt</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
 
-    <!--    <dependencyManagement>-->
-
-    <!--        <dependencies>-->
-
-    <!--&lt;!&ndash;            <dependency>&ndash;&gt;-->
-    <!--&lt;!&ndash;                <groupId>org.springframework.boot</groupId>&ndash;&gt;-->
-    <!--&lt;!&ndash;                <artifactId>spring-boot-dependencies</artifactId>&ndash;&gt;-->
-    <!--&lt;!&ndash;                <version>${spring-boot.version}</version>&ndash;&gt;-->
-    <!--&lt;!&ndash;                <type>pom</type>&ndash;&gt;-->
-    <!--&lt;!&ndash;                <scope>import</scope>&ndash;&gt;-->
-    <!--&lt;!&ndash;            </dependency>&ndash;&gt;-->
-
-    <!--&lt;!&ndash;            <dependency>&ndash;&gt;-->
-    <!--&lt;!&ndash;                <groupId>com.mysql</groupId>&ndash;&gt;-->
-    <!--&lt;!&ndash;                <artifactId>mysql-connector-j</artifactId>&ndash;&gt;-->
-    <!--&lt;!&ndash;                <version>${mysql-connector.version}</version>&ndash;&gt;-->
-    <!--&lt;!&ndash;            </dependency>&ndash;&gt;-->
-    <!--        </dependencies>-->
-    <!--    </dependencyManagement>-->
 </project>

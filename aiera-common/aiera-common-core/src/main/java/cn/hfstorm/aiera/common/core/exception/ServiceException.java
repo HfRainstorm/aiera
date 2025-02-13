@@ -1,27 +1,70 @@
 package cn.hfstorm.aiera.common.core.exception;
 
-import lombok.Getter;
-import org.springframework.http.HttpStatus;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 
 /**
- * @author : hmy
- * @date : 2025/2/8 10:33
+ * 业务异常
+ *
+ * @author hmy
  */
-@Getter
-public class ServiceException extends RuntimeException {
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
+public final class ServiceException extends RuntimeException {
 
-    private static final long serialVersionUID = 5217759563277879342L;
+	@Serial
+	private static final long serialVersionUID = 1L;
 
-    private final int code;
+	/**
+	 * 错误码
+	 */
+	private Integer code;
 
-    public ServiceException(String message) {
-        super(message);
-        this.code = HttpStatus.INTERNAL_SERVER_ERROR.value();
-    }
+	/**
+	 * 错误提示
+	 */
+	private String message;
 
-    public ServiceException(int code, String message) {
-        super(message);
-        this.code = code;
-    }
+	/**
+	 * 错误明细，内部调试错误
+	 */
+	private String detailMessage;
+
+	public ServiceException(String message) {
+		this.message = message;
+	}
+
+	public ServiceException(String message, Integer code) {
+		this.message = message;
+		this.code = code;
+	}
+
+	public String getDetailMessage() {
+		return detailMessage;
+	}
+
+	@Override
+	public String getMessage() {
+		return message;
+	}
+
+	public Integer getCode() {
+		return code;
+	}
+
+	public ServiceException setMessage(String message) {
+		this.message = message;
+		return this;
+	}
+
+	public ServiceException setDetailMessage(String detailMessage) {
+		this.detailMessage = detailMessage;
+		return this;
+	}
 }

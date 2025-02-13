@@ -11,10 +11,20 @@
     <artifactId>aiera-common</artifactId>
     <packaging>pom</packaging>
 
+    <description>aiera-common通用模块</description>
+
     <modules>
-        <module>aiera-common-ai</module>
         <module>aiera-common-core</module>
         <module>aiera-common-bom</module>
+        <module>aiera-common-alibaba-bom</module>
+        <module>aiera-common-doc</module>
+        <module>aiera-common-log</module>
+        <module>aiera-common-encrypt</module>
+        <module>aiera-common-excel</module>
+        <module>aiera-common-mybatis</module>
+        <module>aiera-common-redis</module>
+        <module>aiera-common-satoken</module>
+        <module>aiera-common-security</module>
     </modules>
 
 </project>

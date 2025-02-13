@@ -19,15 +19,20 @@ This project repository is under construction. Please read [Roadmap.md](./Roadma
 
 ## Project Structure
 ```text
-|-aiera
-|---aiera-common Common package
-|-----aiera-common-bom Declaration for all modules
-|-----aiera-common-core Public files, declaring exceptions, configurations, and constants
-|-----aiera-common-ai AI-related public configurations
-|---aiera-ai AI module
-|-----aiera-ai-biz AI business logic
-|-----aiera-ai-core AI operation core classes, such as model invocation, prompt generation, etc.
-|---aiera-server AI service startup
+
+├─aiera（父POM： 项目依赖、modules组织）  
+│   ├─aiera-api（远程api入口）  
+│   │   ├─aiera-api-system  
+│   ├─aiera-common（通用模块）  
+│   │   ├─aiera-common-alibaba-bom   
+│   │   ├─aiera-common-bom   
+│   │   ├─aiera-common-core  
+│   │   └─...  
+│   ├─aiera-auth（鉴权模块 端口默认19220）           
+│   ├─aiera-gateway（网关模块 端口默认18888）    
+│   ├─aiera-modules （业务模块）
+│   │   ├─aiera-file （文件业务模块）
+│   │   └─aiera-system（系统业务模块：例如各种管理）
 
 
 ```

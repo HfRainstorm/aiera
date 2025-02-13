@@ -1,0 +1,1 @@
+{"doc":" 文件请求处理\n\n @author melorogee\n","fields":[],"enumConstants":[],"methods":[{"name":"upload","paramTypes":["org.springframework.web.multipart.MultipartFile","java.lang.String"],"doc":" 文件上传请求\n"}],"constructors":[]}

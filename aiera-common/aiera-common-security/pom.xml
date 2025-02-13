@@ -1,0 +1,59 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>cn.hfstorm</groupId>
+        <artifactId>aiera-common</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>aiera-common-security</artifactId>
+
+
+
+    <description>
+        aiera-common-security 安全模块
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>cn.hfstorm</groupId>
+            <artifactId>aiera-common-satoken</artifactId>
+        </dependency>
+
+        <!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-boot3-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-context</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-spring-boot-actuator</artifactId>
+        </dependency>
+
+        <!-- Sa-Token 整合 Dubbo -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-dubbo3</artifactId>
+            <version>${satoken.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.dubbo</groupId>
+                    <artifactId>dubbo</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+    </dependencies>
+</project>

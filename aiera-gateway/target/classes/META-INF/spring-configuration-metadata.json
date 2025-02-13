@@ -1,0 +1,63 @@
+{
+  "groups": [
+    {
+      "name": "api-decrypt",
+      "type": "cn.hfstorm.aiera.gateway.config.properties.ApiDecryptProperties",
+      "sourceType": "cn.hfstorm.aiera.gateway.config.properties.ApiDecryptProperties"
+    },
+    {
+      "name": "security.ignore",
+      "type": "cn.hfstorm.aiera.gateway.config.properties.IgnoreWhiteProperties",
+      "sourceType": "cn.hfstorm.aiera.gateway.config.properties.IgnoreWhiteProperties"
+    },
+    {
+      "name": "security.xss",
+      "type": "cn.hfstorm.aiera.gateway.config.properties.XssProperties",
+      "sourceType": "cn.hfstorm.aiera.gateway.config.properties.XssProperties"
+    },
+    {
+      "name": "spring.cloud.gateway",
+      "type": "cn.hfstorm.aiera.gateway.config.properties.CustomGatewayProperties",
+      "sourceType": "cn.hfstorm.aiera.gateway.config.properties.CustomGatewayProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "api-decrypt.enabled",
+      "type": "java.lang.Boolean",
+      "description": "加密开关",
+      "sourceType": "cn.hfstorm.aiera.gateway.config.properties.ApiDecryptProperties"
+    },
+    {
+      "name": "api-decrypt.header-flag",
+      "type": "java.lang.String",
+      "description": "头部标识",
+      "sourceType": "cn.hfstorm.aiera.gateway.config.properties.ApiDecryptProperties"
+    },
+    {
+      "name": "security.ignore.whites",
+      "type": "java.util.List<java.lang.String>",
+      "description": "放行白名单配置，网关不校验此处的白名单",
+      "sourceType": "cn.hfstorm.aiera.gateway.config.properties.IgnoreWhiteProperties"
+    },
+    {
+      "name": "security.xss.enabled",
+      "type": "java.lang.Boolean",
+      "description": "Xss开关",
+      "sourceType": "cn.hfstorm.aiera.gateway.config.properties.XssProperties"
+    },
+    {
+      "name": "security.xss.exclude-urls",
+      "type": "java.util.List<java.lang.String>",
+      "description": "排除路径",
+      "sourceType": "cn.hfstorm.aiera.gateway.config.properties.XssProperties"
+    },
+    {
+      "name": "spring.cloud.gateway.request-log",
+      "type": "java.lang.Boolean",
+      "description": "请求日志",
+      "sourceType": "cn.hfstorm.aiera.gateway.config.properties.CustomGatewayProperties"
+    }
+  ],
+  "hints": []
+}

@@ -1,0 +1,4 @@
+cn.hfstorm.aiera.common.security.handler.GlobalExceptionHandler
+cn.hfstorm.aiera.common.security.config.SecurityConfiguration
+cn.hfstorm.aiera.common.security.config.DubboConfiguration
+cn.hfstorm.aiera.common.security.web.service.DictServiceImpl

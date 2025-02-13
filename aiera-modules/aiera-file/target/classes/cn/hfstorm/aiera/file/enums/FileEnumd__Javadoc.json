@@ -1,0 +1,1 @@
+{"doc":" 对象存储服务商枚举\n\n @author melorogee\n","fields":[],"enumConstants":[{"name":"LOCAL","doc":" local\n"},{"name":"FASTDFS","doc":" FastDFS\n"},{"name":"MINIO","doc":" minio\n"}],"methods":[],"constructors":[]}

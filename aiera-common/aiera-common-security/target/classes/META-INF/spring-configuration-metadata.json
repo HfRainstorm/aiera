@@ -1,0 +1,22 @@
+{
+  "groups": [
+    {
+      "name": "dubbo.custom",
+      "type": "cn.hfstorm.aiera.common.security.properties.DubboCustomProperties",
+      "sourceType": "cn.hfstorm.aiera.common.security.properties.DubboCustomProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "dubbo.custom.log-level",
+      "type": "cn.hfstorm.aiera.common.security.enumd.RequestLogEnum",
+      "sourceType": "cn.hfstorm.aiera.common.security.properties.DubboCustomProperties"
+    },
+    {
+      "name": "dubbo.custom.request-log",
+      "type": "java.lang.Boolean",
+      "sourceType": "cn.hfstorm.aiera.common.security.properties.DubboCustomProperties"
+    }
+  ],
+  "hints": []
+}
