@@ -1,11 +1,17 @@
-package cn.hfstorm.aiera.common.ai.provider.build;
+package cn.hfstorm.aiera.ai.provider.build;
 
-import cn.hfstorm.aiera.common.ai.domain.AigcModel;
+import cn.hfstorm.aiera.ai.provider.ModelProvider;
+import cn.hfstorm.aiera.common.ai.biz.domain.AigcModel;
+import cn.hfstorm.aiera.common.ai.chat.domain.ChatRequest;
 import cn.hfstorm.aiera.common.ai.enums.ProviderEnum;
 import cn.hfstorm.aiera.common.core.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.ai.autoconfigure.ollama.OllamaConnectionProperties;
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
+import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.image.ImageModel;
@@ -13,6 +19,7 @@ import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.ollama.OllamaEmbeddingModel;
 import org.springframework.ai.ollama.api.OllamaApi;
 import org.springframework.ai.ollama.api.OllamaOptions;
+import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.stereotype.Component;
 
 /**
@@ -27,6 +34,9 @@ public class OllamaModelBuildHandler implements ModelBuildHandler {
     OllamaConnectionProperties ollamaConnectionProperties;
 
     OllamaEmbeddingModel ollamaEmbeddingModel;
+
+    ModelProvider modelProvider;
+
 
     @Override
     public boolean whetherCurrentModel(AigcModel model) {
@@ -46,7 +56,17 @@ public class OllamaModelBuildHandler implements ModelBuildHandler {
 
     @Override
     public ChatModel buildStreamingChat(AigcModel model) {
-        return null;
+        // 构造ollama 模型
+        OllamaApi ollamaApi = new OllamaApi(model.getBaseUrl());
+        OllamaOptions ollamaOptions =
+                OllamaOptions.builder()
+                        .model(model.getModel())
+                        .temperature(model.getTemperature()).build();
+
+        return OllamaChatModel.builder()
+                .ollamaApi(ollamaApi)
+                .defaultOptions(ollamaOptions)
+                .build();
     }
 
     @Override
@@ -67,19 +87,10 @@ public class OllamaModelBuildHandler implements ModelBuildHandler {
     @Override
     public ChatModel doBuildStreamingChat(AigcModel model) {
         try {
-            if (!whetherCurrentModel(model)) {
-                return null;
-            }
-            if (!basicCheck(model)) {
-                return null;
-            }
-
             // 构造ollama 模型
             OllamaApi ollamaApi = new OllamaApi(model.getBaseUrl());
-            OllamaOptions ollamaOptions = OllamaOptions.builder()
-                    .model(model.getModel())
-                    .temperature(model.getTemperature())
-                    .build();
+            OllamaOptions ollamaOptions =
+                    OllamaOptions.builder().model(model.getModel()).temperature(model.getTemperature()).build();
 
             return OllamaChatModel.builder().ollamaApi(ollamaApi).defaultOptions(ollamaOptions).build();
         } catch (ServiceException e) {

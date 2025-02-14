@@ -1,16 +1,23 @@
-package cn.hfstorm.aiera.common.ai.provider.build;
+package cn.hfstorm.aiera.ai.provider.build;
 
-import cn.hfstorm.aiera.common.ai.domain.AigcModel;
+import cn.hfstorm.aiera.common.ai.biz.domain.AigcModel;
+import cn.hfstorm.aiera.common.ai.chat.domain.ChatRequest;
 import cn.hfstorm.aiera.common.ai.exception.ChatException;
 import cn.hfstorm.aiera.common.core.exception.ServiceException;
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
+import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.image.ImageModel;
+import org.springframework.ai.vectorstore.SearchRequest;
+import org.springframework.ai.vectorstore.VectorStore;
 
 /**
  * @author hmy
  */
-public interface ModelBuildHandler {
+public interface ModelBuildHandler extends ChatClientBuilder {
 
     /**
      * 判断是不是当前模型
@@ -21,10 +28,6 @@ public interface ModelBuildHandler {
      * basic check
      */
     boolean basicCheck(AigcModel model);
-
-    /**
-     * streaming chat build
-     */
 
     /**
      * streaming chat build
@@ -45,6 +48,20 @@ public interface ModelBuildHandler {
         } catch (Exception e) {
             throw new ChatException("build ai model exception", e);
         }
+    }
+
+    @Override
+    default ChatClient doBuildChatClient(AigcModel model) {
+        ChatModel chatModel = buildStreamingChat(model);
+        // build chat client
+        return ChatClient.builder(chatModel)
+                .defaultAdvisors(
+                        new MessageChatMemoryAdvisor(
+                                new InMemoryChatMemory())
+//                        ,
+//                        new QuestionAnswerAdvisor(vectorStore,
+//                                new SearchRequest.Builder().query(chatReq.getMessage()).build())
+                ).build();
     }
 
     /**

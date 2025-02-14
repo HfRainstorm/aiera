@@ -7,15 +7,6 @@
 此仓库中包含许多AI相关的产品对接示例。
 更详细的介绍介绍请参阅每个子项目中的 README.md。
 
-## 如何参与
-
-我们欢迎任何形式的贡献，包括但不限于：
-
-- Spring AI 的使用示例；
-- AI 项目的最佳实践 等。
-
-此项目仓库正在建设中，请阅读 [Roadmap.md](./Roadmap-zh.md) 了解更多信息。
-
 ##### 开发环境
 
 语言：Java 17
@@ -39,6 +30,10 @@ IDE(JAVA)： IDEA
 安全框架：sa-token 1.37.0
 
 微服务技术栈：Spring Cloud Alibaba、Nacos、Gateway、Sentinel、Skywalking
+
+ai框架：Spring AI
+
+向量数据库：milvus
 
 数据库连接池：hikari
 
@@ -94,4 +89,16 @@ docker-compose up -d
 
 运行服务AiEraGatewayApplication
 
-**注意**：若访问接口时出现 未获取到 token 等错误，可以先修改cn.hfstorm.aiera.gateway.filter.AuthFilter的拦截路径
+**注意**：若访问接口时出现 未获取到 token 等错误，可以先修改cn.hfstorm.aiera.gateway.filter.AuthFilter或cn.hfstorm.aiera.common.security.config.SecurityConfiguration.getSaServletFilter的拦截路径
+
+若启动时出现nacos未加载配置，可以尝试重新发布一下nacos配置
+![img.png](images/img.png)
+
+## 如何参与
+
+我们欢迎任何形式的贡献，包括但不限于：
+
+- Spring AI 的使用示例；
+- AI 项目的最佳实践 等。
+
+此项目仓库正在建设中，请阅读 [Roadmap.md](./Roadmap-zh.md) 了解更多信息。

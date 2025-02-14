@@ -2,11 +2,11 @@ package cn.hfstorm.aiera.ai.biz.controller.aigc;
 
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.hfstorm.aiera.common.ai.domain.AigcModel;
+import cn.hfstorm.aiera.common.ai.biz.domain.AigcModel;
 import cn.hfstorm.aiera.ai.biz.service.IAigcModelService;
-import cn.hfstorm.aiera.common.ai.event.ProviderRefreshEvent;
+import cn.hfstorm.aiera.ai.event.ModelProviderRefreshEvent;
 import cn.hfstorm.aiera.common.core.domain.R;
-import cn.hfstorm.aiera.common.core.holder.SpringContextHolder;
+import cn.hfstorm.aiera.ai.holder.SpringContextHolder;
 import cn.hfstorm.aiera.common.log.annotation.Log;
 import cn.hfstorm.aiera.common.log.enums.BusinessType;
 import cn.hfstorm.aiera.common.mybatis.core.page.PageQuery;
@@ -58,7 +58,7 @@ public class AigcModelController extends BaseController {
             data.setSecretKey(null);
         }
         modelService.save(data);
-        SpringContextHolder.publishEvent(new ProviderRefreshEvent(data));
+        SpringContextHolder.publishEvent(new ModelProviderRefreshEvent(data));
         return R.ok();
     }
 
@@ -73,7 +73,7 @@ public class AigcModelController extends BaseController {
             data.setSecretKey(null);
         }
         modelService.updateById(data);
-        SpringContextHolder.publishEvent(new ProviderRefreshEvent(data));
+        SpringContextHolder.publishEvent(new ModelProviderRefreshEvent(data));
         return R.ok();
     }
 

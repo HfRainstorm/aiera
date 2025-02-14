@@ -2,17 +2,14 @@ package cn.hfstorm.aiera.ai.provider;
 
 
 import cn.hfstorm.aiera.ai.biz.service.impl.AigcModelService;
-import cn.hfstorm.aiera.common.ai.domain.AigcModel;
+import cn.hfstorm.aiera.ai.holder.SpringContextHolder;
+import cn.hfstorm.aiera.common.ai.biz.domain.AigcModel;
 import cn.hfstorm.aiera.common.ai.enums.ModelTypeEnum;
-import cn.hfstorm.aiera.common.ai.provider.build.ModelBuildHandler;
-import cn.hfstorm.aiera.common.core.holder.SpringContextHolder;
+import cn.hfstorm.aiera.ai.provider.build.ModelBuildHandler;
 import cn.hutool.core.util.ObjectUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatModel;
-import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
-import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -31,15 +28,15 @@ import java.util.Objects;
  * @author : hmy
  * @date : 2025/2/8 10:33
  */
-@Configuration
-@AllArgsConstructor
 @Slf4j
-public class AiProviderInit implements ApplicationContextAware {
+@AllArgsConstructor
+@Configuration
+public class AiModelProviderInitialize implements ApplicationContextAware {
 
     private final AigcModelService aigcModelService;
     private final SpringContextHolder contextHolder;
     private List<ModelBuildHandler> modelBuildHandlers;
-    private List<AigcModel> modelStore;
+    private List<AigcModel> modelStore = new ArrayList<>();
 
     @Override
     public void setApplicationContext(ApplicationContext context) throws BeansException {
@@ -79,21 +76,11 @@ public class AiProviderInit implements ApplicationContextAware {
             }
             modelBuildHandlers.forEach(x -> {
                 ChatModel chatModel = x.buildStreamingChat(model);
+                if (ObjectUtil.isNotEmpty(chatModel)) {
+                    contextHolder.registerBean(model.getId(), chatModel);
 
-                // build chat client
-                ChatClient chatClient = ChatClient.builder(chatModel)
-                        .defaultAdvisors(new MessageChatMemoryAdvisor(new InMemoryChatMemory())).build();
-
-                // model chat relationship
-//                ModelChat modelChat =
-//                        ModelChat.builder().chatClient(chatClient).chatModel(chatModel)
-//                                .aigcModel(model).modelId(model.getId()).modelType(model.getType()).build();
-//
-//                if (ObjectUtil.isNotEmpty(chatModel)) {
-//                    contextHolder.registerBean(model.getId(), modelChat);
-//
-//                    modelStore.add(model);
-//                }
+                    modelStore.add(model);
+                }
 
 //                ChatLanguageModel languageModel = x.buildChatLanguageModel(model);
 //                if (ObjectUtil.isNotEmpty(languageModel)) {

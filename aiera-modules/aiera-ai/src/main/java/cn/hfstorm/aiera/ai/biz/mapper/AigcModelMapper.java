@@ -1,6 +1,6 @@
 package cn.hfstorm.aiera.ai.biz.mapper;
 
-import cn.hfstorm.aiera.common.ai.domain.AigcModel;
+import cn.hfstorm.aiera.common.ai.biz.domain.AigcModel;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

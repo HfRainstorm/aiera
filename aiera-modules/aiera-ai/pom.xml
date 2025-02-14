@@ -11,6 +11,17 @@
 
 
     <dependencies>
+        <!-- SpringCloud Alibaba Nacos -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
+        <!-- SpringCloud Alibaba Nacos Config -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
 
         <!-- Model -->
         <dependency>
@@ -25,6 +36,14 @@
             <groupId>cn.hfstorm</groupId>
             <artifactId>aiera-common-mybatis</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.hfstorm</groupId>
+            <artifactId>aiera-common-satoken</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hfstorm</groupId>
+            <artifactId>aiera-common-security</artifactId>
+        </dependency>
 
         <!-- Spring Ai -->
         <dependency>
@@ -36,6 +55,13 @@
                     <artifactId>spring-ai-core</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <!-- milvus -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-milvus-store-spring-boot-starter</artifactId>
+            <version>${spring-ai.version}</version>
         </dependency>
 
         <!-- spring ai starter 中的ai-core版本有问题，单独引入 -->

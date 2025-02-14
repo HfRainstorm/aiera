@@ -1,4 +1,4 @@
-package cn.hfstorm.aiera.common.core.holder;
+package cn.hfstorm.aiera.ai.holder;
 
 
 import org.springframework.beans.BeansException;
@@ -8,13 +8,14 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * spring context holder
+ *
  * @author hmy
  */
-@Service
+@Component
 public class SpringContextHolder implements ApplicationContextAware {
 
     private static ApplicationContext applicationContext = null;
@@ -39,8 +40,9 @@ public class SpringContextHolder implements ApplicationContextAware {
         BeanDefinitionRegistry beanDefinitionRegistry =
                 (BeanDefinitionRegistry) applicationContext.getAutowireCapableBeanFactory();
 
-        BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder
-                .genericBeanDefinition((Class<Object>) beanInstance.getClass(), () -> beanInstance);
+        BeanDefinitionBuilder beanDefinitionBuilder =
+                BeanDefinitionBuilder.genericBeanDefinition((Class<Object>) beanInstance.getClass(),
+                        () -> beanInstance);
 
         BeanDefinition beanDefinition = beanDefinitionBuilder.getRawBeanDefinition();
 

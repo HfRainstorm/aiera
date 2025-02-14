@@ -1,6 +1,8 @@
 package cn.hfstorm.aiera.common.mybatis.config;
 
+import cn.hfstorm.aiera.common.core.factory.YmlPropertySourceFactory;
 import cn.hfstorm.aiera.common.mybatis.handler.InjectionMetaObjectHandler;
+import cn.hfstorm.aiera.common.mybatis.interceptor.PlusDataPermissionInterceptor;
 import cn.hutool.core.net.NetUtil;
 import com.baomidou.mybatisplus.autoconfigure.DdlApplicationRunner;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration;
@@ -11,8 +13,6 @@ import com.baomidou.mybatisplus.extension.ddl.IDdl;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import cn.hfstorm.aiera.common.core.factory.YmlPropertySourceFactory;
-import cn.hfstorm.aiera.common.mybatis.interceptor.PlusDataPermissionInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -30,7 +30,8 @@ import java.util.List;
 @EnableTransactionManagement(proxyTargetClass = true)
 @AutoConfiguration(before = MybatisPlusAutoConfiguration.class)
 @MapperScan("${mybatis-plus.mapperPackage}")
-@PropertySource(value = "classpath:common-mybatis.yml", factory = YmlPropertySourceFactory.class)
+@PropertySource(value = "classpath:common-mybatis.yml",
+        factory = YmlPropertySourceFactory.class)
 public class MybatisPlusConfiguration {
 
     @Bean

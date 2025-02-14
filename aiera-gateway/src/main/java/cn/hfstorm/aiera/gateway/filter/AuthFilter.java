@@ -18,36 +18,34 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AuthFilter {
 
-	/**
-	 * 注册 Sa-Token 全局过滤器
-	 */
-	@Bean
-	public SaReactorFilter getSaReactorFilter(IgnoreWhiteProperties ignoreWhite) {
-		return new SaReactorFilter()
-				// 拦截地址
-//				.addInclude("/**")
-				// 开放地址
-//				 .addExclude("/favicon.ico", "/actuator/**", "/swagger-ui/**")
-				// 鉴权方法：每次访问进入
-				.setAuth(obj -> {
-//					// 登录校验 -- 拦截所有路由
-//					SaRouter.match("/**")
-//							.notMatch(ignoreWhite.getWhites())
-//							.check(r -> {
-//								// 检查是否登录 是否有token
-//								StpUtil.checkLogin();
-//
-//								// 有效率影响 用于临时测试
-//								// if (log.isDebugEnabled()) {
-//								//     log.debug("剩余有效时间: {}", StpUtil.getTokenTimeout());
-//								//     log.debug("临时有效时间: {}", StpUtil.getTokenActivityTimeout());
-//								// }
-//							});
-				}).setError(e -> {
-					if (e instanceof NotLoginException) {
-						return SaResult.error(e.getMessage()).setCode(HttpStatus.UNAUTHORIZED);
-					}
-					return SaResult.error("认证失败，无法访问系统资源").setCode(HttpStatus.UNAUTHORIZED);
-				});
-	}
+    /**
+     * 注册 Sa-Token 全局过滤器
+     */
+    @Bean
+    public SaReactorFilter getSaReactorFilter(IgnoreWhiteProperties ignoreWhite) {
+        return new SaReactorFilter()
+                // 拦截地址
+                .addInclude("/**")
+                // 开放地址
+                .addExclude("/favicon.ico", "/actuator/**")
+                // 鉴权方法：每次访问进入
+                .setAuth(obj -> {
+                    // 登录校验 -- 拦截所有路由
+                    SaRouter.match("/**").notMatch(ignoreWhite.getWhites()).check(r -> {
+                        // 检查是否登录 是否有token
+                        StpUtil.checkLogin();
+
+                        // 有效率影响 用于临时测试
+                        // if (log.isDebugEnabled()) {
+                        //     log.debug("剩余有效时间: {}", StpUtil.getTokenTimeout());
+                        //     log.debug("临时有效时间: {}", StpUtil.getTokenActivityTimeout());
+                        // }
+                    });
+                }).setError(e -> {
+                    if (e instanceof NotLoginException) {
+                        return SaResult.error(e.getMessage()).setCode(HttpStatus.UNAUTHORIZED);
+                    }
+                    return SaResult.error("认证失败，无法访问系统资源").setCode(HttpStatus.UNAUTHORIZED);
+                });
+    }
 }

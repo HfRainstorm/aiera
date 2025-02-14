@@ -1,4 +1,4 @@
-package cn.hfstorm.aiera.common.ai.annotation;
+package cn.hfstorm.aiera.ai.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,14 +6,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * valid request chat message
- *
  * @author : hmy
- * @date : 2025/2/10 9:06
+ * @date : 2025/2/14 9:51
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidChatMessage {
+public @interface OpenapiAuth {
 
-    String paramName() default "messages";
+    String value() default "";
 }

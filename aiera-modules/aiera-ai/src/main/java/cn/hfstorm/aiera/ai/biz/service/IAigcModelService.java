@@ -1,6 +1,6 @@
 package cn.hfstorm.aiera.ai.biz.service;
 
-import cn.hfstorm.aiera.common.ai.domain.AigcModel;
+import cn.hfstorm.aiera.common.ai.biz.domain.AigcModel;
 import cn.hfstorm.aiera.common.mybatis.core.page.PageQuery;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
