@@ -1,3 +1,5 @@
+CREATE DATABASE IF NOT EXISTS nacos;
+use nacos;
 /******************************************/
 /*   表名称 = config_info                  */
 /******************************************/
@@ -232,12 +234,8 @@ CREATE TABLE `tenant_info`
   DEFAULT CHARSET = utf8
   COLLATE = utf8_bin COMMENT ='tenant_info';
 
--- ----------------------------
--- Records of tenant_info
--- ----------------------------
 INSERT INTO `tenant_info` VALUES (1, '1', 'dev', 'dev', '开发环境', NULL, 1641741261189, 1641741261189);
 INSERT INTO `tenant_info` VALUES (2, '1', 'prod', 'prod', '生产环境', NULL, 1641741270448, 1641741287236);
-
 
 CREATE TABLE `users`
 (
@@ -246,21 +244,12 @@ CREATE TABLE `users`
     `enabled`  boolean      NOT NULL COMMENT 'enabled'
 );
 
--- ----------------------------
--- Table structure for roles
--- ----------------------------
 CREATE TABLE `roles`
 (
     `username` varchar(50) NOT NULL COMMENT 'username',
     `role`     varchar(50) NOT NULL COMMENT 'role',
     UNIQUE INDEX `idx_user_role` (`username` ASC, `role` ASC) USING BTREE
 );
-
-
--- ----------------------------
--- Records of roles
--- ----------------------------
-INSERT INTO `roles` VALUES ('nacos', 'ROLE_ADMIN');
 
 CREATE TABLE `permissions`
 (
@@ -269,3 +258,9 @@ CREATE TABLE `permissions`
     `action`   varchar(8)   NOT NULL COMMENT 'action',
     UNIQUE INDEX `uk_role_permission` (`role`, `resource`, `action`) USING BTREE
 );
+
+INSERT INTO users (username, password, enabled) VALUES ('nacos', '$2a$10$4P/F5XsSHsoj3YeiaD57genSUf3i5Lu9ptO4msHFHgGIzHCiG/4ZW', TRUE);
+
+INSERT INTO roles (username, role) VALUES ('nacos', 'ROLE_ADMIN');
+
+commit;

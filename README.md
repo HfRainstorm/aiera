@@ -75,7 +75,6 @@ ai框架：Spring AI
 
 修改位置：aiera/pom.xml，找到<profiles>标签并修改里面的nacos相关配置
 
-修改aiera/env/nacos-standalone-mysql.env文件中的 `PREFER_HOST_MODE`、 `MYSQL_SERVICE_HOST`为本机ip地址
 
 ### 3. 根据docker-compost下载相关镜像文件
 
@@ -84,6 +83,8 @@ cd docker
 docker-compose up -d
 ```
 等待下载完成并完成sql初始化，可访问 http://127.0.0.1:8848/nacos 查看nacos是否启动成功
+
+nacos 登录账号密码 **nacos/nacos@2025**
 
 ### 4. 运行程序
 
