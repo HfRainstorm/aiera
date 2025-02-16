@@ -135,6 +135,36 @@ services:
       - "aiera-etcd"
       - "aiera-minio"
 
+  # 调度器
+  aiera-tracker:
+    image: delron/fastdfs:latest
+    container_name: aiera-fastdfs-tracker
+    restart: always
+    ports:
+      - "22122:22122"
+    command: "tracker"
+    networks:
+      - aiera-docker
+  # 存储器
+  aiera-storage:
+    image: delron/fastdfs:latest
+    container_name: aiera-fastdfs-storage
+    restart: always
+    ports:
+      - "23000:23000"
+      - "8888:8888"
+    volumes:
+      - "./fastDFS/storage/storage.conf:/fdfs_conf/storage.conf"
+      - "./fastDFS/storage/storage_base_path:/fastdfs/storage/data"
+      - "./fastDFS/storage/store_path0:/fastdfs/store_path"
+    environment:
+      - TRACKER_SERVER=aiera-fastdfs-tracker:22122
+    command: "storage"
+    depends_on:
+      - aiera-tracker
+    networks:
+      - aiera-docker
+
 networks:
   aiera-docker:
     driver: bridge
