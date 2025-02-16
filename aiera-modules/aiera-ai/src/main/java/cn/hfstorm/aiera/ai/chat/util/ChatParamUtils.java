@@ -3,6 +3,8 @@ package cn.hfstorm.aiera.ai.chat.util;
 import cn.hfstorm.aiera.ai.chat.domain.ChatReq;
 import cn.hfstorm.aiera.common.ai.chat.domain.ChatRequest;
 import cn.hfstorm.aiera.common.ai.exception.ChatException;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 
 import java.util.List;
 
@@ -29,6 +31,7 @@ public class ChatParamUtils {
 
         return new ChatReq()
                 .setMessage(message.content())
+                .setConversationId(StrUtil.isBlank(request.conversationId()) ? IdUtil.simpleUUID() : request.conversationId())
 //                .setRole(message.role().name())
                 .setAigcModelId(request.aigcModelId())
 //                .setPromptText(request.getPrompt())

@@ -34,6 +34,10 @@
         </dependency>
         <dependency>
             <groupId>cn.hfstorm</groupId>
+            <artifactId>aiera-common-doc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hfstorm</groupId>
             <artifactId>aiera-common-mybatis</artifactId>
         </dependency>
         <dependency>
@@ -43,6 +47,11 @@
         <dependency>
             <groupId>cn.hfstorm</groupId>
             <artifactId>aiera-common-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hfstorm</groupId>
+            <artifactId>aiera-common-redis</artifactId>
         </dependency>
 
         <!-- Spring Ai -->
@@ -57,18 +66,39 @@
             </exclusions>
         </dependency>
 
-        <!-- milvus -->
         <dependency>
             <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-milvus-store-spring-boot-starter</artifactId>
-            <version>${spring-ai.version}</version>
+            <artifactId>spring-ai-redis-store</artifactId>
         </dependency>
+
+        <!--        &lt;!&ndash; milvus &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.ai</groupId>-->
+        <!--            <artifactId>spring-ai-milvus-store-spring-boot-starter</artifactId>-->
+        <!--            <version>${spring-ai.version}</version>-->
+        <!--        </dependency>-->
 
         <!-- spring ai starter 中的ai-core版本有问题，单独引入 -->
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-core</artifactId>
             <version>${spring-ai.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-ollama</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

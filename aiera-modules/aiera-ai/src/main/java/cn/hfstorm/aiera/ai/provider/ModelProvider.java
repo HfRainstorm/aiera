@@ -3,8 +3,6 @@ package cn.hfstorm.aiera.ai.provider;
 import cn.hfstorm.aiera.common.ai.exception.ChatException;
 import lombok.AllArgsConstructor;
 import org.springframework.ai.chat.model.ChatModel;
-import org.springframework.ai.vectorstore.VectorStore;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -22,11 +20,8 @@ public class ModelProvider {
 
     private final ApplicationContext context;
 
-    @Autowired
-    VectorStore vectorStore;
 
-
-    public ChatModel getModel(String aigcModelId) throws ChatException {
+    public ChatModel getModel(String aigcModelId) {
         try {
             return (ChatModel) context.getBean(aigcModelId);
         } catch (Exception e) {
