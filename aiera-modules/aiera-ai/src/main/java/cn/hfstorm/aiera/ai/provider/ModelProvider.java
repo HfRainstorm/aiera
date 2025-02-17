@@ -1,8 +1,7 @@
 package cn.hfstorm.aiera.ai.provider;
 
-import cn.hfstorm.aiera.common.ai.exception.ChatException;
+import dev.langchain4j.model.chat.StreamingChatLanguageModel;
 import lombok.AllArgsConstructor;
-import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -21,12 +20,13 @@ public class ModelProvider {
     private final ApplicationContext context;
 
 
-    public ChatModel getModel(String aigcModelId) {
+    public StreamingChatLanguageModel stream(String model) {
         try {
-            return (ChatModel) context.getBean(aigcModelId);
+            return (StreamingChatLanguageModel) context.getBean(model);
         } catch (Exception e) {
-            throw new ChatException("没有匹配到模型，请检查模型配置！");
+            throw new RuntimeException("没有匹配到模型，请检查模型配置！");
         }
     }
+
 
 }

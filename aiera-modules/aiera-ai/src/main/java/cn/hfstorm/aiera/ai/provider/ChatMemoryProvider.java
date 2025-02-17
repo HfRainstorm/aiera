@@ -1,7 +1,7 @@
 package cn.hfstorm.aiera.ai.provider;
 
-import org.springframework.ai.chat.memory.ChatMemory;
-import org.springframework.ai.chat.memory.InMemoryChatMemory;
+import dev.langchain4j.store.memory.chat.ChatMemoryStore;
+import dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore;
 
 /**
  * chat memory provider
@@ -9,7 +9,7 @@ import org.springframework.ai.chat.memory.InMemoryChatMemory;
  */
 public abstract class ChatMemoryProvider {
 
-   public ChatMemory getChatMemory() {
-        return new InMemoryChatMemory();
+   public ChatMemoryStore getChatMemory() {
+        return new InMemoryChatMemoryStore();
    }
 }

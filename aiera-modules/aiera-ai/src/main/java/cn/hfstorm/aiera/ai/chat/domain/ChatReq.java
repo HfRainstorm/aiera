@@ -1,11 +1,13 @@
 package cn.hfstorm.aiera.ai.chat.domain;
 
+import dev.langchain4j.model.input.Prompt;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.springframework.ai.chat.prompt.Prompt;
+import reactor.core.publisher.FluxSink;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 /**
  * @author : hmy
@@ -17,7 +19,7 @@ import java.util.List;
 public class ChatReq {
 
     private String appId;
-    private String aigcModelId;
+    private String modelId;
     private String modelName;
     private String modelProvider;
 
@@ -45,5 +47,9 @@ public class ChatReq {
     private String role;
 
     private Prompt prompt;
+
+    //    private StreamEmitter emitter;
+    private FluxSink<ChatRes> fluxSink;
+    private Executor executor;
 
 }

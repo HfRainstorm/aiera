@@ -55,50 +55,73 @@
         </dependency>
 
         <!-- Spring Ai -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.ai</groupId>-->
+<!--            <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.springframework.ai</groupId>-->
+<!--                    <artifactId>spring-ai-core</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.ai</groupId>-->
+<!--            <artifactId>spring-ai-redis-store</artifactId>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; milvus &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.ai</groupId>-->
+<!--            <artifactId>spring-ai-milvus-store</artifactId>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; spring ai starter 中的ai-core版本有问题，单独引入 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.ai</groupId>-->
+<!--            <artifactId>spring-ai-core</artifactId>-->
+<!--            <version>${spring-ai.version}</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.ai</groupId>-->
+<!--            <artifactId>spring-ai-ollama</artifactId>-->
+<!--        </dependency>-->
+
+
+
         <dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.ai</groupId>
-                    <artifactId>spring-ai-core</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j</artifactId>
+            <version>${langchain4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-core</artifactId>
+            <version>${langchain4j.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-redis-store</artifactId>
-        </dependency>
-
-        <!--        &lt;!&ndash; milvus &ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.ai</groupId>-->
-        <!--            <artifactId>spring-ai-milvus-store-spring-boot-starter</artifactId>-->
-        <!--            <version>${spring-ai.version}</version>-->
-        <!--        </dependency>-->
-
-        <!-- spring ai starter 中的ai-core版本有问题，单独引入 -->
-        <dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-core</artifactId>
-            <version>${spring-ai.version}</version>
-        </dependency>
-
+<!--        <dependency>-->
+<!--            <groupId>dev.langchain4j</groupId>-->
+<!--            <artifactId>langchain4j-reactor</artifactId>-->
+<!--            <version>${langchain4j.version}</version>-->
+<!--        </dependency>-->
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-ollama</artifactId>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-ollama</artifactId>
+            <version>${langchain4j.version}</version>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-embeddings</artifactId>
+            <version>${langchain4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-document-parser-apache-tika</artifactId>
+            <version>${langchain4j.version}</version>
         </dependency>
     </dependencies>
 </project>

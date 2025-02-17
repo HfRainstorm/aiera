@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 public class AiProviderListener {
 
     private final AiModelProviderInitialize aiModelProviderInitialize;
-    private final VectorStoreInitialize vectorStoreInitialize;
+//    private final VectorStoreInitialize vectorStoreInitialize;
 //    private final EmbeddingStoreFactory embeddingStoreInitialize;
 
     @EventListener
@@ -30,12 +30,12 @@ public class AiProviderListener {
         aiModelProviderInitialize.init();
         log.info("refresh model provider beans success......");
     }
-    @EventListener
-    public void providerEvent(VectorProviderRefreshEvent event) {
-        log.info("refresh vector provider beans begin......");
-        vectorStoreInitialize.init();
-        log.info("refresh vector provider beans success......");
-    }
+//    @EventListener
+//    public void providerEvent(VectorProviderRefreshEvent event) {
+//        log.info("refresh vector provider beans begin......");
+//        vectorStoreInitialize.init();
+//        log.info("refresh vector provider beans success......");
+//    }
 //
 //    @EventListener
 //    public void providerEvent(EmbeddingRefreshEvent event) {
