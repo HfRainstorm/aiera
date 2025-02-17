@@ -2,6 +2,7 @@ package cn.hfstorm.aiera.ai.chat.service;
 
 import cn.hfstorm.aiera.ai.chat.domain.ChatReq;
 import cn.hfstorm.aiera.ai.chat.domain.ChatRes;
+import dev.langchain4j.model.output.Response;
 import dev.langchain4j.service.TokenStream;
 import reactor.core.publisher.Flux;
 
@@ -11,7 +12,7 @@ import reactor.core.publisher.Flux;
  */
 public interface LangChatService {
 
-    Flux<ChatRes> chat(ChatReq req);
+    TokenStream chat(ChatReq req);
 
     Flux<ChatRes> singleChat(ChatReq req);
 

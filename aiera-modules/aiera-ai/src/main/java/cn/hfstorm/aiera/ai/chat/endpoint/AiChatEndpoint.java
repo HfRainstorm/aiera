@@ -39,17 +39,16 @@ public class AiChatEndpoint {
 //    public Flux<String> completions(@RequestBody ChatRequest.ChatCompletionRequest req) {
 //        return chatService.streamChat(req).content().concatWith(Flux.just(ChatParamConstant.CHAT_COMPLETE_END_WITH));
 //    }
-    public Flux<ChatRes> chat(@RequestBody ChatReq req) {
-//        StreamEmitter emitter = new StreamEmitter();
-//        req.setEmitter(emitter);
+    public void chat(@RequestBody ChatReq req) {
+        StreamEmitter emitter = new StreamEmitter();
+        req.setEmitter(emitter);
 //        req.setUserId(AuthUtil.getUserId());
 //        req.setUsername(AuthUtil.getUsername());
-//        ExecutorService executor = Executors.newSingleThreadExecutor();
-//        req.setExecutor(executor);
-//        return emitter.streaming(executor, () -> {
-//            chatService.chat(req);
-//        });
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        req.setExecutor(executor);
+        emitter.streaming(executor, () -> {
+            chatService.chat(req);
+        });
 
-        return chatService.chat(req);
     }
 }

@@ -4,6 +4,9 @@ import cn.hfstorm.aiera.ai.chat.domain.ChatReq;
 import cn.hfstorm.aiera.ai.chat.domain.ChatRes;
 import cn.hfstorm.aiera.ai.chat.service.IChatService;
 import cn.hfstorm.aiera.ai.chat.service.LangChatService;
+import cn.hfstorm.aiera.common.ai.util.StreamEmitter;
+import dev.langchain4j.model.output.TokenUsage;
+import dev.langchain4j.service.TokenStream;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,40 +24,40 @@ public class ChatServiceImpl implements IChatService {
     private final LangChatService langChatService;
 
     @Override
-    public  Flux<ChatRes> chat(ChatReq req) {
-//        StreamEmitter emitter = req.getEmitter();
-//        long startTime = System.currentTimeMillis();
-//        StringBuilder text = new StringBuilder();
-//
-//        // save user message
-//        req.setRole("user");
-//
-//        try {
-//            langChatService.chat(req).onNext(e -> {
-//                text.append(e);
-//                emitter.send(new ChatRes(e));
-//            }).onComplete((e) -> {
-//                TokenUsage tokenUsage = e.tokenUsage();
-//                ChatRes res = new ChatRes(tokenUsage.totalTokenCount(), startTime);
-//                emitter.send(res);
-//                emitter.complete();
-//
-//                // save assistant message
-////                        req.setMessage(text.toString());
-////                        req.setRole(RoleEnum.ASSISTANT.getName());
-//            }).onError((e) -> {
-//                emitter.error(e.getMessage());
-//                throw new RuntimeException(e.getMessage());
-//            }).start();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            emitter.error(e.getMessage());
-//            throw new RuntimeException(e.getMessage());
-//        }
+    public void chat(ChatReq req) {
+        StreamEmitter emitter = req.getEmitter();
+        long startTime = System.currentTimeMillis();
+        StringBuilder text = new StringBuilder();
 
-        return langChatService
-                .chat(req);
+        // save user message
+        req.setRole("user");
 
+        try {
+            langChatService.chat(req).onNext(e -> {
+                text.append(e);
+                emitter.send(new ChatRes(e));
+            }).onComplete((e) -> {
+                TokenUsage tokenUsage = e.tokenUsage();
+                ChatRes res = new ChatRes(tokenUsage.totalTokenCount(), startTime);
+                emitter.send(res);
+                emitter.complete();
+
+                // save assistant message
+//                        req.setMessage(text.toString());
+//                        req.setRole(RoleEnum.ASSISTANT.getName());
+            }).onError((e) -> {
+                emitter.error(e.getMessage());
+                throw new RuntimeException(e.getMessage());
+            }).start();
+        } catch (Exception e) {
+            e.printStackTrace();
+            emitter.error(e.getMessage());
+            throw new RuntimeException(e.getMessage());
+        }
+//
+//        return langChatService
+//                .chat(req);
+//
     }
 
 //    @Autowired

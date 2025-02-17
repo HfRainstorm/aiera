@@ -4,13 +4,16 @@ import cn.hfstorm.aiera.ai.chat.core.Agent;
 import cn.hfstorm.aiera.ai.chat.domain.ChatReq;
 import cn.hfstorm.aiera.ai.chat.domain.ChatRes;
 import cn.hfstorm.aiera.ai.chat.service.LangChatService;
+import cn.hfstorm.aiera.ai.factory.ChatResAiSearvices;
 import cn.hfstorm.aiera.ai.provider.ModelProvider;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.output.Response;
 import dev.langchain4j.service.AiServices;
+import dev.langchain4j.service.TokenStream;
 import dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +34,7 @@ public class LangChatServiceImpl implements LangChatService {
 
     private AiServices<Agent> build(StreamingChatLanguageModel streamModel, ChatLanguageModel model, ChatReq req) {
         AiServices<Agent> aiServices =
-                AiServices.builder(Agent.class).chatMemoryProvider(memoryId ->
+                ChatResAiSearvices.builder(Agent.class).chatMemoryProvider(memoryId ->
                         MessageWindowChatMemory.builder().id(req.getConversationId())
                                 .chatMemoryStore(new InMemoryChatMemoryStore())
                         .maxMessages(30)
@@ -49,7 +52,7 @@ public class LangChatServiceImpl implements LangChatService {
     }
 
     @Override
-    public Flux<ChatRes> chat(ChatReq req) {
+    public TokenStream chat(ChatReq req) {
         StreamingChatLanguageModel model = provider.stream(req.getModelId());
         if (StrUtil.isBlank(req.getConversationId())) {
             req.setConversationId(IdUtil.simpleUUID());
@@ -82,6 +85,6 @@ public class LangChatServiceImpl implements LangChatService {
 //        if (req.getPrompt() == null) {
 //            req.setPrompt(PromptUtil.build(req.getMessage(), req.getPromptText()));
 //        }
-        return agent.stream(req.getConversationId(), req.getPrompt().text());
+        return null;
     }
 }

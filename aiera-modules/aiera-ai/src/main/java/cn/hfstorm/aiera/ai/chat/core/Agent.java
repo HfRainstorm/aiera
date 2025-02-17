@@ -2,6 +2,7 @@ package cn.hfstorm.aiera.ai.chat.core;
 
 import cn.hfstorm.aiera.ai.chat.domain.ChatRes;
 import dev.langchain4j.service.MemoryId;
+import dev.langchain4j.service.TokenStream;
 import dev.langchain4j.service.UserMessage;
 import reactor.core.publisher.Flux;
 
@@ -11,7 +12,7 @@ import reactor.core.publisher.Flux;
  */
 public interface Agent {
 
-    Flux<ChatRes> stream(@MemoryId String id, @UserMessage String message);
+    TokenStream stream(@MemoryId String id, @UserMessage String message);
 
     String text(@MemoryId String id, @UserMessage String message);
 }
