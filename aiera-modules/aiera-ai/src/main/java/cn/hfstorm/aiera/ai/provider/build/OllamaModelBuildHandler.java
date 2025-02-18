@@ -1,13 +1,13 @@
 package cn.hfstorm.aiera.ai.provider.build;
 
-import cn.hfstorm.aiera.ai.provider.ModelProvider;
-import cn.hfstorm.aiera.common.ai.biz.domain.AigcModel;
+import cn.hfstorm.aiera.common.ai.domain.AigcModel;
 import cn.hfstorm.aiera.common.ai.enums.ProviderEnum;
-import cn.hfstorm.aiera.common.core.exception.ServiceException;
-import dev.langchain4j.model.chat.StreamingChatLanguageModel;
-import dev.langchain4j.model.ollama.OllamaStreamingChatModel;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.ollama.OllamaChatModel;
+import org.springframework.ai.ollama.api.OllamaApi;
+import org.springframework.ai.ollama.api.OllamaOptions;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,10 +18,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class OllamaModelBuildHandler implements ModelBuildHandler {
-
-
-    ModelProvider modelProvider;
-
 
     @Override
     public boolean whetherCurrentModel(AigcModel model) {
@@ -39,14 +35,18 @@ public class OllamaModelBuildHandler implements ModelBuildHandler {
         return true;
     }
 
-
     @Override
-    public StreamingChatLanguageModel doBuildStreamingChat(AigcModel model) {
+    public ChatModel doBuildChatModel(AigcModel model) {
         try {
-            return OllamaStreamingChatModel.builder().baseUrl(model.getBaseUrl()).modelName(model.getModel()).temperature(model.getTemperature()).topP(model.getTopP()).logRequests(true).logResponses(true).build();
-        } catch (ServiceException e) {
-            log.error(e.getMessage());
-            throw e;
+            // 构造ollama 模型
+            OllamaApi ollamaApi = new OllamaApi(model.getBaseUrl());
+            OllamaOptions ollamaOptions = OllamaOptions.builder()
+                    .model(model.getModel())
+                    .temperature(model.getTemperature())
+                    .build();
+
+            return OllamaChatModel.builder().ollamaApi(ollamaApi).defaultOptions(ollamaOptions).build();
+
         } catch (Exception e) {
             log.error("Ollama streaming chat 配置报错", e);
             return null;

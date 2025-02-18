@@ -4,12 +4,12 @@ package cn.hfstorm.aiera.ai.provider;
 import cn.hfstorm.aiera.ai.biz.service.impl.AigcModelService;
 import cn.hfstorm.aiera.ai.holder.SpringContextHolder;
 import cn.hfstorm.aiera.ai.provider.build.ModelBuildHandler;
-import cn.hfstorm.aiera.common.ai.biz.domain.AigcModel;
+import cn.hfstorm.aiera.common.ai.domain.AigcModel;
 import cn.hfstorm.aiera.common.ai.enums.ModelTypeEnum;
 import cn.hutool.core.util.ObjectUtil;
-import dev.langchain4j.model.chat.StreamingChatLanguageModel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -59,7 +59,7 @@ public class AiModelProviderInitialize implements ApplicationContextAware {
             imageHandler(model);
         });
 
-        modelStore.forEach(i -> log.info("已成功注册模型：{} -- {}， 模型配置：{}", i.getProvider(), i.getType(),  i));
+//        modelStore.forEach(i -> log.info("已成功注册模型：{} -- {}， 模型配置：{}", i.getProvider(), i.getType(), i));
     }
 
     private void chatHandler(AigcModel model) {
@@ -69,9 +69,9 @@ public class AiModelProviderInitialize implements ApplicationContextAware {
                 return;
             }
             modelBuildHandlers.forEach(x -> {
-                StreamingChatLanguageModel streamingChatLanguageModel = x.buildStreamingChat(model);
-                if (ObjectUtil.isNotEmpty(streamingChatLanguageModel)) {
-                    contextHolder.registerBean(model.getId(), streamingChatLanguageModel);
+                ChatModel chatModel = x.buildStreamingChat(model);
+                if (ObjectUtil.isNotEmpty(chatModel)) {
+                    contextHolder.registerBean(model.getId(), chatModel);
                     modelStore.add(model);
                 }
 

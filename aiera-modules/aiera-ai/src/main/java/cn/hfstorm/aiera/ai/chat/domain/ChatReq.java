@@ -1,14 +1,10 @@
 package cn.hfstorm.aiera.ai.chat.domain;
 
-import cn.hfstorm.aiera.common.ai.util.StreamEmitter;
-import dev.langchain4j.model.input.Prompt;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import reactor.core.publisher.FluxSink;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
 
 /**
  * @author : hmy
@@ -46,11 +42,4 @@ public class ChatReq {
     private String url;
 
     private String role;
-
-    private Prompt prompt;
-
-        private StreamEmitter emitter;
-//    private FluxSink<ChatRes> fluxSink;
-    private Executor executor;
-
 }

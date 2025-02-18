@@ -1,9 +1,8 @@
 package cn.hfstorm.aiera.ai.chat.service;
 
 import cn.hfstorm.aiera.ai.chat.domain.ChatReq;
-import cn.hfstorm.aiera.ai.chat.domain.ChatRes;
-import dev.langchain4j.service.TokenStream;
-import reactor.core.publisher.Flux;
+import cn.hfstorm.aiera.common.ai.domain.ApiRequest;
+import org.springframework.ai.chat.client.ChatClient;
 
 /**
  * @author : hmy
@@ -17,7 +16,7 @@ public interface IChatService {
      * @param content
      * @return
      */
-//    ChatClient.StreamResponseSpec streamChat(ChatRequest.ChatCompletionRequest request);
+    ChatClient.StreamResponseSpec streamChat(ChatReq request);
 
-    void chat(ChatReq req);
+//    void chat(ChatReq req);
 }

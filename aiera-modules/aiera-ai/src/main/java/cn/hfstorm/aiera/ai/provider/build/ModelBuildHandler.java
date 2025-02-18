@@ -1,9 +1,15 @@
 package cn.hfstorm.aiera.ai.provider.build;
 
-import cn.hfstorm.aiera.common.ai.biz.domain.AigcModel;
+import cn.hfstorm.aiera.ai.chat.domain.ChatReq;
+import cn.hfstorm.aiera.common.ai.domain.AigcModel;
 import cn.hfstorm.aiera.common.ai.exception.ChatException;
 import cn.hfstorm.aiera.common.core.exception.ServiceException;
-import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.memory.InMemoryChatMemory;
+import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author hmy
@@ -23,9 +29,9 @@ public interface ModelBuildHandler {
     /**
      * streaming chat build
      */
-    StreamingChatLanguageModel doBuildStreamingChat(AigcModel model);
+    ChatModel doBuildChatModel(AigcModel model);
 
-    default StreamingChatLanguageModel buildStreamingChat(AigcModel model) {
+    default ChatModel buildStreamingChat(AigcModel model) {
         try {
             if (!whetherCurrentModel(model)) {
                 return null;
@@ -33,7 +39,8 @@ public interface ModelBuildHandler {
             if (!basicCheck(model)) {
                 return null;
             }
-            return doBuildStreamingChat(model);
+            return doBuildChatModel(model);
+
         } catch (ServiceException e) {
             throw e;
         } catch (Exception e) {

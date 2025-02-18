@@ -1,6 +1,6 @@
 package cn.hfstorm.aiera.ai.biz.service.impl;
 
-import cn.hfstorm.aiera.common.ai.biz.domain.AigcModel;
+import cn.hfstorm.aiera.common.ai.domain.AigcModel;
 import cn.hfstorm.aiera.ai.biz.mapper.AigcModelMapper;
 import cn.hfstorm.aiera.ai.biz.service.IAigcModelService;
 import cn.hfstorm.aiera.common.ai.enums.ModelTypeEnum;

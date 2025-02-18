@@ -86,6 +86,7 @@ docker-compose up -d
 
 nacos 登录账号密码 **nacos/nacos@2025**
 
+
 ### 4. 运行程序
 
 运行服务AiEraGatewayApplication
@@ -94,6 +95,13 @@ nacos 登录账号密码 **nacos/nacos@2025**
 
 若启动时出现nacos未加载配置，可以尝试重新发布一下nacos配置
 ![img.png](images/img.png)
+
+
+### 5. 访问接口
+
+- **vector store**
+  - **milvus** <br/>
+    docker集成了attu可视化界面，访问地址：http://127.0.0.1:18000/  无需修改配置，直接点击connect进入界面
 
 ## 如何参与
 

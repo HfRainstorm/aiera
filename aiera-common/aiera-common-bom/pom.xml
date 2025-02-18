@@ -99,6 +99,13 @@
                 <version>${revision}</version>
             </dependency>
 
+
+            <dependency>
+                <groupId>cn.hfstorm</groupId>
+                <artifactId>aiera-common-ai-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

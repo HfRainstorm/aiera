@@ -2,7 +2,7 @@
 //
 //import cn.hfstorm.aiera.ai.biz.service.IAigcVectorStoreService;
 //import cn.hfstorm.aiera.ai.holder.SpringContextHolder;
-//import cn.hfstorm.aiera.common.ai.biz.domain.AigcVectorStore;
+//import cn.hfstorm.aiera.common.ai.domain.AigcVectorStore;
 //import cn.hfstorm.aiera.common.ai.enums.VectorStoreTypeEnum;
 //import cn.hutool.core.util.StrUtil;
 //import dev.langchain4j.store.embedding.elasticsearch.ElasticsearchEmbeddingStore;

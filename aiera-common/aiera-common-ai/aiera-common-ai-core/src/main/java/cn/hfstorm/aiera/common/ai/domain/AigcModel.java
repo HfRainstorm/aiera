@@ -1,4 +1,4 @@
-package cn.hfstorm.aiera.common.ai.biz.domain;
+package cn.hfstorm.aiera.common.ai.domain;
 
 
 import com.baomidou.mybatisplus.annotation.IdType;

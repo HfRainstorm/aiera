@@ -1,4 +1,4 @@
-package cn.hfstorm.aiera.common.ai.chat.consts;
+package cn.hfstorm.aiera.common.ai.consts;
 
 /**
  * @author : hmy
