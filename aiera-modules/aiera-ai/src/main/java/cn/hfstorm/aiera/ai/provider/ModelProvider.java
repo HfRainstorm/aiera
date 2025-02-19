@@ -1,6 +1,9 @@
 package cn.hfstorm.aiera.ai.provider;
 
+import cn.hfstorm.aiera.ai.api.AiEraModelApi;
+import cn.hfstorm.aiera.ai.api.AiEraOllamaApi;
 import cn.hfstorm.aiera.ai.biz.service.impl.AigcModelService;
+import cn.hfstorm.aiera.ai.chat.domain.AigcChatModel;
 import cn.hfstorm.aiera.ai.chat.domain.ChatReq;
 import cn.hfstorm.aiera.ai.holder.SpringContextHolder;
 import cn.hfstorm.aiera.ai.provider.build.ModelBuildHandler;
@@ -12,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.PromptChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
@@ -42,7 +46,7 @@ public class ModelProvider extends ChatMemoryProvider{
     private List<ModelBuildHandler> modelBuildHandlers;
 
 
-    public ChatClient chatHandler(ChatReq chatReq, AigcModel model) {
+    public AigcChatModel chatHandler(ChatReq chatReq, AigcModel model) {
         try {
             String type = model.getType();
             if (!ModelTypeEnum.CHAT.name().equals(type)) {
@@ -50,20 +54,20 @@ public class ModelProvider extends ChatMemoryProvider{
             }
             for (ModelBuildHandler x : modelBuildHandlers) {
                 // 构造chat model
-                ChatModel chatModel = x.buildStreamingChat(model);
+                AigcChatModel chatModel = x.buildStreamingChat(model);
+//
+//                ChatClient chatClient = ChatClient.builder(chatModel)
+//                        .defaultAdvisors(
+//                                new PromptChatMemoryAdvisor(chatMemory, chatReq.getConversationId(), 30, "")
+////                        ,
+////                        new QuestionAnswerAdvisor(vectorStore,
+////                                new SearchRequest.Builder().query(chatReq.getMessage()).build())
+//                        ).build();
 
-                ChatClient chatClient = ChatClient.builder(chatModel)
-                        .defaultAdvisors(
-                                new MessageChatMemoryAdvisor(chatMemory, chatReq.getConversationId(), 30)
-//                        ,
-//                        new QuestionAnswerAdvisor(vectorStore,
-//                                new SearchRequest.Builder().query(chatReq.getMessage()).build())
-                        ).build();
-
-                if (ObjectUtil.isNotEmpty(chatClient)) {
-                    contextHolder.registerBean(chatReq.getConversationId(), chatClient);
+                if (ObjectUtil.isNotEmpty(chatModel)) {
+                    contextHolder.registerBean(chatReq.getConversationId(), chatModel);
                     log.info("已成功注册模型：{} -- {}， 模型配置：{}", model.getProvider(), model.getType(), model);
-                    return chatClient;
+                    return chatModel;
                 }
             }
         } catch (Exception e) {
@@ -72,10 +76,10 @@ public class ModelProvider extends ChatMemoryProvider{
         return null;
     }
 
-    public ChatClient getChatClient(ChatReq chatReq) {
+    public AigcChatModel getChatClient(ChatReq chatReq) {
 
         if (context.containsBean(chatReq.getConversationId())) {
-            return (ChatClient) context.getBean(chatReq.getConversationId());
+            return (AigcChatModel) context.getBean(chatReq.getConversationId());
         } else {
 
             AigcModel model = aigcModelService.selectById(chatReq.getModelId());
@@ -86,13 +90,13 @@ public class ModelProvider extends ChatMemoryProvider{
             // Uninstall previously registered beans before registering them
             contextHolder.unregisterBean(chatReq.getConversationId());
 
-            ChatClient chatClient = chatHandler(chatReq, model);
-            if (null == chatClient) {
+            AigcChatModel chatModel = chatHandler(chatReq, model);
+            if (null == chatModel) {
 
                 throw new ChatException("没有匹配到模型，请检查模型配置！");
             }
 
-            return chatClient;
+            return chatModel;
         }
     }
 

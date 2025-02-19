@@ -119,6 +119,24 @@
                 <scope>import</scope>
             </dependency>
 
+
+            <!-- common 的依赖配置-->
+            <dependency>
+                <groupId>cn.hfstorm</groupId>
+                <artifactId>aiera-common-bom</artifactId>
+                <version>${revision}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hfstorm</groupId>
+                <artifactId>aiera-common-ai-bom</artifactId>
+                <version>${revision}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <!-- SpringCloud Alibaba 微服务 -->
             <dependency>
                 <groupId>cn.hfstorm</groupId>
@@ -172,23 +190,6 @@
                 <groupId>me.zhyd.oauth</groupId>
                 <artifactId>JustAuth</artifactId>
                 <version>${justauth.version}</version>
-            </dependency>
-
-            <!-- common 的依赖配置-->
-            <dependency>
-                <groupId>cn.hfstorm</groupId>
-                <artifactId>aiera-common-bom</artifactId>
-                <version>${revision}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>cn.hfstorm</groupId>
-                <artifactId>aiera-common-ai-bom</artifactId>
-                <version>${revision}</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
 
             <dependency>

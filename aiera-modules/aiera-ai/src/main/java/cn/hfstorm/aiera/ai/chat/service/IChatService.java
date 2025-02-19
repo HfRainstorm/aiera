@@ -1,7 +1,6 @@
 package cn.hfstorm.aiera.ai.chat.service;
 
 import cn.hfstorm.aiera.ai.chat.domain.ChatReq;
-import cn.hfstorm.aiera.common.ai.domain.ApiRequest;
 import org.springframework.ai.chat.client.ChatClient;
 
 /**

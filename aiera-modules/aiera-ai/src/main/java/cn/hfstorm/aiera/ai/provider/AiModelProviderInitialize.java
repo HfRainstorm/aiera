@@ -2,6 +2,7 @@ package cn.hfstorm.aiera.ai.provider;
 
 
 import cn.hfstorm.aiera.ai.biz.service.impl.AigcModelService;
+import cn.hfstorm.aiera.ai.chat.domain.AigcChatModel;
 import cn.hfstorm.aiera.ai.holder.SpringContextHolder;
 import cn.hfstorm.aiera.ai.provider.build.ModelBuildHandler;
 import cn.hfstorm.aiera.common.ai.domain.AigcModel;
@@ -69,7 +70,7 @@ public class AiModelProviderInitialize implements ApplicationContextAware {
                 return;
             }
             modelBuildHandlers.forEach(x -> {
-                ChatModel chatModel = x.buildStreamingChat(model);
+                AigcChatModel chatModel = x.buildStreamingChat(model);
                 if (ObjectUtil.isNotEmpty(chatModel)) {
                     contextHolder.registerBean(model.getId(), chatModel);
                     modelStore.add(model);

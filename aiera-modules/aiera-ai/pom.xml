@@ -66,6 +66,10 @@
             </exclusions>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>io.milvus</groupId>-->
+<!--            <artifactId>milvus-sdk-java</artifactId>-->
+<!--        </dependency>-->
 
 
         <!-- spring ai starter 中的ai-core版本有问题，单独引入 -->

@@ -10,20 +10,76 @@
     <properties>
         <milvus-sdk-java.version>2.3.9</milvus-sdk-java.version>
         <revision>0.0.1</revision>
+        <spring-ai.version>1.0.3</spring-ai.version>
     </properties>
 
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>io.milvus</groupId>-->
-<!--            <artifactId>milvus-sdk-java</artifactId>-->
-<!--            <version>${milvus-sdk-java.version}</version>-->
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.apache.logging.log4j</groupId>-->
-<!--                    <artifactId>log4j-slf4j-impl</artifactId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
-<!--        </dependency>-->
+
 
     </dependencies>
+
+
+        <dependencyManagement>
+            <dependencies>
+                <dependency>
+                    <groupId>io.milvus</groupId>
+                    <artifactId>milvus-sdk-java</artifactId>
+                    <version>${milvus-sdk-java.version}</version>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>org.apache.logging.log4j</groupId>
+                            <artifactId>log4j-slf4j-impl</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+
+                <dependency>
+                    <groupId>io.springboot.ai</groupId>
+                    <artifactId>spring-ai-spring-boot-autoconfigure</artifactId>
+                    <version>${spring-ai.version}</version>
+                    <scope>compile</scope>
+                </dependency>
+
+<!--                &lt;!&ndash;     ollama       &ndash;&gt;-->
+<!--                <dependency>-->
+<!--                    <groupId>io.springboot.ai</groupId>-->
+<!--                    <artifactId>spring-ai-ollama</artifactId>-->
+<!--                    <version>${spring-ai.version}</version>-->
+<!--                    <scope>compile</scope>-->
+<!--                </dependency>-->
+<!--                <dependency>-->
+<!--                    <groupId>io.springboot.ai</groupId>-->
+<!--                    <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>-->
+<!--                    <version>${spring-ai.version}</version>-->
+<!--                    <exclusions>-->
+<!--                        <exclusion>-->
+<!--                            <groupId>org.springframework.boot</groupId>-->
+<!--                            <artifactId>spring-boot-starter-logging</artifactId>-->
+<!--                        </exclusion>-->
+<!--                    </exclusions>-->
+<!--                </dependency>-->
+
+
+<!--                &lt;!&ndash; https://mvnrepository.com/artifact/io.springboot.ai/spring-ai-qwen-spring-boot-starter &ndash;&gt;-->
+<!--                <dependency>-->
+<!--                    <groupId>io.springboot.ai</groupId>-->
+<!--                    <artifactId>spring-ai-qwen-spring-boot-starter</artifactId>-->
+<!--                    <version>${spring-ai.version}</version>-->
+<!--                </dependency>-->
+
+
+<!--                &lt;!&ndash; https://mvnrepository.com/artifact/io.springboot.ai/spring-ai-openai-spring-boot-starter &ndash;&gt;-->
+<!--                <dependency>-->
+<!--                    <groupId>io.springboot.ai</groupId>-->
+<!--                    <artifactId>spring-ai-openai-spring-boot-starter</artifactId>-->
+<!--                    <version>${spring-ai.version}</version>-->
+<!--                    <exclusions>-->
+<!--                        <exclusion>-->
+<!--                            <groupId>org.springframework.boot</groupId>-->
+<!--                            <artifactId>spring-boot-starter-logging</artifactId>-->
+<!--                        </exclusion>-->
+<!--                    </exclusions>-->
+<!--                </dependency>-->
+            </dependencies>
+        </dependencyManagement>
 </project>
