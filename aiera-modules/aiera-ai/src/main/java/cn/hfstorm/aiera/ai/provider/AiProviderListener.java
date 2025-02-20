@@ -20,14 +20,14 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class AiProviderListener {
 
-//    private final AiModelProviderInitialize aiModelProviderInitialize;
+    private final AiModelProviderInitialize aiModelProviderInitialize;
 //    private final VectorStoreInitialize vectorStoreInitialize;
 //    private final EmbeddingStoreFactory embeddingStoreInitialize;
 
     @EventListener
     public void providerEvent(ModelProviderRefreshEvent event) {
         log.info("refresh model provider beans begin......");
-//        aiModelProviderInitialize.init();
+        aiModelProviderInitialize.init();
         log.info("refresh model provider beans success......");
     }
 //    @EventListener

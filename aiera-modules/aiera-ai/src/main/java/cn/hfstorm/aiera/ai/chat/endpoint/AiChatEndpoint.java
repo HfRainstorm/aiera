@@ -7,11 +7,20 @@ import cn.hfstorm.aiera.ai.chat.service.IChatService;
 import cn.hfstorm.aiera.common.ai.consts.ChatParamConstant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.memory.ChatMemory;
+import org.springframework.ai.chat.memory.InMemoryChatMemory;
+import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.http.MediaType;
+import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+
+import java.util.List;
 
 /**
  * @author : hmy
@@ -30,20 +39,8 @@ public class AiChatEndpoint {
     @ValidChatMessage
 //    @Log(title = "模型对话",
 //            businessType = BusinessType.OTHER)
-    @PostMapping(value = "/chat/completions")
-    public Flux<String> completions(@RequestBody ChatReq req) {
-        return chatService.streamChat(req).content().concatWith(Flux.just(ChatParamConstant.CHAT_COMPLETE_END_WITH));
+    @PostMapping(value = "/chat/completions", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<ServerSentEvent<String>> completions(@RequestBody ChatReq request) {
+        return chatService.streamChat(request);
     }
-//    public void chat(@RequestBody ChatReq req) {
-//        StreamEmitter emitter = new StreamEmitter();
-//        req.setEmitter(emitter);
-////        req.setUserId(AuthUtil.getUserId());
-////        req.setUsername(AuthUtil.getUsername());
-//        ExecutorService executor = Executors.newSingleThreadExecutor();
-//        req.setExecutor(executor);
-//        emitter.streaming(executor, () -> {
-//            chatService.chat(req);
-//        });
-//
-//    }
 }

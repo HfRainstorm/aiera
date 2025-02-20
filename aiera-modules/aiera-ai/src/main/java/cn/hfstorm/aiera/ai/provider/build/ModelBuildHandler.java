@@ -1,11 +1,9 @@
 package cn.hfstorm.aiera.ai.provider.build;
 
-import cn.hfstorm.aiera.ai.chat.domain.AigcChatModel;
-import cn.hfstorm.aiera.ai.chat.domain.ChatReq;
 import cn.hfstorm.aiera.common.ai.domain.AigcModel;
 import cn.hfstorm.aiera.common.ai.exception.ChatException;
 import cn.hfstorm.aiera.common.core.exception.ServiceException;
-import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.model.ChatModel;
 
 /**
  * @author hmy
@@ -25,13 +23,9 @@ public interface ModelBuildHandler {
     /**
      * streaming chat build
      */
-    ChatClient.StreamResponseSpec doStreamChat(ChatReq req);
-    /**
-     * streaming chat build
-     */
-    AigcChatModel doBuildChatModel(AigcModel model);
+    ChatModel doBuildChatModel(AigcModel model);
 
-    default AigcChatModel buildStreamingChat(AigcModel model) {
+    default ChatModel buildStreamingChat(AigcModel model) {
         try {
             if (!whetherCurrentModel(model)) {
                 return null;

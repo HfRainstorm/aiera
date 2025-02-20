@@ -2,7 +2,6 @@ package cn.hfstorm.aiera.ai.provider;
 
 
 import cn.hfstorm.aiera.ai.biz.service.impl.AigcModelService;
-import cn.hfstorm.aiera.ai.chat.domain.AigcChatModel;
 import cn.hfstorm.aiera.ai.holder.SpringContextHolder;
 import cn.hfstorm.aiera.ai.provider.build.ModelBuildHandler;
 import cn.hfstorm.aiera.common.ai.domain.AigcModel;
@@ -45,8 +44,6 @@ public class AiModelProviderInitialize implements ApplicationContextAware {
 
     @Async
     public void init() {
-        modelStore = new ArrayList<>();
-
         List<AigcModel> list = aigcModelService.list();
         list.forEach(model -> {
             if (Objects.equals(model.getBaseUrl(), "")) {
@@ -60,7 +57,7 @@ public class AiModelProviderInitialize implements ApplicationContextAware {
             imageHandler(model);
         });
 
-//        modelStore.forEach(i -> log.info("已成功注册模型：{} -- {}， 模型配置：{}", i.getProvider(), i.getType(), i));
+        modelStore.forEach(i -> log.info("已成功注册模型：{} -- {}， 模型配置：{}", i.getProvider(), i.getType(), i));
     }
 
     private void chatHandler(AigcModel model) {
@@ -70,7 +67,7 @@ public class AiModelProviderInitialize implements ApplicationContextAware {
                 return;
             }
             modelBuildHandlers.forEach(x -> {
-                AigcChatModel chatModel = x.buildStreamingChat(model);
+                ChatModel chatModel = x.buildStreamingChat(model);
                 if (ObjectUtil.isNotEmpty(chatModel)) {
                     contextHolder.registerBean(model.getId(), chatModel);
                     modelStore.add(model);

@@ -46,7 +46,7 @@ public class ModelProvider extends ChatMemoryProvider{
     private List<ModelBuildHandler> modelBuildHandlers;
 
 
-    public AigcChatModel chatHandler(ChatReq chatReq, AigcModel model) {
+    public ChatModel chatHandler(ChatReq chatReq, AigcModel model) {
         try {
             String type = model.getType();
             if (!ModelTypeEnum.CHAT.name().equals(type)) {
@@ -54,15 +54,7 @@ public class ModelProvider extends ChatMemoryProvider{
             }
             for (ModelBuildHandler x : modelBuildHandlers) {
                 // 构造chat model
-                AigcChatModel chatModel = x.buildStreamingChat(model);
-//
-//                ChatClient chatClient = ChatClient.builder(chatModel)
-//                        .defaultAdvisors(
-//                                new PromptChatMemoryAdvisor(chatMemory, chatReq.getConversationId(), 30, "")
-////                        ,
-////                        new QuestionAnswerAdvisor(vectorStore,
-////                                new SearchRequest.Builder().query(chatReq.getMessage()).build())
-//                        ).build();
+                ChatModel chatModel = x.buildStreamingChat(model);
 
                 if (ObjectUtil.isNotEmpty(chatModel)) {
                     contextHolder.registerBean(chatReq.getConversationId(), chatModel);
@@ -76,10 +68,10 @@ public class ModelProvider extends ChatMemoryProvider{
         return null;
     }
 
-    public AigcChatModel getChatClient(ChatReq chatReq) {
+    public ChatModel getChatClient(ChatReq chatReq) {
 
         if (context.containsBean(chatReq.getConversationId())) {
-            return (AigcChatModel) context.getBean(chatReq.getConversationId());
+            return (ChatModel) context.getBean(chatReq.getConversationId());
         } else {
 
             AigcModel model = aigcModelService.selectById(chatReq.getModelId());
@@ -90,7 +82,7 @@ public class ModelProvider extends ChatMemoryProvider{
             // Uninstall previously registered beans before registering them
             contextHolder.unregisterBean(chatReq.getConversationId());
 
-            AigcChatModel chatModel = chatHandler(chatReq, model);
+            ChatModel chatModel = chatHandler(chatReq, model);
             if (null == chatModel) {
 
                 throw new ChatException("没有匹配到模型，请检查模型配置！");

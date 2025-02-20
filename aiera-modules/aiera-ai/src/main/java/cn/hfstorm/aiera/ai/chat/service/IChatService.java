@@ -1,7 +1,8 @@
 package cn.hfstorm.aiera.ai.chat.service;
 
 import cn.hfstorm.aiera.ai.chat.domain.ChatReq;
-import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.http.codec.ServerSentEvent;
+import reactor.core.publisher.Flux;
 
 /**
  * @author : hmy
@@ -9,13 +10,14 @@ import org.springframework.ai.chat.client.ChatClient;
  */
 public interface IChatService {
 
+    // 模拟数据库存储会话和消息
     /**
      * 流式对话
      *
      * @param content
      * @return
      */
-    ChatClient.StreamResponseSpec streamChat(ChatReq request);
+    Flux<ServerSentEvent<String>> streamChat(ChatReq request);
 
 //    void chat(ChatReq req);
 }
