@@ -33,3 +33,29 @@ spring:
       - optional:nacos:datasource.yml
       - optional:nacos:aiera-system.yml
       - optional:nacos:${spring.application.name}.yml
+
+
+#spring:
+#  ai:
+#    ollama:
+#      # 填写模型所在的地址
+#      base-url: http://localhost:11434
+#      chat:
+#        model: deepseek-r1:8b
+#    vectorstore:
+#      milvus:
+#        client:
+#          host: "localhost"
+#          port: 19530
+#          username: "root"
+#          password: "milvus"
+#        databaseName: "default"
+#        collectionName: "vector_store"
+#        embeddingDimension: 1536
+#        indexType: IVF_FLAT
+#        metricType: COSINE
+#      redis:
+#        initialize-schema: true
+#        index-name: custom-index
+#        prefix: custom-prefix
+#        batching-strategy: TOKEN_COUNT # Optional: Controls how documents are batched for embedding

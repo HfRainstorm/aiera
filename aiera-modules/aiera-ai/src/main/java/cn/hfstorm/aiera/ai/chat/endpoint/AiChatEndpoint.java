@@ -29,7 +29,7 @@ public class AiChatEndpoint {
 
     private final IChatService chatService;
 
-    @OpenapiAuth()
+//    @OpenapiAuth()
     @ValidChatMessage
     @Log(title = "模型对话")
     @PostMapping(value = "/chat/completions",

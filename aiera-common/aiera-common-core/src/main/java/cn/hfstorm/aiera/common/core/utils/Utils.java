@@ -26,7 +26,6 @@ public class Utils {
 
     public static String null2String(String s) {
         return s == null ? "" : s;
-
     }
 
     public static String null2String(String s, String def) {
@@ -44,4 +43,8 @@ public class Utils {
         return (s == null || s.equals("")) ? "0" : s;
     }
 
+
+    public static String exception2String(Throwable e) {
+        return e == null ? "" : e.getMessage();
+    }
 }

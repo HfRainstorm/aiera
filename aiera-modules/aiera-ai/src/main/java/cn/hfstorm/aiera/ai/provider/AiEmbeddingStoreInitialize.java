@@ -3,6 +3,7 @@ package cn.hfstorm.aiera.ai.provider;
 import cn.hfstorm.aiera.ai.biz.service.IAigcEmbedStoreService;
 import cn.hfstorm.aiera.ai.holder.SpringContextHolder;
 import cn.hfstorm.aiera.common.ai.domain.AigcEmbedStore;
+import cn.hfstorm.aiera.common.ai.enums.VectorStoreTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * 向量数据库注册
  *
- * @author tycoding
+ * @author hmy
  * @since 2024/10/28
  */
 @Slf4j

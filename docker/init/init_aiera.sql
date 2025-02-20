@@ -204,4 +204,15 @@ CREATE TABLE `aigc_embed_store`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci COMMENT ='Embedding向量数据库配置表';
 
+
+-- ----------------------------
+-- Records of aigc_embed_store
+-- ----------------------------
+BEGIN;
+
+INSERT INTO `aigc_embed_store`(`id`, `name`, `provider`, `host`, `port`, `username`, `password`, `database_name`, `table_name`, `dimension`)
+VALUES ('1', 'milvus_name', 'milvus', '127.0.0.1', 19530, '', '', 'default', 'aiera', 128);
+
+COMMIT;
+
 SET FOREIGN_KEY_CHECKS = 1;

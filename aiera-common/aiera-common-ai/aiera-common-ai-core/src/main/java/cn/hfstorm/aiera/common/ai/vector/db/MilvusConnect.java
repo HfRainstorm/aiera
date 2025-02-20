@@ -33,9 +33,11 @@ public class MilvusConnect implements VectorStoreConnect {
     public R<Boolean> testVectorDbConnection(AigcEmbedStore aigcEmbedStore) {
         // 构造连接参数
         ConnectParam.Builder connectBuilder =
-                ConnectParam.newBuilder().withHost(aigcEmbedStore.getHost()).withPort(aigcEmbedStore.getPort()).withAuthorization(Utils.blank2String(aigcEmbedStore.getUsername(), ""), Utils.blank2String(aigcEmbedStore.getPassword(), ""));
-
-        connectBuilder.withDatabaseName(aigcEmbedStore.getDatabaseName());
+                ConnectParam.newBuilder()
+                        .withHost(aigcEmbedStore.getHost())
+                        .withPort(aigcEmbedStore.getPort())
+                        .withAuthorization(Utils.blank2String(aigcEmbedStore.getUsername(), ""), Utils.blank2String(aigcEmbedStore.getPassword(), ""))
+                        .withDatabaseName(aigcEmbedStore.getDatabaseName());
 
         HasCollectionParam collectionParam =
                 HasCollectionParam.newBuilder().withCollectionName(aigcEmbedStore.getTableName()).build();
@@ -50,7 +52,8 @@ public class MilvusConnect implements VectorStoreConnect {
                     .withTimeout(getTimeouts(), getTimeoutUnit()) // 超时时间
                     .hasCollection(collectionParam);
 
-            return buildResult(connectResult.getData(), connectResult.getMessage(), connectResult.getStatus());
+            return buildResult(connectResult.getData(), Utils.exception2String(connectResult.getException()),
+                    connectResult.getStatus());
         } catch (Exception e) {
             log.error("Milvus连接失败", e);
             buildResult(false, e.getMessage(), -1);

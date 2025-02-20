@@ -10,7 +10,6 @@ import cn.hfstorm.aiera.common.ai.exception.ChatException;
 import cn.hutool.core.util.ObjectUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -27,13 +26,10 @@ import java.util.Objects;
 @Slf4j
 @Component
 @AllArgsConstructor
-public class ModelProvider extends ChatMemoryProvider{
+public class ModelProvider extends ChatMemoryProvider {
 
 
     private final ApplicationContext context;
-    private final ChatMemory chatMemory = getChatMemory();
-
-
     private final AigcModelService aigcModelService;
     private final SpringContextHolder contextHolder;
     private List<ModelBuildHandler> modelBuildHandlers;

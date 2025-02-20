@@ -17,11 +17,9 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AigcEmbedStoreServiceImpl extends ServiceImpl<AigcVectorStoreMapper, AigcEmbedStore> implements IAigcEmbedStoreService {
-
-    VectorStoreConnectFactory vectorStoreConnectFactory;
     @Override
     public R<Boolean> testVectorDbConnection(AigcEmbedStore data) {
-        VectorStoreConnect vectorStoreConnect = vectorStoreConnectFactory.getVectorStoreConnect(data);
+        VectorStoreConnect vectorStoreConnect = VectorStoreConnectFactory.getVectorStoreConnect(data);
         if (null != vectorStoreConnect) {
             return vectorStoreConnect.testVectorDbConnection(data);
         }

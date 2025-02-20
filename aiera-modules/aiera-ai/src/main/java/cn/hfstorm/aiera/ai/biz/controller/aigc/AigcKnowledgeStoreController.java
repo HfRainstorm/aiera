@@ -7,7 +7,6 @@ import cn.hfstorm.aiera.ai.biz.service.IAigcEmbedStoreService;
 import cn.hfstorm.aiera.ai.biz.service.IAigcKnowledgeService;
 import cn.hfstorm.aiera.ai.biz.service.IAigcModelService;
 import cn.hfstorm.aiera.ai.provider.AiKnowledgeStoreInitialize;
-import cn.hfstorm.aiera.ai.provider.EmbeddingProvider;
 import cn.hfstorm.aiera.common.ai.domain.AigcDocs;
 import cn.hfstorm.aiera.common.ai.domain.AigcEmbedStore;
 import cn.hfstorm.aiera.common.ai.domain.AigcKnowledge;
@@ -47,7 +46,6 @@ public class AigcKnowledgeStoreController {
     private final AigcDocsMapper docsMapper;
     private final IAigcEmbedStoreService embedStoreService;
     private final IAigcModelService modelService;
-    private final EmbeddingProvider embeddingProvider;
     private final AiKnowledgeStoreInitialize knowledgeStore;
 
     @GetMapping("/list")
