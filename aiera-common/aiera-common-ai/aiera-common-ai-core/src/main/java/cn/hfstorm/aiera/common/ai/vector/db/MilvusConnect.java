@@ -1,6 +1,6 @@
 package cn.hfstorm.aiera.common.ai.vector.db;
 
-import cn.hfstorm.aiera.common.ai.domain.AigcVectorStore;
+import cn.hfstorm.aiera.common.ai.domain.AigcEmbedStore;
 import cn.hfstorm.aiera.common.ai.enums.VectorStoreTypeEnum;
 import cn.hfstorm.aiera.common.core.domain.R;
 import cn.hfstorm.aiera.common.core.utils.Utils;
@@ -30,15 +30,15 @@ public class MilvusConnect implements VectorStoreConnect {
      * @throws Exception
      */
     @Override
-    public R<Boolean> testVectorDbConnection(AigcVectorStore aigcVectorStore) {
+    public R<Boolean> testVectorDbConnection(AigcEmbedStore aigcEmbedStore) {
         // 构造连接参数
         ConnectParam.Builder connectBuilder =
-                ConnectParam.newBuilder().withHost(aigcVectorStore.getHost()).withPort(aigcVectorStore.getPort()).withAuthorization(Utils.blank2String(aigcVectorStore.getUsername(), ""), Utils.blank2String(aigcVectorStore.getPassword(), ""));
+                ConnectParam.newBuilder().withHost(aigcEmbedStore.getHost()).withPort(aigcEmbedStore.getPort()).withAuthorization(Utils.blank2String(aigcEmbedStore.getUsername(), ""), Utils.blank2String(aigcEmbedStore.getPassword(), ""));
 
-        connectBuilder.withDatabaseName(aigcVectorStore.getDatabaseName());
+        connectBuilder.withDatabaseName(aigcEmbedStore.getDatabaseName());
 
         HasCollectionParam collectionParam =
-                HasCollectionParam.newBuilder().withCollectionName(aigcVectorStore.getTableName()).build();
+                HasCollectionParam.newBuilder().withCollectionName(aigcEmbedStore.getTableName()).build();
 
 
         MilvusServiceClient milvusServiceClient = null;

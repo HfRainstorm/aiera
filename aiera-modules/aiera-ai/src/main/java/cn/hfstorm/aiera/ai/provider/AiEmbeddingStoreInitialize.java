@@ -1,52 +1,44 @@
-//package cn.hfstorm.aiera.ai.provider;
-//
-//import cn.hfstorm.aiera.ai.biz.service.IAigcVectorStoreService;
-//import cn.hfstorm.aiera.ai.holder.SpringContextHolder;
-//import cn.hfstorm.aiera.common.ai.domain.AigcVectorStore;
-//import cn.hfstorm.aiera.common.ai.enums.VectorStoreTypeEnum;
-//import cn.hutool.core.util.StrUtil;
-//import dev.langchain4j.store.embedding.elasticsearch.ElasticsearchEmbeddingStore;
-//import dev.langchain4j.store.embedding.milvus.MilvusEmbeddingStore;
-//import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
-//import dev.langchain4j.store.embedding.redis.RedisEmbeddingStore;
-//import lombok.AllArgsConstructor;
-//import lombok.extern.slf4j.Slf4j;
-//import org.apache.http.Header;
-//import org.apache.http.HttpHost;
-//import org.apache.http.message.BasicHeader;
-//import org.elasticsearch.client.RestClient;
-//import org.springframework.beans.BeansException;
-//import org.springframework.context.ApplicationContext;
-//import org.springframework.context.ApplicationContextAware;
-//import org.springframework.stereotype.Component;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-///**
-// * @author tycoding
-// * @since 2024/10/28
-// */
-//@Slf4j
-//@Component
-//@AllArgsConstructor
-//public class AiEmbeddingStoreInitialize implements ApplicationContextAware {
-//
-//    private final IAigcVectorStoreService aigcEmbedStoreService;
-//    private final SpringContextHolder contextHolder;
-//    private List<AigcVectorStore> modelStore = new ArrayList<>();
-//
-//    @Override
-//    public void setApplicationContext(ApplicationContext context) throws BeansException {
-//        init();
-//
-//        modelStore.forEach(i -> log.info("已成功注册Embedding Store：{}， 配置信息：{}", i.getProvider(), i));
-//    }
-//
-//    public void init() {
-//        List<AigcVectorStore> list = aigcEmbedStoreService.list();
-//        list.forEach(embed -> {
-//            try {
+package cn.hfstorm.aiera.ai.provider;
+
+import cn.hfstorm.aiera.ai.biz.service.IAigcEmbedStoreService;
+import cn.hfstorm.aiera.ai.holder.SpringContextHolder;
+import cn.hfstorm.aiera.common.ai.domain.AigcEmbedStore;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 向量数据库注册
+ *
+ * @author tycoding
+ * @since 2024/10/28
+ */
+@Slf4j
+@Component
+@AllArgsConstructor
+public class AiEmbeddingStoreInitialize implements ApplicationContextAware {
+
+    private final IAigcEmbedStoreService aigcEmbedStoreService;
+    private final SpringContextHolder contextHolder;
+    private List<AigcEmbedStore> modelStore = new ArrayList<>();
+
+    @Override
+    public void setApplicationContext(ApplicationContext context) throws BeansException {
+        init();
+
+        modelStore.forEach(i -> log.info("已成功注册Embedding Store：{}， 配置信息：{}", i.getProvider(), i));
+    }
+
+    public void init() {
+        List<AigcEmbedStore> list = aigcEmbedStoreService.list();
+        list.forEach(embed -> {
+            try {
 //                if (VectorStoreTypeEnum.REDIS.name().equalsIgnoreCase(embed.getProvider())) {
 //                    RedisEmbeddingStore.Builder builder = RedisEmbeddingStore.builder()
 //                            .host(embed.getHost())
@@ -98,11 +90,11 @@
 //                            .build();
 //                    contextHolder.registerBean(embed.getId(), store);
 //                }
-//                modelStore.add(embed);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                log.error("向量数据库初始化失败：[{}] --- [{}]，数据库配置信息：[{}]", embed.getName(), embed.getProvider(), embed);
-//            }
-//        });
-//    }
-//}
+                modelStore.add(embed);
+            } catch (Exception e) {
+                e.printStackTrace();
+                log.error("向量数据库初始化失败：[{}] --- [{}]，数据库配置信息：[{}]", embed.getName(), embed.getProvider(), embed);
+            }
+        });
+    }
+}

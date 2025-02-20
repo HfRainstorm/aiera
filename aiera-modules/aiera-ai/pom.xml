@@ -54,7 +54,7 @@
             <artifactId>aiera-common-redis</artifactId>
         </dependency>
 
-<!--         Spring Ai -->
+        <!-- Spring Ai -->
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>
@@ -66,10 +66,10 @@
             </exclusions>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>io.milvus</groupId>-->
-<!--            <artifactId>milvus-sdk-java</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>io.milvus</groupId>-->
+        <!--            <artifactId>milvus-sdk-java</artifactId>-->
+        <!--        </dependency>-->
 
 
         <!-- spring ai starter 中的ai-core版本有问题，单独引入 -->
@@ -80,22 +80,28 @@
         </dependency>
 
 
-<!--        <dependency>-->
-<!--            <groupId>junit</groupId>-->
-<!--            <artifactId>junit</artifactId>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-test</artifactId>-->
-<!--        </dependency>-->
+        <!-- embedding -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-tika-document-reader</artifactId>
+        </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.springframework</groupId>-->
-<!--            <artifactId>spring-test</artifactId>-->
-<!--            <version>6.2.2</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>junit</groupId>-->
+        <!--            <artifactId>junit</artifactId>-->
+        <!--            <scope>test</scope>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-test</artifactId>-->
+        <!--        </dependency>-->
+
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework</groupId>-->
+        <!--            <artifactId>spring-test</artifactId>-->
+        <!--            <version>6.2.2</version>-->
+        <!--            <scope>test</scope>-->
+        <!--        </dependency>-->
 
     </dependencies>
 </project>

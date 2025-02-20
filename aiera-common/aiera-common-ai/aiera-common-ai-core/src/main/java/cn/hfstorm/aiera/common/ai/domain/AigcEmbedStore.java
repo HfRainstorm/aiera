@@ -15,7 +15,7 @@ import java.io.Serializable;
  */
 @Data
 @TableName(autoResultMap = true)
-public class AigcVectorStore implements Serializable {
+public class AigcEmbedStore implements Serializable {
     @Serial
     private static final long serialVersionUID = 2020477032393716663L;
 

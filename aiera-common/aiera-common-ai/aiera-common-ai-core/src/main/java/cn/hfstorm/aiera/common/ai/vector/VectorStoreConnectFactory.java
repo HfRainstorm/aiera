@@ -1,6 +1,6 @@
 package cn.hfstorm.aiera.common.ai.vector;
 
-import cn.hfstorm.aiera.common.ai.domain.AigcVectorStore;
+import cn.hfstorm.aiera.common.ai.domain.AigcEmbedStore;
 import cn.hfstorm.aiera.common.ai.enums.VectorStoreTypeEnum;
 import cn.hfstorm.aiera.common.ai.vector.db.MilvusConnect;
 import cn.hfstorm.aiera.common.ai.vector.db.VectorStoreConnect;
@@ -17,12 +17,12 @@ public class VectorStoreConnectFactory {
     /**
      * 获取向量库连接
      *
-     * @param aigcVectorStore
+     * @param aigcEmbedStore
      * @return
      */
-    public VectorStoreConnect getVectorStoreConnect(AigcVectorStore aigcVectorStore) {
+    public VectorStoreConnect getVectorStoreConnect(AigcEmbedStore aigcEmbedStore) {
 
-        if (VectorStoreTypeEnum.MILVUS.name().equalsIgnoreCase(aigcVectorStore.getProvider())) {
+        if (VectorStoreTypeEnum.MILVUS.name().equalsIgnoreCase(aigcEmbedStore.getProvider())) {
             return new MilvusConnect();
         }
 

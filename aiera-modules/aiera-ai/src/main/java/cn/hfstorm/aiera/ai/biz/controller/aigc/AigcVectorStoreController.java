@@ -2,12 +2,10 @@ package cn.hfstorm.aiera.ai.biz.controller.aigc;
 
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.hfstorm.aiera.ai.biz.service.IAigcVectorStoreService;
+import cn.hfstorm.aiera.ai.biz.service.IAigcEmbedStoreService;
 import cn.hfstorm.aiera.ai.event.VectorProviderRefreshEvent;
 import cn.hfstorm.aiera.ai.holder.SpringContextHolder;
-import cn.hfstorm.aiera.common.ai.domain.AigcVectorStore;
-import cn.hfstorm.aiera.common.ai.vector.VectorStoreConnectFactory;
-import cn.hfstorm.aiera.common.ai.vector.db.VectorStoreConnect;
+import cn.hfstorm.aiera.common.ai.domain.AigcEmbedStore;
 import cn.hfstorm.aiera.common.core.domain.R;
 import cn.hfstorm.aiera.common.log.annotation.Log;
 import cn.hfstorm.aiera.common.mybatis.core.page.PageQuery;
@@ -39,40 +37,33 @@ import java.util.List;
 @RequestMapping("/aigc/vectorstore")
 public class AigcVectorStoreController extends BaseController {
 
-    VectorStoreConnectFactory vectorStoreConnectFactory;
 
-
-    private final IAigcVectorStoreService vectorStoreService;
+    private final IAigcEmbedStoreService vectorStoreService;
     private final SpringContextHolder contextHolder;
 
     @PostMapping("/testconnect")
-    public R<Boolean> testconnect(@RequestBody AigcVectorStore data) {
-        VectorStoreConnect vectorStoreConnect = vectorStoreConnectFactory.getVectorStoreConnect(data);
-        if (null != vectorStoreConnect) {
-            return vectorStoreConnect.testVectorDbConnection(data);
-        }
-
-        return R.fail("不支持的向量库类型");
+    public R<Boolean> testconnect(@RequestBody AigcEmbedStore data) {
+        return vectorStoreService.testVectorDbConnection(data);
     }
 
     @GetMapping("/list")
-    public R<List<AigcVectorStore>> list(AigcVectorStore data) {
-        List<AigcVectorStore> list = vectorStoreService.list(Wrappers.lambdaQuery());
+    public R<List<AigcEmbedStore>> list(AigcEmbedStore data) {
+        List<AigcEmbedStore> list = vectorStoreService.list(Wrappers.lambdaQuery());
         list.forEach(this::hide);
         return R.ok(list);
     }
 
     @GetMapping("/page")
-    public R<Dict> page(AigcVectorStore embedStore, PageQuery queryPage) {
-        IPage<AigcVectorStore> page = vectorStoreService.page(MybatisUtils.wrap(embedStore, queryPage),
+    public R<Dict> page(AigcEmbedStore embedStore, PageQuery queryPage) {
+        IPage<AigcEmbedStore> page = vectorStoreService.page(MybatisUtils.wrap(embedStore, queryPage),
                 Wrappers.lambdaQuery());
         page.getRecords().forEach(this::hide);
         return R.ok(MybatisUtils.getData(page));
     }
 
     @GetMapping("/{id}")
-    public R<AigcVectorStore> findById(@PathVariable String id) {
-        AigcVectorStore store = vectorStoreService.getById(id);
+    public R<AigcEmbedStore> findById(@PathVariable String id) {
+        AigcEmbedStore store = vectorStoreService.getById(id);
         hide(store);
         return R.ok(store);
     }
@@ -80,32 +71,40 @@ public class AigcVectorStoreController extends BaseController {
     @PostMapping
     @Log(title = "新增向量库")
     @SaCheckPermission("aigc:embed-store:add")
-    public R<AigcVectorStore> add(@RequestBody AigcVectorStore data) {
+    public R<AigcEmbedStore> add(@RequestBody AigcEmbedStore data) {
         if (StrUtil.isNotBlank(data.getPassword()) && data.getPassword().contains("*")) {
             data.setPassword(null);
         }
-        vectorStoreService.save(data);
-        SpringContextHolder.publishEvent(new VectorProviderRefreshEvent(data));
-        return R.ok();
+        R<Boolean> booleanR = vectorStoreService.testVectorDbConnection(data);
+        if (booleanR.getData()) {
+            vectorStoreService.save(data);
+            SpringContextHolder.publishEvent(new VectorProviderRefreshEvent(data));
+            return R.ok();
+        }
+        return R.fail(booleanR.getCode(), booleanR.getMsg());
     }
 
     @PutMapping
     @Log(title = "修改向量库")
     @SaCheckPermission("aigc:embed-store:update")
-    public R update(@RequestBody AigcVectorStore data) {
+    public R update(@RequestBody AigcEmbedStore data) {
         if (StrUtil.isNotBlank(data.getPassword()) && data.getPassword().contains("*")) {
             data.setPassword(null);
         }
-        vectorStoreService.updateById(data);
-        SpringContextHolder.publishEvent(new VectorProviderRefreshEvent(data));
-        return R.ok();
+        R<Boolean> booleanR = vectorStoreService.testVectorDbConnection(data);
+        if (booleanR.getData()) {
+            vectorStoreService.updateById(data);
+            SpringContextHolder.publishEvent(new VectorProviderRefreshEvent(data));
+            return R.ok();
+        }
+        return R.fail(booleanR.getCode(), booleanR.getMsg());
     }
 
     @DeleteMapping("/{id}")
     @Log(title = "删除向量库")
     @SaCheckPermission("aigc:embed-store:delete")
     public R delete(@PathVariable String id) {
-        AigcVectorStore store = vectorStoreService.getById(id);
+        AigcEmbedStore store = vectorStoreService.getById(id);
         if (store != null) {
             vectorStoreService.removeById(id);
             contextHolder.unregisterBean(id);
@@ -113,7 +112,7 @@ public class AigcVectorStoreController extends BaseController {
         return R.ok();
     }
 
-    private void hide(AigcVectorStore data) {
+    private void hide(AigcEmbedStore data) {
         if (data == null || StrUtil.isBlank(data.getPassword())) {
             return;
         }

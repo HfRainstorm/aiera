@@ -1,9 +1,6 @@
 package cn.hfstorm.aiera.ai.provider;
 
-import cn.hfstorm.aiera.ai.api.AiEraModelApi;
-import cn.hfstorm.aiera.ai.api.AiEraOllamaApi;
 import cn.hfstorm.aiera.ai.biz.service.impl.AigcModelService;
-import cn.hfstorm.aiera.ai.chat.domain.AigcChatModel;
 import cn.hfstorm.aiera.ai.chat.domain.ChatReq;
 import cn.hfstorm.aiera.ai.holder.SpringContextHolder;
 import cn.hfstorm.aiera.ai.provider.build.ModelBuildHandler;
@@ -13,11 +10,7 @@ import cn.hfstorm.aiera.common.ai.exception.ChatException;
 import cn.hutool.core.util.ObjectUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
-import org.springframework.ai.chat.client.advisor.PromptChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
-import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;

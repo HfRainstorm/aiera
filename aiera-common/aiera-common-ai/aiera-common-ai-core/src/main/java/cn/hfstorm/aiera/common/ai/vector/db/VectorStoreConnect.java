@@ -1,6 +1,6 @@
 package cn.hfstorm.aiera.common.ai.vector.db;
 
-import cn.hfstorm.aiera.common.ai.domain.AigcVectorStore;
+import cn.hfstorm.aiera.common.ai.domain.AigcEmbedStore;
 import cn.hfstorm.aiera.common.core.domain.R;
 
 import java.util.concurrent.TimeUnit;
@@ -31,5 +31,5 @@ public interface VectorStoreConnect {
      * @return
      * @throws Exception
      */
-    R<Boolean> testVectorDbConnection(AigcVectorStore aigcVectorStore);
+    R<Boolean> testVectorDbConnection(AigcEmbedStore aigcEmbedStore);
 }
