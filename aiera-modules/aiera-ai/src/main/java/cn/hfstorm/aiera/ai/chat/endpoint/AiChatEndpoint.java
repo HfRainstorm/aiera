@@ -31,7 +31,7 @@ public class AiChatEndpoint {
 
 //    @OpenapiAuth()
     @ValidChatMessage
-    @Log(title = "模型对话")
+//    @Log(title = "模型对话")
     @PostMapping(value = "/chat/completions",
             produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<ServerSentEvent<String>> completions(@RequestBody ChatReq request) {

@@ -1,4 +1,4 @@
-package cn.hfstorm.aiera.ai.provider.build;
+package cn.hfstorm.aiera.ai.provider.model.build;
 
 import cn.hfstorm.aiera.common.ai.domain.AigcModel;
 import cn.hfstorm.aiera.common.ai.exception.ChatException;

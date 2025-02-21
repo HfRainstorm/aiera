@@ -6,7 +6,7 @@ import cn.hfstorm.aiera.ai.biz.mapper.AigcDocsMapper;
 import cn.hfstorm.aiera.ai.biz.service.IAigcEmbedStoreService;
 import cn.hfstorm.aiera.ai.biz.service.IAigcKnowledgeService;
 import cn.hfstorm.aiera.ai.biz.service.IAigcModelService;
-import cn.hfstorm.aiera.ai.provider.AiKnowledgeStoreInitialize;
+import cn.hfstorm.aiera.ai.provider.knowledge.AiKnowledgeStoreInitialize;
 import cn.hfstorm.aiera.common.ai.domain.AigcDocs;
 import cn.hfstorm.aiera.common.ai.domain.AigcEmbedStore;
 import cn.hfstorm.aiera.common.ai.domain.AigcKnowledge;

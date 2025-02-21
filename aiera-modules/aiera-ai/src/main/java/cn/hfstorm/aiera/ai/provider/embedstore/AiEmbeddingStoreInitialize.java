@@ -1,11 +1,11 @@
-package cn.hfstorm.aiera.ai.provider;
+package cn.hfstorm.aiera.ai.provider.embedstore;
 
 import cn.hfstorm.aiera.ai.biz.service.IAigcEmbedStoreService;
 import cn.hfstorm.aiera.ai.holder.SpringContextHolder;
 import cn.hfstorm.aiera.common.ai.domain.AigcEmbedStore;
-import cn.hfstorm.aiera.common.ai.enums.VectorStoreTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -29,11 +29,15 @@ public class AiEmbeddingStoreInitialize implements ApplicationContextAware {
     private final SpringContextHolder contextHolder;
     private List<AigcEmbedStore> modelStore = new ArrayList<>();
 
+    // spring ai 的 vectorStore
+    List<VectorStore> vectorStores;
+
     @Override
     public void setApplicationContext(ApplicationContext context) throws BeansException {
         init();
 
         modelStore.forEach(i -> log.info("已成功注册Embedding Store：{}， 配置信息：{}", i.getProvider(), i));
+        vectorStores.forEach(i -> log.info("已成功注册Vector Store：{}", i.getName()));
     }
 
     public void init() {

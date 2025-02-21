@@ -2,7 +2,7 @@ package cn.hfstorm.aiera.ai.chat.service.impl;
 
 import cn.hfstorm.aiera.ai.chat.domain.ChatReq;
 import cn.hfstorm.aiera.ai.chat.service.IChatService;
-import cn.hfstorm.aiera.ai.provider.ModelProvider;
+import cn.hfstorm.aiera.ai.provider.model.ModelProvider;
 import cn.hfstorm.aiera.common.ai.exception.ChatException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

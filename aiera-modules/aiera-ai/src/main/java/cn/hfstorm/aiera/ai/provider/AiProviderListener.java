@@ -2,7 +2,7 @@ package cn.hfstorm.aiera.ai.provider;
 
 
 import cn.hfstorm.aiera.ai.event.ModelProviderRefreshEvent;
-import cn.hfstorm.aiera.ai.event.VectorProviderRefreshEvent;
+import cn.hfstorm.aiera.ai.provider.model.ModelProviderFactory;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -19,15 +19,16 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class AiProviderListener {
+    private ModelProviderFactory modelProviderFactory;
 
-    private final AiModelProviderInitialize aiModelProviderInitialize;
+//    private final AiModelProviderInitialize aiModelProviderInitialize;
 //    private final VectorStoreInitialize vectorStoreInitialize;
 //    private final EmbeddingStoreFactory embeddingStoreInitialize;
 
     @EventListener
     public void providerEvent(ModelProviderRefreshEvent event) {
         log.info("refresh model provider beans begin......");
-        aiModelProviderInitialize.init();
+        modelProviderFactory.init();
         log.info("refresh model provider beans success......");
     }
 //    @EventListener

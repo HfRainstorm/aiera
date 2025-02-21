@@ -1,4 +1,4 @@
-package cn.hfstorm.aiera.ai.provider;
+package cn.hfstorm.aiera.ai.provider.knowledge;
 
 import cn.hfstorm.aiera.ai.biz.service.IAigcEmbedStoreService;
 import cn.hfstorm.aiera.ai.biz.service.IAigcKnowledgeService;
