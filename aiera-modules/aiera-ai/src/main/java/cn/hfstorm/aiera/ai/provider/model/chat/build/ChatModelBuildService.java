@@ -1,46 +1,16 @@
-package cn.hfstorm.aiera.ai.provider.model.build;
+package cn.hfstorm.aiera.ai.provider.model.chat.build;
 
-import cn.hfstorm.aiera.common.ai.domain.AigcModel;
-import cn.hfstorm.aiera.common.ai.exception.ChatException;
-import cn.hfstorm.aiera.common.core.exception.ServiceException;
-import org.springframework.ai.chat.model.ChatModel;
+import cn.hfstorm.aiera.common.ai.enums.ModelTypeEnum;
 
 /**
  * @author hmy
  */
-public interface ModelBuildHandler {
+public interface ChatModelBuildService {
 
-    /**
-     * 判断是不是当前模型
-     */
-    boolean whetherCurrentModel(AigcModel model);
-
-    /**
-     * basic check
-     */
-    boolean basicCheck(AigcModel model);
-
-    /**
-     * streaming chat build
-     */
-    ChatModel doBuildChatModel(AigcModel model);
-
-    default ChatModel buildStreamingChat(AigcModel model) {
-        try {
-            if (!whetherCurrentModel(model)) {
-                return null;
-            }
-            if (!basicCheck(model)) {
-                return null;
-            }
-            return doBuildChatModel(model);
-
-        } catch (ServiceException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new ChatException("build ai model exception", e);
-        }
+    default ModelTypeEnum currentModelType() {
+        return ModelTypeEnum.CHAT;
     }
+
 //
 //    @Override
 //    default ChatClient doBuildChatClient(AigcModel model) {

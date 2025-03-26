@@ -2,16 +2,15 @@ package cn.hfstorm.aiera.ai.provider.model;
 
 import cn.hfstorm.aiera.ai.biz.service.impl.AigcModelService;
 import cn.hfstorm.aiera.ai.holder.SpringContextHolder;
-import cn.hfstorm.aiera.ai.provider.embedmodel.build.EmbedModelBuildHandler;
-import cn.hfstorm.aiera.ai.provider.model.build.ModelBuildHandler;
 import cn.hfstorm.aiera.common.ai.domain.AigcModel;
 import cn.hfstorm.aiera.common.ai.enums.ModelTypeEnum;
 import cn.hutool.core.util.ObjectUtil;
+import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ai.chat.model.ChatModel;
-import org.springframework.ai.embedding.EmbeddingModel;
-import org.springframework.stereotype.Component;
+import org.springframework.ai.model.Model;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.Async;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +22,17 @@ import java.util.Objects;
  */
 @Slf4j
 @AllArgsConstructor
-@Component
-public class ModelProviderFactory {
+@Configuration
+public class AiModelStoreFactory {
 
     private final AigcModelService aigcModelService;
     private final SpringContextHolder contextHolder;
-    private List<ModelBuildHandler> modelBuildHandlers;
-    private List<EmbedModelBuildHandler> embedModelBuildHandlers;
+    private List<AiModelBuildService> chatModelBuildServices;
     private List<AigcModel> modelStore = new ArrayList<>();
 
 
+    @Async
+    @PostConstruct
     public void init() {
         List<AigcModel> list = aigcModelService.list();
         list.forEach(model -> {
@@ -42,8 +42,7 @@ public class ModelProviderFactory {
             // Uninstall previously registered beans before registering them
             contextHolder.unregisterBean(model.getId());
 
-            chatHandler(model);
-            embeddingHandler(model);
+            aiModelHandler(model);
             imageHandler(model);
         });
 
@@ -54,55 +53,25 @@ public class ModelProviderFactory {
     /**
      * @param model
      */
-    public ChatModel chatHandler(AigcModel model) {
+    public <T extends Model> T aiModelHandler(AigcModel model) {
         try {
             String type = model.getType();
-            if (!ModelTypeEnum.CHAT.name().equals(type)) {
+            if (!ModelTypeEnum.CHAT.name().equals(type)
+                    && !ModelTypeEnum.EMBEDDING.name().equals(type)) {
                 return null;
             }
-            for (ModelBuildHandler x : modelBuildHandlers) {
-                ChatModel chatModel = x.buildStreamingChat(model);
+            for (AiModelBuildService<T> x : chatModelBuildServices) {
+                T chatModel = x.doBuildModel(model);
                 if (ObjectUtil.isNotEmpty(chatModel)) {
                     contextHolder.registerBean(model.getId(), chatModel);
                     modelStore.add(model);
                 }
-
-//                ChatLanguageModel languageModel = x.buildChatLanguageModel(model);
-//                if (ObjectUtil.isNotEmpty(languageModel)) {
-//                    contextHolder.registerBean(model.getId() + ModelConst.TEXT_SUFFIX, languageModel);
-//                }
                 return chatModel;
             }
 
         } catch (Exception e) {
             log.error("model 【 id: {} name: {}】streaming chat 配置报错", model.getId(), model.getName());
         }
-        return null;
-    }
-
-    /**
-     * 构造嵌入模型
-     *
-     * @param model
-     */
-    public EmbeddingModel embeddingHandler(AigcModel model) {
-        try {
-            String type = model.getType();
-            if (!ModelTypeEnum.EMBEDDING.name().equals(type)) {
-                return null;
-            }
-            embedModelBuildHandlers.forEach(x -> {
-                EmbeddingModel embeddingModel = x.buildEmbedModel(model);
-                if (ObjectUtil.isNotEmpty(embeddingModel)) {
-                    contextHolder.registerBean(model.getId(), embeddingModel);
-                    modelStore.add(model);
-                }
-            });
-
-        } catch (Exception e) {
-            log.error("model 【id{} name{}】 embedding 配置报错", model.getId(), model.getName());
-        }
-
         return null;
     }
 

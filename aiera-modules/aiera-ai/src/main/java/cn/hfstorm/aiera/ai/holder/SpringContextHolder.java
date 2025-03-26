@@ -47,6 +47,9 @@ public class SpringContextHolder implements ApplicationContextAware {
         BeanDefinition beanDefinition = beanDefinitionBuilder.getRawBeanDefinition();
 
         beanDefinitionRegistry.registerBeanDefinition(beanName, beanDefinition);
+        // 通知其他集群节点
+        // 1. Spring Cloud Bus 可以通过消息总线（如 RabbitMQ 或 Kafka）将事件广播到集群中的所有节点。
+        // 2.  使用分布式配置中心（如 Nacos、Consul） 将Bean的注册信息存储到分布式配置中心，其他节点监听配置变化并动态注册Bean。（推荐）
     }
 
     public void unregisterBean(String beanName) {
@@ -56,5 +59,7 @@ public class SpringContextHolder implements ApplicationContextAware {
         if (beanDefinitionRegistry.containsBeanDefinition(beanName)) {
             beanDefinitionRegistry.removeBeanDefinition(beanName);
         }
+
+        // 通知其他集群节点
     }
 }

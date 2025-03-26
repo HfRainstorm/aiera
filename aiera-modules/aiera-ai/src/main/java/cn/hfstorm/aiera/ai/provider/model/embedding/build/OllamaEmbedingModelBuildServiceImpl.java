@@ -1,7 +1,9 @@
-package cn.hfstorm.aiera.ai.provider.embedmodel.build;
+package cn.hfstorm.aiera.ai.provider.model.embedding.build;
 
+import cn.hfstorm.aiera.ai.provider.model.AiModelBuildService;
 import cn.hfstorm.aiera.common.ai.domain.AigcModel;
 import cn.hfstorm.aiera.common.ai.enums.EmbeddingTypeEnum;
+import cn.hfstorm.aiera.common.ai.enums.ModelTypeEnum;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.ollama.OllamaEmbeddingModel;
 import org.springframework.ai.ollama.api.OllamaApi;
@@ -13,8 +15,13 @@ import org.springframework.stereotype.Component;
  * @date : 2025/2/21 9:12
  */
 @Component
-public class OllamaEmbedModelBuildHandler implements EmbedModelBuildHandler {
+public class OllamaEmbedingModelBuildServiceImpl implements EmbedModelBuildService, AiModelBuildService<EmbeddingModel> {
 
+
+    @Override
+    public ModelTypeEnum getModelType() {
+        return currentModelType();
+    }
 
     @Override
     public boolean whetherCurrentModel(AigcModel aigcModel) {
@@ -27,7 +34,7 @@ public class OllamaEmbedModelBuildHandler implements EmbedModelBuildHandler {
     }
 
     @Override
-    public EmbeddingModel doBuildEmbedModel(AigcModel aigcModel) {
+    public EmbeddingModel buildModel(AigcModel aigcModel) {
         OllamaApi ollamaApi = new OllamaApi(aigcModel.getBaseUrl());
         OllamaOptions ollamaOptions =
                 OllamaOptions.builder()

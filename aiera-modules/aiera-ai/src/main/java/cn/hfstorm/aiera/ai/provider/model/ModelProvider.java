@@ -29,7 +29,7 @@ public class ModelProvider {
     private final AigcModelService aigcModelService;
     private final SpringContextHolder contextHolder;
 
-    private ModelProviderFactory modelProviderFactory;
+    private AiModelStoreFactory aiModelStoreFactory;
 
     public ChatModel getChatClient(ChatReq chatReq) {
 
@@ -45,7 +45,7 @@ public class ModelProvider {
             // Uninstall previously registered beans before registering them
             contextHolder.unregisterBean(chatReq.getModelId());
 
-            ChatModel chatModel = modelProviderFactory.chatHandler(model);
+            ChatModel chatModel = aiModelStoreFactory.aiModelHandler(model);
             if (null == chatModel) {
 
                 throw new ChatException("没有匹配到模型，请检查模型配置！");

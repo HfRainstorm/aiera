@@ -1,6 +1,6 @@
 package cn.hfstorm.aiera.ai.chat.domain;
 
-import cn.hfstorm.aiera.ai.provider.model.build.ModelBuildHandler;
+import cn.hfstorm.aiera.ai.provider.model.chat.build.ChatModelBuildService;
 import cn.hfstorm.aiera.common.ai.domain.AigcModel;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +18,7 @@ public class AigcChatModel {
 
     private AigcModel aigcModel;
 
-    private ModelBuildHandler modelBuildHandler;
+    private ChatModelBuildService chatModelBuildService;
 
 
 }

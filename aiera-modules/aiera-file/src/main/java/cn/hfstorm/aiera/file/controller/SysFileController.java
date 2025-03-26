@@ -9,7 +9,9 @@ import cn.hfstorm.aiera.common.core.utils.file.FileUtils;
 import cn.hfstorm.aiera.file.service.ISysFileService;
 import cn.hfstorm.aiera.system.api.domain.SysFile;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,8 +28,10 @@ public class SysFileController {
 	/**
 	 * 文件上传请求
 	 */
-	@PostMapping("upload")
-	public R<SysFile> upload(MultipartFile file,String fileType) {
+//	@PostMapping("upload")
+	@PostMapping(path = "/upload", produces= MediaType.MULTIPART_FORM_DATA_VALUE)
+	public R<SysFile> upload(@RequestParam(name = "file") MultipartFile file,
+							 @RequestParam(name="fileType") String fileType) {
 		try {
 			ISysFileService sysFileService = (ISysFileService) SpringUtils.getBean(FileEnumd.getServiceClass(fileType));
 			// 上传并返回访问地址
