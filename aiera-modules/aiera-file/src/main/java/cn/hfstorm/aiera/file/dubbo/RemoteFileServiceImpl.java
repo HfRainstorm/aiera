@@ -25,10 +25,10 @@ public class RemoteFileServiceImpl implements RemoteFileService {
 
 
 	@Override
-	public SysFile upload(MultipartFile file, String fileType) {
+	public SysFile upload(MultipartFile file, String saveType) {
 		SysFile sysFile = null;
 		try {
-			ISysFileService sysFileService = (ISysFileService) SpringUtils.getBean(FileEnumd.getServiceClass(fileType));
+			ISysFileService sysFileService = (ISysFileService) SpringUtils.getBean(FileEnumd.getServiceClass(saveType));
 			// 上传并返回访问地址
 			String url = sysFileService.uploadFile(file);
 			sysFile = new SysFile();

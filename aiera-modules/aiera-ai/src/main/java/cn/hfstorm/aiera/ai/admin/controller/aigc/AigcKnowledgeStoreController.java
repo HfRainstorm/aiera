@@ -1,12 +1,12 @@
-package cn.hfstorm.aiera.ai.biz.controller.aigc;
+package cn.hfstorm.aiera.ai.admin.controller.aigc;
 
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.hfstorm.aiera.ai.biz.mapper.AigcDocsMapper;
-import cn.hfstorm.aiera.ai.biz.service.IAigcEmbedStoreService;
-import cn.hfstorm.aiera.ai.biz.service.IAigcKnowledgeService;
-import cn.hfstorm.aiera.ai.biz.service.IAigcModelService;
-import cn.hfstorm.aiera.ai.provider.knowledge.AiKnowledgeStoreInitialize;
+import cn.hfstorm.aiera.ai.admin.mapper.AigcDocsMapper;
+import cn.hfstorm.aiera.ai.admin.service.IAigcEmbedStoreService;
+import cn.hfstorm.aiera.ai.admin.service.IAigcKnowledgeService;
+import cn.hfstorm.aiera.ai.admin.service.IAigcModelService;
+import cn.hfstorm.aiera.ai.provider.knowledge.AiKnowledgeFactory;
 import cn.hfstorm.aiera.common.ai.domain.AigcDocs;
 import cn.hfstorm.aiera.common.ai.domain.AigcEmbedStore;
 import cn.hfstorm.aiera.common.ai.domain.AigcKnowledge;
@@ -34,6 +34,8 @@ import java.util.stream.Collectors;
 
 /**
  * aigc model
+ *
+ * @author hmy
  */
 
 @Validated
@@ -46,7 +48,7 @@ public class AigcKnowledgeStoreController {
     private final AigcDocsMapper docsMapper;
     private final IAigcEmbedStoreService embedStoreService;
     private final IAigcModelService modelService;
-    private final AiKnowledgeStoreInitialize knowledgeStore;
+    private final AiKnowledgeFactory knowledgeStore;
 
     @GetMapping("/list")
     public R<List<AigcKnowledge>> list(AigcKnowledge data) {

@@ -1,4 +1,4 @@
-package cn.hfstorm.aiera.ai.biz.service;
+package cn.hfstorm.aiera.ai.admin.service;
 
 import cn.hfstorm.aiera.common.ai.domain.AigcModel;
 import cn.hfstorm.aiera.common.mybatis.core.page.PageQuery;

@@ -1,4 +1,4 @@
-package cn.hfstorm.aiera.ai.biz.mapper;
+package cn.hfstorm.aiera.ai.admin.mapper;
 
 import cn.hfstorm.aiera.common.ai.domain.AigcEmbedStore;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

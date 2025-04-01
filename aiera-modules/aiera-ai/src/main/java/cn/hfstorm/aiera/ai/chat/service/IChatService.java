@@ -11,10 +11,11 @@ import reactor.core.publisher.Flux;
 public interface IChatService {
 
     // 模拟数据库存储会话和消息
+
     /**
      * 流式对话
      *
-     * @param content
+     * @param request
      * @return
      */
     Flux<ServerSentEvent<String>> streamChat(ChatReq request);

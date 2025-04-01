@@ -17,7 +17,7 @@ public interface IEmbeddingService {
      * @param file
      * @param knowledgeId
      */
-    R embeddingFile(MultipartFile file, String knowledgeId) throws IOException;
+    R embeddingFile(MultipartFile file, String saveType, String knowledgeId) throws IOException;
 
 //    void chat(ChatReq req);
 }

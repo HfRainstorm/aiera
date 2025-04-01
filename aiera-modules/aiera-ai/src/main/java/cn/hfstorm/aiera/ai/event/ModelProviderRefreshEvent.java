@@ -11,8 +11,18 @@ import java.io.Serial;
 public class ModelProviderRefreshEvent extends ApplicationEvent {
     @Serial
     private static final long serialVersionUID = 2608324904040141991L;
+    private boolean result;
 
-    public ModelProviderRefreshEvent(Object source) {
+    public ModelProviderRefreshEvent(Object source, boolean result) {
         super(source);
+        this.result = result;
+    }
+
+    public boolean isResult() {
+        return result;
+    }
+
+    public void setResult(boolean result) {
+        this.result = result;
     }
 }

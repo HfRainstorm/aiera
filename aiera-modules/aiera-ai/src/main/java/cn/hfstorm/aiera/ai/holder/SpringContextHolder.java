@@ -31,6 +31,10 @@ public class SpringContextHolder implements ApplicationContextAware {
         return applicationContext.getBean(requiredType);
     }
 
+    public boolean containsBean(String beanName) {
+        return applicationContext.containsBean(beanName);
+    }
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         SpringContextHolder.applicationContext = applicationContext;

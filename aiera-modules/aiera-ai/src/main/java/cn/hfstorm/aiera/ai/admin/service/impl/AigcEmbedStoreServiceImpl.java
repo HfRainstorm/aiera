@@ -1,7 +1,7 @@
-package cn.hfstorm.aiera.ai.biz.service.impl;
+package cn.hfstorm.aiera.ai.admin.service.impl;
 
-import cn.hfstorm.aiera.ai.biz.mapper.AigcVectorStoreMapper;
-import cn.hfstorm.aiera.ai.biz.service.IAigcEmbedStoreService;
+import cn.hfstorm.aiera.ai.admin.mapper.AigcVectorStoreMapper;
+import cn.hfstorm.aiera.ai.admin.service.IAigcEmbedStoreService;
 import cn.hfstorm.aiera.common.ai.domain.AigcEmbedStore;
 import cn.hfstorm.aiera.common.ai.vector.VectorStoreConnectFactory;
 import cn.hfstorm.aiera.common.ai.vector.db.VectorStoreConnect;

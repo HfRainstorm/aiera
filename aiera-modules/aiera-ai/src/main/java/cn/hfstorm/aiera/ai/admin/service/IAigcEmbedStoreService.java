@@ -1,4 +1,4 @@
-package cn.hfstorm.aiera.ai.biz.service;
+package cn.hfstorm.aiera.ai.admin.service;
 
 import cn.hfstorm.aiera.common.ai.domain.AigcEmbedStore;
 import cn.hfstorm.aiera.common.core.domain.R;

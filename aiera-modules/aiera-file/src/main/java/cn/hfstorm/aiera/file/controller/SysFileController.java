@@ -31,9 +31,9 @@ public class SysFileController {
 //	@PostMapping("upload")
 	@PostMapping(path = "/upload", produces= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public R<SysFile> upload(@RequestParam(name = "file") MultipartFile file,
-							 @RequestParam(name="fileType") String fileType) {
+							 @RequestParam(name="saveType") String saveType) {
 		try {
-			ISysFileService sysFileService = (ISysFileService) SpringUtils.getBean(FileEnumd.getServiceClass(fileType));
+			ISysFileService sysFileService = (ISysFileService) SpringUtils.getBean(FileEnumd.getServiceClass(saveType));
 			// 上传并返回访问地址
 			String url = sysFileService.uploadFile(file);
 			SysFile sysFile = new SysFile();

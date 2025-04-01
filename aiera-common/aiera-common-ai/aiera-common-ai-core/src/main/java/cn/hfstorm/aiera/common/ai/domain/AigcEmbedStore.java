@@ -10,6 +10,8 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
+ * 向量库信息
+ *
  * @author : hmy
  * @date : 2025/2/17
  */

@@ -16,7 +16,7 @@ public interface RemoteFileService {
      * @param file 文件信息
      * @return 结果
      */
-    SysFile upload(MultipartFile file,String fileType);
+    SysFile upload(MultipartFile file,String saveType);
 
 	/**
 	 * 文件删除

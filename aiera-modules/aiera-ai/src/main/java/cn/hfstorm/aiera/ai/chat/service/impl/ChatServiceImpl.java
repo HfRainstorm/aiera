@@ -28,7 +28,9 @@ public class ChatServiceImpl implements IChatService {
     @Autowired
     ModelProvider modelProvider;
 
-    // 模拟数据库存储会话和消息
+    /**
+     * 模拟数据库存储会话和消息
+     */
     private final ChatMemory chatMemory = new InMemoryChatMemory();
 
     /**

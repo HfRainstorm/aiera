@@ -1,8 +1,8 @@
-package cn.hfstorm.aiera.ai.biz.service.impl;
+package cn.hfstorm.aiera.ai.admin.service.impl;
 
 import cn.hfstorm.aiera.common.ai.domain.AigcModel;
-import cn.hfstorm.aiera.ai.biz.mapper.AigcModelMapper;
-import cn.hfstorm.aiera.ai.biz.service.IAigcModelService;
+import cn.hfstorm.aiera.ai.admin.mapper.AigcModelMapper;
+import cn.hfstorm.aiera.ai.admin.service.IAigcModelService;
 import cn.hfstorm.aiera.common.ai.enums.ModelTypeEnum;
 import cn.hfstorm.aiera.common.mybatis.core.page.PageQuery;
 import cn.hutool.core.util.StrUtil;

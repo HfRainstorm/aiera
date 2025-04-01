@@ -6,6 +6,7 @@ import cn.hfstorm.aiera.common.ai.domain.AigcDocs;
 import cn.hfstorm.aiera.common.core.domain.R;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,10 +32,11 @@ import java.io.IOException;
 public class AiEmbeddingEndpoint {
     IEmbeddingService embeddingService;
 
-    @PostMapping("/docs/{knowledgeId}")
-//    @SaCheckPermission("aigc:embedding:docs")
-    public R docs(@RequestParam MultipartFile file, @PathVariable String knowledgeId) throws IOException {
-        return embeddingService.embeddingFile(file, knowledgeId);
+    @PostMapping(path = "/docs/{knowledgeId}", produces= MediaType.MULTIPART_FORM_DATA_VALUE)
+    @SaCheckPermission("aigc:embedding:docs")
+    public R docs(@RequestParam MultipartFile file, @RequestParam String saveType,
+                  @PathVariable String knowledgeId) throws IOException {
+        return embeddingService.embeddingFile(file, saveType, knowledgeId);
     }
 
     @GetMapping("/re-embed/{docsId}")

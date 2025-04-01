@@ -1,6 +1,7 @@
 package cn.hfstorm.aiera.common.ai.enums;
 
 
+import cn.hfstorm.aiera.common.ai.consts.BeanNamePrefixConstant;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -33,4 +34,13 @@ public enum ProviderEnum {
      * 描述
      */
     private String profiler;
+
+//    /**
+//     * 获取模型bean名称
+//     *
+//     * @return
+//     */
+//    public String getModelBeanName() {
+//        return BeanNamePrefixConstant.PREFIX_CHAT_MODEL + name();
+//    }
 }

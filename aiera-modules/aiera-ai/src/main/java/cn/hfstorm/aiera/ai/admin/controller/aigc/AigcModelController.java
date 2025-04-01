@@ -1,8 +1,8 @@
-package cn.hfstorm.aiera.ai.biz.controller.aigc;
+package cn.hfstorm.aiera.ai.admin.controller.aigc;
 
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.hfstorm.aiera.ai.biz.service.IAigcModelService;
+import cn.hfstorm.aiera.ai.admin.service.IAigcModelService;
 import cn.hfstorm.aiera.ai.event.ModelProviderRefreshEvent;
 import cn.hfstorm.aiera.ai.holder.SpringContextHolder;
 import cn.hfstorm.aiera.common.ai.domain.AigcModel;
@@ -28,6 +28,8 @@ import java.util.List;
 
 /**
  * aigc model
+ *
+ * @author hmy
  */
 @Validated
 @RequiredArgsConstructor
@@ -55,7 +57,8 @@ public class AigcModelController extends BaseController {
     }
 
     @PostMapping
-    @Log(title = "添加模型", businessType = BusinessType.INSERT)
+    @Log(title = "添加模型",
+            businessType = BusinessType.INSERT)
     @SaCheckPermission("aigc:model:add")
     public R add(@RequestBody AigcModel data) {
         if (StrUtil.isNotBlank(data.getApiKey()) && data.getApiKey().contains("*")) {
@@ -64,13 +67,14 @@ public class AigcModelController extends BaseController {
         if (StrUtil.isNotBlank(data.getSecretKey()) && data.getSecretKey().contains("*")) {
             data.setSecretKey(null);
         }
-        modelService.save(data);
-        SpringContextHolder.publishEvent(new ModelProviderRefreshEvent(data));
-        return R.ok();
+        boolean saveResult = modelService.save(data);
+        SpringContextHolder.publishEvent(new ModelProviderRefreshEvent(data, saveResult));
+        return R.of(saveResult);
     }
 
     @PutMapping
-    @Log(title = "修改模型", businessType = BusinessType.UPDATE)
+    @Log(title = "修改模型",
+            businessType = BusinessType.UPDATE)
     @SaCheckPermission("aigc:model:update")
     public R update(@RequestBody AigcModel data) {
         if (StrUtil.isNotBlank(data.getApiKey()) && data.getApiKey().contains("*")) {
@@ -79,13 +83,14 @@ public class AigcModelController extends BaseController {
         if (StrUtil.isNotBlank(data.getSecretKey()) && data.getSecretKey().contains("*")) {
             data.setSecretKey(null);
         }
-        modelService.updateById(data);
-        SpringContextHolder.publishEvent(new ModelProviderRefreshEvent(data));
-        return R.ok();
+        boolean result = modelService.updateById(data);
+        SpringContextHolder.publishEvent(new ModelProviderRefreshEvent(data, result));
+        return R.of(result);
     }
 
     @DeleteMapping("/{id}")
-    @Log(title = "删除模型", businessType = BusinessType.DELETE)
+    @Log(title = "删除模型",
+            businessType = BusinessType.DELETE)
     @SaCheckPermission("aigc:model:delete")
     public R delete(@PathVariable String id) {
         modelService.removeById(id);

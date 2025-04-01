@@ -12,7 +12,18 @@ public class VectorProviderRefreshEvent extends ApplicationEvent {
     @Serial
     private static final long serialVersionUID = -5594499106263316869L;
 
-    public VectorProviderRefreshEvent(Object source) {
+    private boolean result;
+
+    public VectorProviderRefreshEvent(Object source, boolean result) {
         super(source);
+        this.result = result;
+    }
+
+    public boolean isResult() {
+        return result;
+    }
+
+    public void setResult(boolean result) {
+        this.result = result;
     }
 }

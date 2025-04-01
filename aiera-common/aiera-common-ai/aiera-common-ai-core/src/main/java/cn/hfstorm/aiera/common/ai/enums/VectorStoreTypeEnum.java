@@ -1,6 +1,7 @@
 package cn.hfstorm.aiera.common.ai.enums;
 
 
+import cn.hfstorm.aiera.common.ai.consts.BeanNamePrefixConstant;
 import lombok.Getter;
 
 /**
@@ -14,6 +15,14 @@ public enum VectorStoreTypeEnum {
     MILVUS,
     ELASTICSEARCH,
     ;
-
+//
+//    /**
+//     * 获取模型bean名称
+//     *
+//     * @return
+//     */
+//    public String getModelBeanName() {
+//        return BeanNamePrefixConstant.PREFIX_EMBED_STORE_MODEL + name();
+//    }
 
 }

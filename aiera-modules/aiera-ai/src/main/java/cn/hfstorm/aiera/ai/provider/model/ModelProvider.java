@@ -1,6 +1,6 @@
 package cn.hfstorm.aiera.ai.provider.model;
 
-import cn.hfstorm.aiera.ai.biz.service.impl.AigcModelService;
+import cn.hfstorm.aiera.ai.admin.service.impl.AigcModelService;
 import cn.hfstorm.aiera.ai.chat.domain.ChatReq;
 import cn.hfstorm.aiera.ai.holder.SpringContextHolder;
 import cn.hfstorm.aiera.common.ai.domain.AigcModel;

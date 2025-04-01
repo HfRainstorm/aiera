@@ -1,8 +1,8 @@
-package cn.hfstorm.aiera.ai.biz.controller.aigc;
+package cn.hfstorm.aiera.ai.admin.controller.aigc;
 
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.hfstorm.aiera.ai.biz.service.IAigcEmbedStoreService;
+import cn.hfstorm.aiera.ai.admin.service.IAigcEmbedStoreService;
 import cn.hfstorm.aiera.ai.event.VectorProviderRefreshEvent;
 import cn.hfstorm.aiera.ai.holder.SpringContextHolder;
 import cn.hfstorm.aiera.common.ai.domain.AigcEmbedStore;
@@ -77,9 +77,9 @@ public class AigcVectorStoreController extends BaseController {
         }
         R<Boolean> booleanR = vectorStoreService.testVectorDbConnection(data);
         if (booleanR.getData()) {
-            vectorStoreService.save(data);
-            SpringContextHolder.publishEvent(new VectorProviderRefreshEvent(data));
-            return R.ok();
+            boolean saveResult = vectorStoreService.save(data);
+            SpringContextHolder.publishEvent(new VectorProviderRefreshEvent(data, saveResult));
+            return R.of(saveResult);
         }
         return R.fail(booleanR.getCode(), booleanR.getMsg());
     }
@@ -93,9 +93,9 @@ public class AigcVectorStoreController extends BaseController {
         }
         R<Boolean> booleanR = vectorStoreService.testVectorDbConnection(data);
         if (booleanR.getData()) {
-            vectorStoreService.updateById(data);
-            SpringContextHolder.publishEvent(new VectorProviderRefreshEvent(data));
-            return R.ok();
+            boolean updateResult = vectorStoreService.updateById(data);
+            SpringContextHolder.publishEvent(new VectorProviderRefreshEvent(data, updateResult));
+            return R.of(updateResult);
         }
         return R.fail(booleanR.getCode(), booleanR.getMsg());
     }

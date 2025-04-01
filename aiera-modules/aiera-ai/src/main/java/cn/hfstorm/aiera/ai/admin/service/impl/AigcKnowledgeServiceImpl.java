@@ -1,8 +1,8 @@
-package cn.hfstorm.aiera.ai.biz.service.impl;
+package cn.hfstorm.aiera.ai.admin.service.impl;
 
-import cn.hfstorm.aiera.ai.biz.mapper.AigcDocsMapper;
-import cn.hfstorm.aiera.ai.biz.mapper.AigcKnowledgeMapper;
-import cn.hfstorm.aiera.ai.biz.service.IAigcKnowledgeService;
+import cn.hfstorm.aiera.ai.admin.mapper.AigcDocsMapper;
+import cn.hfstorm.aiera.ai.admin.mapper.AigcKnowledgeMapper;
+import cn.hfstorm.aiera.ai.admin.service.IAigcKnowledgeService;
 import cn.hfstorm.aiera.common.ai.domain.AigcDocs;
 import cn.hfstorm.aiera.common.ai.domain.AigcKnowledge;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
