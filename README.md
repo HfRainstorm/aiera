@@ -84,7 +84,7 @@ docker-compose up -d
 ```
 等待下载完成并完成sql初始化，可访问 http://127.0.0.1:8848/nacos 查看nacos是否启动成功
 
-nacos 登录账号密码 **nacos/nacos@2025**
+nacos 登录账号密码 **nacos/nacos2025**
 
 
 ### 4. 运行程序
