@@ -17,7 +17,6 @@
     </description>
     <modules>
         <module>aiera-file</module>
-        <module>aiera-file</module>
         <module>aiera-ai</module>
     </modules>
 

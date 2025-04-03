@@ -59,7 +59,7 @@ INSERT INTO `config_info` VALUES (1, 'application-common.yml', 'DEFAULT_GROUP', 
     # info 基础信息 param 参数信息 full 全部
     log-level: info
   registry:
-    address: nacos://localhost:8848?username=nacos&password=nacos@2025
+    address: nacos://localhost:8848?username=nacos&password=nacos2025
 
 spring:
   # 资源信息
