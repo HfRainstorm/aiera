@@ -132,8 +132,8 @@ services:
       - "19530:19530"
       - "9091:9091"
     depends_on:
-      - "aiera-etcd"
-      - "aiera-minio"
+      - aiera-etcd
+      - aiera-minio
   # milvus向量数据库 可视化工具
   aiera-attu:
     container_name: attu
@@ -143,7 +143,7 @@ services:
     ports:
       - "18000:3000"
     depends_on:
-      - "aiera-standalone"
+      - aiera-standalone
 
   # 调度器
   aiera-tracker:
@@ -153,8 +153,7 @@ services:
     ports:
       - "22122:22122"
     command: "tracker"
-    networks:
-      - aiera-docker
+    network_mode: host
   # 存储器
   aiera-storage:
     image: delron/fastdfs:latest
@@ -172,8 +171,7 @@ services:
     command: "storage"
     depends_on:
       - aiera-tracker
-    networks:
-      - aiera-docker
+    network_mode: host
 
 networks:
   aiera-docker:

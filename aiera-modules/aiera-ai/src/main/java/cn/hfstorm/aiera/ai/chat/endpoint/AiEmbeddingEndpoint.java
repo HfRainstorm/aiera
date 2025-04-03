@@ -33,7 +33,7 @@ public class AiEmbeddingEndpoint {
     IEmbeddingService embeddingService;
 
     @PostMapping(path = "/docs/{knowledgeId}", produces= MediaType.MULTIPART_FORM_DATA_VALUE)
-    @SaCheckPermission("aigc:embedding:docs")
+//    @SaCheckPermission("aigc:embedding:docs")
     public R docs(@RequestParam MultipartFile file, @RequestParam String saveType,
                   @PathVariable String knowledgeId) throws IOException {
         return embeddingService.embeddingFile(file, saveType, knowledgeId);
