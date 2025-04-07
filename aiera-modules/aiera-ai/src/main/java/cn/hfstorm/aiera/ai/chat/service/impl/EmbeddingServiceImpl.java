@@ -5,10 +5,10 @@ import cn.hfstorm.aiera.ai.chat.service.IEmbeddingService;
 import cn.hfstorm.aiera.ai.provider.knowledge.AiKnowledgeFactory;
 import cn.hfstorm.aiera.common.ai.consts.EmbedTypeConstant;
 import cn.hfstorm.aiera.common.ai.domain.AigcDocs;
-import cn.hfstorm.aiera.common.ai.task.TaskManager;
 import cn.hfstorm.aiera.common.core.domain.R;
 import cn.hfstorm.aiera.common.satoken.utils.LoginHelper;
 import cn.hfstorm.aiera.system.api.RemoteFileService;
+import cn.hfstorm.aiera.system.api.domain.CommonsMultipleFile;
 import cn.hfstorm.aiera.system.api.domain.SysFile;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,14 +18,12 @@ import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.reader.tika.TikaDocumentReader;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.Executors;
 
 /**
  * @author : hmy
@@ -49,7 +47,7 @@ public class EmbeddingServiceImpl implements IEmbeddingService {
         String userId = String.valueOf(LoginHelper.getUserId());
 
         // 上传到oss
-        SysFile oss = remoteFileService.upload(file, saveType);
+        SysFile oss = remoteFileService.upload(new CommonsMultipleFile(file, saveType));
         // oss结果信息保存到数据库
         AigcDocs data = new AigcDocs()
                 .setName(oss.getName())

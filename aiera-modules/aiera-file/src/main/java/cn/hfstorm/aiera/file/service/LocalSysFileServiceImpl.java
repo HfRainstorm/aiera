@@ -2,9 +2,11 @@ package cn.hfstorm.aiera.file.service;
 
 import cn.hfstorm.aiera.common.core.utils.file.FileUtils;
 import cn.hfstorm.aiera.file.utils.FileUploadUtils;
+import cn.hfstorm.aiera.system.api.domain.CommonsMultipleFile;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 /**
  * 本地文件存储
@@ -37,10 +39,9 @@ public class LocalSysFileServiceImpl implements ISysFileService {
 	 *
 	 * @param file 上传的文件
 	 * @return 访问地址
-	 * @throws Exception
-	 */
+     */
 	@Override
-	public String uploadFile(MultipartFile file) throws Exception {
+	public String uploadFile(CommonsMultipleFile file) throws IOException {
 		String name = FileUploadUtils.upload(localFilePath, file);
 		String url = domain + localFilePrefix + name;
 		return url;

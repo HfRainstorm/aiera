@@ -1,5 +1,6 @@
 package cn.hfstorm.aiera.file.utils;
 
+import cn.hfstorm.aiera.system.api.domain.CommonsMultipleFile;
 import cn.hutool.core.util.IdUtil;
 import cn.hfstorm.aiera.common.core.exception.file.FileNameLengthLimitExceededException;
 import cn.hfstorm.aiera.common.core.exception.file.FileSizeLimitExceededException;
@@ -8,7 +9,6 @@ import cn.hfstorm.aiera.common.core.utils.DateUtils;
 import cn.hfstorm.aiera.common.core.utils.StringUtils;
 import cn.hfstorm.aiera.common.core.utils.file.MimeTypeUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +37,7 @@ public class FileUploadUtils {
 	 * @return 文件名称
 	 * @throws IOException
 	 */
-	public static final String upload(String baseDir, MultipartFile file) throws IOException {
+	public static final String upload(String baseDir, CommonsMultipleFile file) throws IOException {
 		try {
 			return upload(baseDir, file, MimeTypeUtils.DEFAULT_ALLOWED_EXTENSION);
 		} catch (Exception e) {
@@ -57,7 +57,7 @@ public class FileUploadUtils {
 	 * @throws IOException                          比如读写文件出错时
 	 * @throws InvalidExtensionException            文件校验异常
 	 */
-	public static final String upload(String baseDir, MultipartFile file, String[] allowedExtension)
+	public static final String upload(String baseDir, CommonsMultipleFile file, String[] allowedExtension)
 			throws FileSizeLimitExceededException, IOException, FileNameLengthLimitExceededException,
 			InvalidExtensionException {
 		int fileNamelength = file.getOriginalFilename().length();
@@ -78,7 +78,7 @@ public class FileUploadUtils {
 	/**
 	 * 编码文件名
 	 */
-	public static final String extractFilename(MultipartFile file) {
+	public static final String extractFilename(CommonsMultipleFile file) {
 		String fileName = file.getOriginalFilename();
 		String extension = getExtension(file);
 		fileName = DateUtils.datePath() + "/" + IdUtil.fastUUID() + "." + extension;
@@ -108,7 +108,7 @@ public class FileUploadUtils {
 	 * @throws FileSizeLimitExceededException 如果超出最大大小
 	 * @throws InvalidExtensionException      文件校验异常
 	 */
-	public static final void assertAllowed(MultipartFile file, String[] allowedExtension)
+	public static final void assertAllowed(CommonsMultipleFile file, String[] allowedExtension)
 			throws FileSizeLimitExceededException, InvalidExtensionException {
 		long size = file.getSize();
 		if (DEFAULT_MAX_SIZE != -1 && size > DEFAULT_MAX_SIZE) {
@@ -158,7 +158,7 @@ public class FileUploadUtils {
 	 * @param file 表单文件
 	 * @return 后缀名
 	 */
-	public static final String getExtension(MultipartFile file) {
+	public static final String getExtension(CommonsMultipleFile file) {
 		String extension = FilenameUtils.getExtension(file.getOriginalFilename());
 		if (StringUtils.isEmpty(extension)) {
 			extension = MimeTypeUtils.getExtension(file.getContentType());
