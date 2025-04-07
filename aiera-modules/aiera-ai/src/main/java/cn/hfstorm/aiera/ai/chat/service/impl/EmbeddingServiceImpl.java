@@ -62,11 +62,10 @@ public class EmbeddingServiceImpl implements IEmbeddingService {
 //            embeddingService.embedDocsSlice(data, oss.getUrl());
 //        }));
         // 从IO流中读取文件
-        TikaDocumentReader tikaDocumentReader = new TikaDocumentReader(new InputStreamResource(file.getInputStream()));
+        TikaDocumentReader tikaDocumentReader = new TikaDocumentReader(oss.getUrl());
         // 将文本内容划分成更小的块
         List<Document> splitDocuments = new TokenTextSplitter()
                 .apply(tikaDocumentReader.read());
-
         // 根据知识库id，获取向量库的配置
         EmbeddingModel embeddingModel = aiKnowledgeFactory.getEmbeddingModel(knowledgeId);
         // 存入向量数据库，这个过程会自动调用embeddingModel,将文本变成向量再存入。
